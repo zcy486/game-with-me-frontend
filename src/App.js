@@ -1,11 +1,14 @@
 import React from "react";
 import routes from "./routes";
+import theme from "./theming/themes";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "./components/Container";
+
 
 const useStyles = makeStyles(() => ({
   appRoot: {
@@ -20,18 +23,19 @@ function App() {
 
   return (
     <div className={classes.appRoot}>
-      <React.Fragment>
-        <Header />
-        <Container>
-          <BrowserRouter>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <React.Fragment>
+          <Header />
+          <Container>
             <Switch>
               {routes.map((route, i) => (
                 <Route key={i} {...route} />
               ))}
             </Switch>
-          </BrowserRouter>
-        </Container>
-      </React.Fragment>
+          </Container>
+        </React.Fragment>
+      </MuiThemeProvider>
     </div>
   );
 }

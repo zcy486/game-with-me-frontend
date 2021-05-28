@@ -1,9 +1,10 @@
+import React from "react";
+import { withRouter } from "react-router-dom";
 import {
   AppBar,
   fade,
   IconButton,
   InputBase,
-  Link,
   makeStyles,
   Toolbar,
   Typography,
@@ -13,21 +14,26 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Chat";
 
+import UserMenu from "./UserMenu";
+
+
 const useStyles = makeStyles((theme) => ({
   appbar: {
-    background: "linear-gradient(to right, #8be3ff, #7908be)",
+    background: theme.palette.background.appBar,
   },
   toolbar: {
     flexGrow: 1,
   },
   title: {
-    flexGrow: 1,
-    paddingLeft: theme.spacing(1),
-  },
-  link: {
     color: "black",
-    fontFamily: "Audiowide",
+    fontFamily: theme.typography.fontFamily.title,
     fontSize: 20,
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    cursor: "pointer",
+  },
+  placeHolder: {
+    flexGrow: 1,
   },
   search: {
     position: "relative",
@@ -69,25 +75,37 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  whiteicon: {
+  iconButton: {
     color: "white",
-  },
-  blackicon: {
-    color: "black",
   },
 }));
 
-function Header() {
+function Header(props) {
   const classes = useStyles();
+
+  const [userAnchor, setUserAnchor] = React.useState(null);
+
+  const onClickTitle = () => {
+    props.history.push("/");
+  };
+
+  const onClickChat = () => {
+    props.history.push("/login");
+  }
 
   return (
     <AppBar position={"sticky"} className={classes.appbar}>
+      <UserMenu
+        open={Boolean(userAnchor)}
+        anchor={userAnchor}
+        //everytime when closing the menu, set the anchor to null
+        onClose={() => setUserAnchor(null)}
+      />
       <Toolbar className={classes.toolbar}>
-        <Typography className={classes.title}>
-          <Link href="/" className={classes.link} underline={"none"}>
-            GameWithMe
-          </Link>
+        <Typography className={classes.title} onClick={onClickTitle}>
+          GameWithMe
         </Typography>
+        <div className={classes.placeHolder} />
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
@@ -98,10 +116,14 @@ function Header() {
             inputProps={{ "aria-label": "search" }}
           />
         </div>
-        <IconButton className={classes.whiteicon}>
+        <IconButton className={classes.iconButton} onClick={onClickChat}>
           <ChatIcon />
         </IconButton>
-        <IconButton className={classes.whiteicon}>
+        <IconButton
+          className={classes.iconButton}
+          //triggered by event "clicking", the clicked icon becomes the anchor
+          onClick={(event) => setUserAnchor(event.currentTarget)}
+        >
           <AccountCircleIcon />
         </IconButton>
       </Toolbar>
@@ -109,4 +131,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default withRouter(Header);

@@ -4,7 +4,6 @@ import PostDetailsView from "./views/PostDetailsView";
 import SignUpView from "./views/SignUpView";
 import LoginView from "./views/LoginView";
 
-
 const routes = [
     {
         path: "/",

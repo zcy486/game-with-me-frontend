@@ -1,5 +1,31 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import ScrollContainer from "../components/ScrollContainer";
+import IntroBlock from "../components/IntroBlock";
+import ThreeSteps from "../components/ThreeSteps";
+
+import backgroundPic from "../images/bg_homepage.png";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    backgroundImage: `url(${backgroundPic})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
+}));
+
 function HomePageView() {
-  return <p>I'm the home page! (TODO)</p>;
+  const classes = useStyles();
+
+  return (
+    <ScrollContainer>
+      <div className={classes.root}>
+        <IntroBlock />
+        <ThreeSteps />
+      </div>
+    </ScrollContainer>
+  );
 }
 
 export default HomePageView;

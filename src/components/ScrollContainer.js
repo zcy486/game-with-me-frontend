@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   scrollContainerRoot: {
     height: "100%",
     width: "100%",
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
  * For having an internal scroll container
  * @param {props} props
  */
-function Container(props) {
+function ScrollContainer(props) {
   const classes = useStyles();
 
   return (
@@ -34,4 +33,4 @@ function Container(props) {
   );
 }
 
-export default Container;
+export default ScrollContainer;

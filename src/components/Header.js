@@ -12,10 +12,9 @@ import {
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
-import ChatIcon from "@material-ui/icons/Chat";
+import MessageIcon from "@material-ui/icons/Message";
 
 import UserMenu from "./UserMenu";
-
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -117,7 +116,7 @@ function Header(props) {
           />
         </div>
         <IconButton className={classes.iconButton} onClick={onClickChat}>
-          <ChatIcon />
+          <MessageIcon />
         </IconButton>
         <IconButton
           className={classes.iconButton}

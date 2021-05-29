@@ -1,65 +1,46 @@
-import { Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GamesSelector from "../../components/PostListView/GamesSelector";
-import SortSelector from "../../components/PostListView/SortSelector";
 import FilterBox from "../../components/PostListView/FilterBox";
-import bgPic from "../../components/Images/LOL.jpeg";
+import PostBox from "../../components/PostListView/PostBox";
+import ScrollContainer from "../../components/ScrollContainer";
+import backgroundPic from "../../images/bg_postlist.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "row",
+    background: `url(${backgroundPic})`,
+    backgroundRepeat: "repeat",
   },
-  selector: {
-    flexGrow: 1,
+  gameSelector: {
+    paddingRight: theme.spacing(4),
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 2,
+    textAlign: "right",
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(8),
+    paddingLeft: theme.spacing(10),
+    paddingRight: theme.spacing(10),
   },
   gameTitle: {
-    position: "relative",
-    display: "flex",
-    paddingTop: "10%",
-    paddingLeft: "3%",
-    paddingBottom: "6%",
-    fontSize: "45px",
+    fontSize: "40px",
     fontFamily: "Helvetica",
-  },
-  filterscolumn: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    fontSize: "30px",
   },
   filtersRow: {
-    position: "relative",
     display: "flex",
     flexDirection: "row",
-    fontSize: "30px",
   },
-  sortFilter: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "row",
-    fontSize: "30px",
-    paddingTop: "1.5%",
-    paddingLeft: "30%",
-  },
-  sortBy: {
-    marginTop: "12px",
-    fontFamily: "Helvetica",
-    fontWeight: "normal",
-    fontSize: "17px",
+  placeHolder: {
+    flexGrow: 1,
   },
 }));
 
 function PostListView() {
   const classes = useStyles();
 
-  const allStatus = ["online", "offline", "busy", "all-status"];
+  const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
+    "None",
     "Deutsch",
     "English",
     "Español",
@@ -73,35 +54,36 @@ function PostListView() {
     "Tiếng Việt",
     "中文",
   ];
-  const allTypes = ["Carry", "Chill", "All types"];
-  const allPrices = ["0-5", "6-10", "11-20", "20+"];
-  const Servers = ["EU", "CN", "JP"];
-  const Platforms = ["PC", "Nintendo"];
+  const allTypes = ["None", "Carry", "Chill", "All types"];
+  const allPrices = ["None", "0-5", "6-10", "11-20", "20+"];
+  const Servers = ["None", "EU", "CN", "JP"];
+  const Platforms = ["None", "PC", "Nintendo"];
+  const sortBy = ["order", "ratings"];
 
   return (
     <div className={classes.root}>
-      <div className={classes.selector}>
+      <div className={classes.gameSelector}>
         <GamesSelector />
       </div>
-      <div className={classes.content}>
-        <h1 className={classes.gameTitle}>League of Legends</h1>
-        <div className={classes.filterscolumn}>
+      <ScrollContainer>
+        <div className={classes.content}>
+          <h1 className={classes.gameTitle}>League of Legends</h1>
           <div className={classes.filtersRow}>
-            <FilterBox choices={allStatus} helperText="Status"></FilterBox>
-            <FilterBox choices={allLanguages} helperText="Language"></FilterBox>
-            <FilterBox choices={allTypes} helperText="Type"></FilterBox>
-            <FilterBox choices={allPrices} helperText="Price"></FilterBox>
-            <div className={classes.sortFilter}>
-              <h6 className={classes.sortBy}>sort by: </h6>
-              <SortSelector />
-            </div>
+            <FilterBox choices={allStatus} helperText="Status" />
+            <FilterBox choices={allLanguages} helperText="Language" />
+            <FilterBox choices={allTypes} helperText="Type" />
+            <FilterBox choices={allPrices} helperText="Price" />
+            <FilterBox choices={Servers} helperText="Server" />
+            <FilterBox choices={Platforms} helperText="Platform" />
+            <div className={classes.placeHolder} />
+            <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
-          <div className={classes.filtersRow}>
-          <FilterBox choices={Servers} helperText="Server"></FilterBox>
-          <FilterBox choices={Platforms} helperText="Platform"></FilterBox>
-          </div>
+          <PostBox username="Tom"></PostBox>
+          <PostBox username="Takahashi99"></PostBox>
+          <PostBox username="blabla"></PostBox>
+          <PostBox username="heiheihei"></PostBox>
         </div>
-      </div>
+      </ScrollContainer>
     </div>
   );
 }

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     overflow: "auto",
     maxHeight: 300,
+    fontFamily: "Helvetica",
   },
   listSection: {
     backgroundColor: "inherit",
@@ -58,6 +59,79 @@ function AllGamesSelector() {
           <ListSubheader>{"D"}</ListSubheader>
           <ListItemLink href="#simple-list">
             <ListItemText primary="Dota2" />
+          </ListItemLink>
+          <ListSubheader>{"F"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Fortnight" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Fifa" />
+          </ListItemLink>
+          <ListSubheader>{"G"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Grand Theft Auto" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Golf" />
+          </ListItemLink>
+          <ListSubheader>{"H"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Humans Fall Flat" />
+          </ListItemLink>
+          <ListSubheader>{"L"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="League of Legends" />
+          </ListItemLink>
+          <ListSubheader>{"M"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Minecraft" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Monster Hunter" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Monopoly" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Mario Kart" />
+          </ListItemLink>
+          <ListSubheader>{"O"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Overwatch" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Overcooked" />
+          </ListItemLink>
+          <ListSubheader>{"P"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Portal" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="PUBG" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Pokemon" />
+          </ListItemLink>
+          <ListSubheader>{"R"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Rainbow Six" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Risk of Rain" />
+          </ListItemLink>
+          <ListSubheader>{"S"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Stardew Valley" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Super Smash Bros" />
+          </ListItemLink>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="Splatoon" />
+          </ListItemLink>
+          <ListSubheader>{"U"}</ListSubheader>
+          <ListItemLink href="#simple-list">
+            <ListItemText primary="UNO" />
           </ListItemLink>
         </ul>
       </li>

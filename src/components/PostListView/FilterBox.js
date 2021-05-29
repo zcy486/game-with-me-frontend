@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 55,
-    backgroundColor: fade("#EFB2DA", 1),
+    //backgroundColor: fade("#EFB2DA", 1),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),

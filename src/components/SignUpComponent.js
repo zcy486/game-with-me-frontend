@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button, TextField, Typography } from "@material-ui/core";
 
-import logo from "../icons/logo.png";
-
+import logo from "../images/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   signUpRoot: {

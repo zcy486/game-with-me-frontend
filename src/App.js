@@ -7,8 +7,6 @@ import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "./components/Container";
-
 
 const useStyles = makeStyles(() => ({
   appRoot: {
@@ -27,13 +25,11 @@ function App() {
         <CssBaseline />
         <React.Fragment>
           <Header />
-          <Container>
-            <Switch>
-              {routes.map((route, i) => (
-                <Route key={i} {...route} />
-              ))}
-            </Switch>
-          </Container>
+          <Switch>
+            {routes.map((route, i) => (
+              <Route key={i} {...route} />
+            ))}
+          </Switch>
         </React.Fragment>
       </MuiThemeProvider>
     </div>

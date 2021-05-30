@@ -14,7 +14,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import MessageIcon from "@material-ui/icons/Message";
 
-import UserMenu from "./UserMenu";
+import UserMenu from "./UserRelevant/UserMenu";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {

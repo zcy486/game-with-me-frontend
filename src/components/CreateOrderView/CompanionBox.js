@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Divider, ButtonBase, Typography} from "@material-ui/core";
 import logo from "../../images/logo.png";
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import Ecoin from "../ECoin";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -64,7 +64,7 @@ function CompanionBox(props) {
                     <Grid container spacing={2} direction="column"> 
                     <Grid item>Details</Grid>
                    
-                <Grid item container flex="row">Price: {props.price}  <span>&nbsp;</span><MonetizationOnIcon color= "secondary" ></MonetizationOnIcon> <span>&nbsp;</span>/ Game </Grid>
+                <Grid item container flex="row">Price: {props.price}  <span>&nbsp;</span><Ecoin></Ecoin> <span>&nbsp;</span>/ Game </Grid>
                 <Grid item>Server: {props.server}</Grid>
                 <Grid item>Platform: {props.platform}</Grid>
                 </Grid></div>

@@ -10,7 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import Ecoin from '../ECoin';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -70,12 +70,14 @@ function OrderBox(props) {
             <Grid container spacing={2}>
                 <Grid item> Game: {props.gameName}</Grid>
                 
-                <Grid item container flex="row">Price: {props.price}<span>&nbsp;</span><MonetizationOnIcon color= "secondary" ></MonetizationOnIcon><span>&nbsp;</span>/ Game</Grid>
+                <Grid item container flex="row">Price: {props.price} <span>&nbsp;</span><Ecoin></Ecoin>
+                <span>&nbsp;</span>
+                / Game</Grid>
          
                <Grid item container alignItems="center" flex="row" >
           
           Amount: 
-          <span>&nbsp;&nbsp;</span>
+          <span>&nbsp;</span>
   
 
           
@@ -97,17 +99,16 @@ function OrderBox(props) {
                  </Grid>
                 <Grid item container flex="row">Total: {totalAmount}
                 <span>&nbsp;</span>
-                <MonetizationOnIcon color= "secondary" >
-                    </MonetizationOnIcon>
-                    <span>&nbsp;</span>
+                <Ecoin></Ecoin>
+                <span>&nbsp;</span>
                 </Grid>
                 <Grid item container flex="row">
                     My wallet: {props.balance}
                 
                 <span>&nbsp;</span>
-                <MonetizationOnIcon color= "secondary" >
-                    </MonetizationOnIcon>
-                    <span>&nbsp;</span></Grid>
+                <Ecoin></Ecoin>
+                <span>&nbsp;</span>
+                </Grid>
                 
 
           <Grid item> 

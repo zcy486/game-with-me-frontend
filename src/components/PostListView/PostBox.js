@@ -50,8 +50,10 @@ function PostBox(props) {
             <Grid item>
               5
             </Grid>
+            
             <Grid item>
-              / Game
+              <ECoin></ECoin>
+                / Game
             </Grid>
           </Grid>
         </Grid>

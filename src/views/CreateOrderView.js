@@ -2,7 +2,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import ScrollContainer from "../components/ScrollContainer";
-import backgroundPic from "../images/bg_homepage.png";
+import backgroundPic from "../images/bg_postlist.png";
 import OrderBox from "../components/CreateOrderView/OrderBox"
 import CompanionBox from "../components/CreateOrderView/CompanionBox"
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 function CreateOrderView(props) {
     const classes = useStyles();
     const onConfirm = () => {
-        //TODO
+        console.log("aa")
       };
 
       const onRecharge = () => {

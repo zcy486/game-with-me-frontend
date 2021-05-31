@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 
-import logo from "../images/logo_gif.gif";
+import logo from "../../images/logo_gif.gif";
 
 const useStyles = makeStyles((theme) => ({
   root: {

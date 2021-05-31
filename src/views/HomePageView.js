@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ScrollContainer from "../components/ScrollContainer";
-import IntroBlock from "../components/IntroBlock";
-import ThreeSteps from "../components/ThreeSteps";
+import IntroBlock from "../components/HomePageView/IntroBlock";
+import ThreeSteps from "../components/HomePageView/ThreeSteps";
 
 import backgroundPic from "../images/bg_homepage.png";
 

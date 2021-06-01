@@ -78,10 +78,10 @@ function PostListView() {
             <div className={classes.placeHolder} />
             <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
-          <PostBox username="Tom"></PostBox>
-          <PostBox username="Takahashi99"></PostBox>
-          <PostBox username="blabla"></PostBox>
-          <PostBox username="heiheihei"></PostBox>
+          <PostBox username="Tom" />
+          <PostBox username="Takahashi99" />
+          <PostBox username="blabla" />
+          <PostBox username="heiheihei" />
         </div>
       </ScrollContainer>
     </div>

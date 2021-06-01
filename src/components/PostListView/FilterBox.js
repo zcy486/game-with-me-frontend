@@ -4,13 +4,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 55,
-    //backgroundColor: fade("#EFB2DA", 1),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),

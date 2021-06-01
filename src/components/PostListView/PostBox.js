@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import logo from "../../images/logo.png";
 import ECoin from "../ECoin";
 import Rating from "@material-ui/lab/Rating";
 
@@ -43,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  languageRow: {
+    display: "table",
+  },
+  languageColumn: {
+    display: "table-cell",
+  },
 }));
 
 function PostBox(props) {
@@ -53,13 +58,14 @@ function PostBox(props) {
       <Grid className={classes.paperContent}>
         <Grid item>
           <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="avatar" src={logo} />
+            <img className={classes.img} alt="avatar" src={props.avatar} />
           </ButtonBase>
         </Grid>
         <Grid className={classes.paperColumn}>
           <Typography>{props.username}</Typography>
           <Grid className={classes.priceInfo}>
-            5<span>&nbsp;</span>
+            {props.price}
+            <span>&nbsp;</span>
             <ECoin></ECoin>
             <span>&nbsp;</span>/ Game
           </Grid>
@@ -69,12 +75,24 @@ function PostBox(props) {
           <Grid className={classes.ratingStars}>
             <Rating
               name="half-rating-read"
-              defaultValue={2.5}
+              defaultValue={props.rating}
               precision={0.5}
               readOnly
             />
           </Grid>
-          <Grid item>Language: Español, English</Grid>
+          <Grid item>
+            <div className={classes.languageRow}>
+              Language:
+              {props.languages.map(function (language, i) {
+                return (
+                  <div className={classes.languageColumn}>
+                    {i > 0 ? "," : ""}
+                    <span>&nbsp;</span>{language}
+                  </div>
+                );
+              })}
+            </div>
+          </Grid>
         </Grid>
       </Grid>
     </Paper>

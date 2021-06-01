@@ -4,6 +4,7 @@ import FilterBox from "../../components/PostListView/FilterBox";
 import PostBox from "../../components/PostListView/PostBox";
 import ScrollContainer from "../../components/ScrollContainer";
 import backgroundPic from "../../images/bg_postlist.png";
+import logo from "../../images/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,10 +79,10 @@ function PostListView() {
             <div className={classes.placeHolder} />
             <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
-          <PostBox username="Tom" />
-          <PostBox username="Takahashi99" />
-          <PostBox username="blabla" />
-          <PostBox username="heiheihei" />
+          <PostBox username="Tom" price={5} rating={2.85} languages={["Español", "English"]} avatar={logo}/>
+          <PostBox username="Takahashi99" price={2} rating={3.5} languages={["日本語", "Deutsch", "English"]} avatar={logo}/>
+          <PostBox username="blabla" price={3} rating={4.4} languages={["Italiano", "Deutsch"]} avatar={logo}/>
+          <PostBox username="heiheihei" price={4} rating={4.9} languages={["English", "中文"]} avatar={logo}/>
         </div>
       </ScrollContainer>
     </div>

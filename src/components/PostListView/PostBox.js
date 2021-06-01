@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: 128,
     height: 128,
+    padding: theme.spacing(1)
   },
   img: {
     margin: "auto",
@@ -66,7 +67,7 @@ function PostBox(props) {
           <Grid className={classes.priceInfo}>
             {props.price}
             <span>&nbsp;</span>
-            <ECoin />
+            <ECoin></ECoin>
             <span>&nbsp;</span>/ Game
           </Grid>
         </Grid>
@@ -74,7 +75,6 @@ function PostBox(props) {
         <Grid className={classes.paperColumn}>
           <Grid className={classes.ratingStars}>
             <Rating
-              name="half-rating-read"
               defaultValue={props.rating}
               precision={0.5}
               readOnly
@@ -87,8 +87,7 @@ function PostBox(props) {
                 return (
                   <div className={classes.languageColumn}>
                     {i > 0 ? "," : ""}
-                    <span>&nbsp;</span>
-                    {language}
+                    <span>&nbsp;</span>{language}
                   </div>
                 );
               })}

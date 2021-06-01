@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PostDetails from "../../components/PostDetailsView/PostDetails";
 import ScrollContainer from "../../components/ScrollContainer";
-
+import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +36,15 @@ function PostDetailsView() {
             companionType={"Carry"}
             server="EU"
             platform="PC"
+          />
+          <Comments
+            numComments={10}
+            labels={[
+              { num: 10, name: "Carry in game" },
+              { num: 5, name: "Humorous" },
+              { num: 3, name: "Fast Response" },
+              { num: 1, name: "Cooperative" },
+            ]}
           />
         </div>
       </div>

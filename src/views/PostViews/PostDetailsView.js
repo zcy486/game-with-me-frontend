@@ -4,6 +4,7 @@ import PostDetails from "../../components/PostDetailsView/PostDetails";
 import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
+import MockAvatar from "../../images/avatar.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,7 @@ function PostDetailsView() {
             companionType={"Carry"}
             server="EU"
             platform="PC"
+            avatar={MockAvatar}
           />
           <Comments
             numComments={10}

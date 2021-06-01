@@ -12,7 +12,6 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import ECoin from "../ECoin";
-import logo from "../../images/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -87,7 +86,7 @@ function PostDetails(props) {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="avatar" src={logo} />
+                <img className={classes.img} alt="avatar" src={props.avatar} />
               </ButtonBase>
             </Grid>
 

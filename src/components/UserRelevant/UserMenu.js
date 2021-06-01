@@ -42,8 +42,12 @@ function UserMenu(props) {
       getContentAnchorEl={null}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
-      <MenuItem className={classes.menuItem} onClick={onClickLogin}>Log In</MenuItem>
-      <MenuItem className={classes.menuItem} onClick={onClickSignUp}>Sign Up</MenuItem>
+      <MenuItem className={classes.menuItem} onClick={onClickLogin}>
+        Log In
+      </MenuItem>
+      <MenuItem className={classes.menuItem} onClick={onClickSignUp}>
+        Sign Up
+      </MenuItem>
     </Menu>
   );
 }

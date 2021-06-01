@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textLabels: {
     fontSize: "20px",
-  }
+  },
 }));
 
 const StepLine = withStyles((theme) => ({
@@ -59,9 +59,7 @@ function ThreeSteps() {
         {steps.map((label) => (
           <Step completed={true}>
             <StepLabel StepIconComponent={StepIcon}>
-              <div className={classes.textLabels}>
-                {label}
-              </div>
+              <div className={classes.textLabels}>{label}</div>
             </StepLabel>
           </Step>
         ))}

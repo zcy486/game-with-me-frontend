@@ -33,27 +33,18 @@ function PostBox(props) {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase className={classes.image}>
-            <img
-              className={classes.img}
-              alt="avatar"
-              src={logo}
-            />
+            <img className={classes.img} alt="avatar" src={logo} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <Typography>
-                {props.username}
-              </Typography>
+              <Typography>{props.username}</Typography>
             </Grid>
+            <Grid item>5</Grid>
+
             <Grid item>
-              5
-            </Grid>
-            
-            <Grid item>
-              <ECoin></ECoin>
-                / Game
+              <ECoin></ECoin>/ Game
             </Grid>
           </Grid>
         </Grid>

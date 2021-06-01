@@ -90,7 +90,7 @@ function Header(props) {
 
   const onClickChat = () => {
     props.history.push("/login");
-  }
+  };
 
   return (
     <AppBar position={"sticky"} className={classes.appbar}>

@@ -1,25 +1,35 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  circle: {
+  outerCircle: {
     display: "flex",
-    height: "25px",
-    width: "25px",
-    backgroundColor: "rgba(121, 8, 190)",
+    height: "24px",
+    width: "24px",
+    backgroundColor: "rgb(224,189,0)",
+    borderRadius: "50%",
+  },
+  innerCircle: {
+    display: "flex",
+    height: "20px",
+    width: "20px",
+    backgroundColor: "gold",
     borderRadius: "50%",
   },
   text: {
     margin: "auto",
-    color: "white",
-    fontSize: 16,
+    color: theme.palette.secondary.main,
+    fontSize: 15,
+    fontFamily: "Audiowide",
   },
 }));
 
 function ECoin() {
   const classes = useStyles();
   return (
-    <span class={classes.circle} color="secondary">
-      <span class={classes.text}>E</span>
+    <span className={classes.outerCircle}>
+      <span className={classes.innerCircle}>
+        <span className={classes.text}>E</span>
+      </span>
     </span>
   );
 }

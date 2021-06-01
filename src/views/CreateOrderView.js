@@ -4,6 +4,7 @@ import ScrollContainer from "../components/ScrollContainer";
 import backgroundPic from "../images/bg_postlist.png";
 import OrderBox from "../components/CreateOrderView/OrderBox";
 import CompanionBox from "../components/CreateOrderView/CompanionBox";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundImage: `url(${backgroundPic})`,
@@ -42,7 +43,7 @@ function CreateOrderView(props) {
             onConfirm={onConfirm}
             onCancel={onCancel}
             onRecharge={onRecharge}
-          ></OrderBox>
+          />
 
           <h1>Information about Gaming Companion</h1>
           <CompanionBox
@@ -51,7 +52,7 @@ function CreateOrderView(props) {
             price={5}
             server="EU"
             platform="PC"
-          ></CompanionBox>
+          />
         </div>
       </div>
     </ScrollContainer>

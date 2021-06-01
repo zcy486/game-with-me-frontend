@@ -3,7 +3,7 @@ import PostListView from "./views/PostViews/PostListView";
 import PostDetailsView from "./views/PostViews/PostDetailsView";
 import SignUpView from "./views/SignUpView";
 import LoginView from "./views/LoginView";
-
+import CreateOrderView from "./views/CreateOrderView";
 const routes = [
     {
         path: "/",
@@ -18,6 +18,7 @@ const routes = [
     {
         path: "/games/:gameId/detail/:postId",
         component: PostDetailsView,
+        exact: true,
     },
     {
         path: "/login",
@@ -26,6 +27,10 @@ const routes = [
     {
         path: "/register",
         component:SignUpView,
+    },
+    {
+       path: "/games/:gameId/detail/:postId/order",
+       component:CreateOrderView,
     },
 ];
 

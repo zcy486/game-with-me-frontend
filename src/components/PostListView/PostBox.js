@@ -50,33 +50,33 @@ function PostBox(props) {
 
   return (
     <Paper className={classes.paper}>
-      <div className={classes.paperContent}>
+      <Grid className={classes.paperContent}>
         <Grid item>
           <ButtonBase className={classes.image}>
             <img className={classes.img} alt="avatar" src={logo} />
           </ButtonBase>
         </Grid>
-        <div className={classes.paperColumn}>
+        <Grid className={classes.paperColumn}>
           <Typography>{props.username}</Typography>
-          <div className={classes.priceInfo}>
+          <Grid className={classes.priceInfo}>
             5<span>&nbsp;</span>
             <ECoin></ECoin>
             <span>&nbsp;</span>/ Game
-          </div>
-        </div>
-        <div className={classes.placeHolder} />
-        <div className={classes.paperColumn}>
-          <div className={classes.ratingStars}>
+          </Grid>
+        </Grid>
+        <Grid className={classes.placeHolder} />
+        <Grid className={classes.paperColumn}>
+          <Grid className={classes.ratingStars}>
             <Rating
               name="half-rating-read"
               defaultValue={2.5}
               precision={0.5}
               readOnly
             />
-          </div>
+          </Grid>
           <Grid item>Language: Español, English</Grid>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </Paper>
   );
 }

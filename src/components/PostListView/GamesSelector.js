@@ -38,7 +38,7 @@ function GamesSelector() {
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListItem >
+      <ListItem>
         <ListItemIcon>
           <WhatshotIcon />
         </ListItemIcon>

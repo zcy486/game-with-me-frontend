@@ -28,11 +28,7 @@ function StepIcon(props) {
     3: <ChatIcon />,
   };
 
-  return (
-    <div className={classes.root}>
-      {icons[String(props.icon)]}
-    </div>
-  );
+  return <div className={classes.root}>{icons[String(props.icon)]}</div>;
 }
 
 export default StepIcon;

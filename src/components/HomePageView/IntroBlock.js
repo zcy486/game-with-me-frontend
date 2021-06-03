@@ -80,7 +80,14 @@ function IntroBlock() {
       </div>
       <div className={classes.contentMiddle}>
         <img className={classes.logo} src={logo} alt={"Logo"} />
-        <Button className={classes.button} variant={"contained"} color={"secondary"} size={"large"}>Get started</Button>
+        <Button
+          className={classes.button}
+          variant={"contained"}
+          color={"secondary"}
+          size={"large"}
+        >
+          Get started
+        </Button>
       </div>
       <div className={classes.contentRight}>
         <Typography className={classes.textRight}>

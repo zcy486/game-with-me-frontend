@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import SignUpComponent from "../components/UserRelevant/SignUpComponent";
+import { connect, useSelector } from "react-redux";
 
+import SignUpComponent from "../components/UserRelevant/SignUpComponent";
+import { register } from "../redux/actions";
 import backgroundPic from "../images/bg_postlist.png";
 
 const useStyles = makeStyles(() => ({
@@ -20,19 +22,26 @@ const useStyles = makeStyles(() => ({
 function SignUpView(props) {
   const classes = useStyles();
 
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user.user) {
+      props.history.push("/");
+    }
+  }, [user, props.history]);
+
   const onRegister = (username, password) => {
-    //TODO
+    props.dispatch(register(username, password));
   };
 
   const onCancel = () => {
     props.history.push("/");
   };
 
-  //TODO modify props.user
   return (
     <div className={classes.root}>
       <SignUpComponent
-        user={null}
+        user={user}
         onRegister={onRegister}
         onCancel={onCancel}
       />
@@ -40,4 +49,4 @@ function SignUpView(props) {
   );
 }
 
-export default SignUpView;
+export default connect()(SignUpView);

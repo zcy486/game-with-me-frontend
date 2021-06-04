@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
 import { makeStyles, Menu, MenuItem } from "@material-ui/core";
+
+import { logout } from "../../redux/actions";
 
 const useStyles = makeStyles(() => ({
   menuItem: {
@@ -13,6 +16,11 @@ const useStyles = makeStyles(() => ({
 function UserMenu(props) {
   const classes = useStyles();
 
+  const user = useSelector((state) => {
+    // return the currnetly logged in user from redux store
+    return state.user;
+  });
+
   const onClickLogin = () => {
     props.onClose();
     props.history.push("/login");
@@ -23,10 +31,16 @@ function UserMenu(props) {
     props.history.push("/register");
   };
 
-  /* TODO
   const onClickLogout = () => {
+    // trigger redux logout action
+    props.dispatch(logout());
+    // close this menu
+    props.onClose();
+    // navigate to the home page
+    props.history.push("/");
   };
 
+  /*
   const onClickProfile = () => {
   };
 
@@ -42,12 +56,22 @@ function UserMenu(props) {
       getContentAnchorEl={null}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
-      <MenuItem className={classes.menuItem} onClick={onClickLogin}>
-        Log In
-      </MenuItem>
-      <MenuItem className={classes.menuItem} onClick={onClickSignUp}>
-        Sign Up
-      </MenuItem>
+      {user.user
+        ? [
+            <MenuItem className={classes.menuItem}>Profile of: {user.user.username}</MenuItem>,
+            <MenuItem className={classes.menuItem}>My orders</MenuItem>,
+            <MenuItem className={classes.menuItem} onClick={onClickLogout}>
+              Logout
+            </MenuItem>,
+          ]
+        : [
+            <MenuItem className={classes.menuItem} onClick={onClickLogin}>
+              Log In
+            </MenuItem>,
+            <MenuItem className={classes.menuItem} onClick={onClickSignUp}>
+              Sign Up
+            </MenuItem>,
+          ]}
     </Menu>
   );
 }
@@ -59,4 +83,4 @@ UserMenu.protoTypes = {
   open: PropTypes.bool.isRequired,
 };
 
-export default withRouter(UserMenu);
+export default connect()(withRouter(UserMenu));

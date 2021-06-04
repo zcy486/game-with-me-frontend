@@ -49,8 +49,7 @@ function LoginComponent(props) {
   const [loginError, setLoginError] = React.useState("");
 
   useEffect(() => {
-    //TODO modify the condition (remove props.user)
-    if (props.user && props.user.error) {
+    if (props.user.error) {
       setLoginError(props.user.error);
     } else {
       setLoginError("");

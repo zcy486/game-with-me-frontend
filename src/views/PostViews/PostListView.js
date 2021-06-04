@@ -4,7 +4,6 @@ import FilterBox from "../../components/PostListView/FilterBox";
 import PostBox from "../../components/PostListView/PostBox";
 import ScrollContainer from "../../components/ScrollContainer";
 import backgroundPic from "../../images/bg_postlist.png";
-import logo from "../../images/logo.png";
 import MockAvatar from "../../images/avatar.svg";
 
 const useStyles = makeStyles((theme) => ({

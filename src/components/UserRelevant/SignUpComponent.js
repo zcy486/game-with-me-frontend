@@ -50,8 +50,7 @@ function SignUpComponent(props) {
   const [registerError, setRegisterError] = React.useState("");
 
   useEffect(() => {
-    //TODO modify the condition (remove props.user)
-    if (props.user && props.user.error) {
+    if (props.user.error) {
       setRegisterError(props.user.error);
     } else {
       setRegisterError("");

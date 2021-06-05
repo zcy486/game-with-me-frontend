@@ -3,6 +3,8 @@ import PostListView from "./views/PostViews/PostListView";
 import PostDetailsView from "./views/PostViews/PostDetailsView";
 import SignUpView from "./views/SignUpView";
 import LoginView from "./views/LoginView";
+import CreateReviewView from "./views/CreateReviewView";
+import MyOrderDetailView from "./views/MyOrderDetailView";
 
 const routes = [
     {
@@ -26,6 +28,14 @@ const routes = [
     {
         path: "/register",
         component:SignUpView,
+    },
+    {
+        path: "/review",
+        component:CreateReviewView,
+    },
+    {
+        path: "/orderDetails",
+        component:MyOrderDetailView,
     },
 ];
 

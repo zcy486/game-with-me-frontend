@@ -86,7 +86,7 @@ function IntroBlock() {
           color={"secondary"}
           size={"large"}
         >
-          Get started
+          Get Started
         </Button>
       </div>
       <div className={classes.contentRight}>

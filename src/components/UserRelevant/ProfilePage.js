@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Divider, ButtonBase, Button } from "@material-ui/core";
+import {
+  Paper,
+  Grid,
+  Divider,
+  ButtonBase,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 
 import MockAvatar from "../../images/avatar.svg";
 import ECoin from "../ECoin";
@@ -47,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  withdrawButton: {
+  secondButton: {
     marginRight: theme.spacing(3),
   },
   centerArea: {
@@ -59,10 +68,71 @@ const useStyles = makeStyles((theme) => ({
   centerRow: {
     margin: theme.spacing(2),
   },
+  inputBase: {
+    padding: theme.spacing(0.3),
+    color: "inherit !important",
+  },
+  input: {
+    padding: theme.spacing(0),
+    textAlign: "left",
+  },
 }));
 
 function ProfilePage(props) {
   const classes = useStyles();
+
+  const minAge = 0;
+  const maxAge = 999;
+  const [userAge, setUserAge] = React.useState("");
+  const [userGender, setUserGender] = React.useState("");
+
+  const [editMode, setEditMode] = React.useState(false);
+
+  const extractUser = () => {
+    if (!props.user) {
+      return;
+    }
+
+    setUserAge(props.user.age);
+    setUserGender(props.user.gender);
+  };
+
+  const packUser = () => {
+    let back = {
+      ...props.user,
+    };
+
+    back.age = userAge;
+    back.gender = userGender;
+
+    return back;
+  };
+
+  // triggers when the new parameter is changed
+  useEffect(() => {
+    extractUser();
+  }, [props.user]);
+
+  const onChangeUserAge = (event) => {
+    const newAge = Math.round(
+      Math.min(Math.max(event.target.value, minAge), maxAge)
+    );
+    setUserAge(String(newAge));
+  };
+
+  const onChangeUserGender = (event) => {
+    setUserGender(event.target.value);
+  };
+
+  const onCancel = () => {
+    setEditMode(false);
+    extractUser();
+  };
+
+  const onSave = () => {
+    setEditMode(false);
+    props.onSave(packUser());
+  };
 
   return (
     <div className={classes.root}>
@@ -76,18 +146,80 @@ function ProfilePage(props) {
               </ButtonBase>
             </Grid>
             <Grid item xs container direction="column" spacing={3}>
-              <Grid item> Username: {props.username} </Grid>
+              <Grid item>Username: {props.user.username}</Grid>
               <Grid item>
-                {" "}
-                Age: {props.age === -1 ? "not given" : props.age}{" "}
+                Age:{" "}
+                <TextField
+                  value={userAge}
+                  type={"number"}
+                  color={"secondary"}
+                  onChange={onChangeUserAge}
+                  disabled={!editMode}
+                  variant={editMode ? "outlined" : "standard"}
+                  InputProps={
+                    editMode
+                      ? {
+                          className: classes.inputBase,
+                        }
+                      : {
+                          className: classes.inputBase,
+                          disableUnderline: true,
+                        }
+                  }
+                  inputProps={{
+                    className: classes.input,
+                  }}
+                />
               </Grid>
-              <Grid item> Gender: {props.gender} </Grid>
+              <Grid item>
+                Gender:{" "}
+                {editMode
+                  ? [
+                      <Select
+                        value={userGender}
+                        color={"secondary"}
+                        onChange={onChangeUserGender}
+                      >
+                        <MenuItem value={"male"}>male</MenuItem>
+                        <MenuItem value={"female"}>female</MenuItem>
+                        <MenuItem value={"other"}>other</MenuItem>
+                        <MenuItem value={"not given"}>not given</MenuItem>
+                      </Select>,
+                    ]
+                  : [`${userGender}`]}
+              </Grid>
             </Grid>
           </Grid>
           <Grid className={classes.buttons}>
-            <Button variant={"contained"} color={"secondary"} size={"small"}>
-              Edit Profile
-            </Button>
+            {editMode
+              ? [
+                  <Button
+                    className={classes.secondButton}
+                    onClick={onCancel}
+                    variant={"outlined"}
+                    size={"small"}
+                  >
+                    Cancel
+                  </Button>,
+                  <Button
+                    onClick={onSave}
+                    variant={"contained"}
+                    color={"secondary"}
+                    size={"small"}
+                  >
+                    Save
+                  </Button>,
+                ]
+              : [
+                  <Button
+                    onClick={(e) => setEditMode(true)}
+                    variant={"contained"}
+                    color={"secondary"}
+                    size={"small"}
+                  >
+                    Edit Profile
+                  </Button>,
+                ]}
           </Grid>
           <Divider />
           <h2 className={classes.headerInner}>My Wallet</h2>
@@ -96,7 +228,7 @@ function ProfilePage(props) {
           </Grid>
           <Grid className={classes.buttons}>
             <Button
-              className={classes.withdrawButton}
+              className={classes.secondButton}
               variant={"outlined"}
               size={"small"}
             >

@@ -44,3 +44,22 @@ export function register(username, password) {
         }
     };
 }
+
+export function updateProfile(updatedUser) {
+    function onSuccess(user) {
+        return { type: "UPDATEUSER_SUCCESS", user: user };
+    }
+
+    function onFailure(error) {
+        return { type: "UPDATEUSER_FAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.updateProfile(updatedUser);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+}

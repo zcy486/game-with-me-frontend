@@ -99,7 +99,7 @@ export default class HttpService {
             });
 
             if (this.checkIfUnauthorized(resp)) {
-                window.location = "/login";
+                onError(resp.error);
                 return;
             } else {
                 resp = await resp.json();
@@ -149,6 +149,7 @@ export default class HttpService {
         }
     }
 
+    //TODO
     static checkIfUnauthorized(res) {
         return res.status === 401;
     }

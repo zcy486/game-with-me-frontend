@@ -20,8 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PostDetailsView() {
+
+function PostDetailsView(props) {
   const classes = useStyles();
+
+  const clickOrder = () => {
+    props.history.push(window.location.pathname + "order");
+  };
 
   return (
     <ScrollContainer>
@@ -38,6 +43,7 @@ function PostDetailsView() {
             server="EU"
             platform="PC"
             avatar={MockAvatar}
+            clickOrder={clickOrder}
           />
           <Comments
             numComments={10}

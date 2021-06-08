@@ -31,14 +31,17 @@ const useStyles = makeStyles((theme) => ({
 function OrderBox(props) {
   const classes = useStyles();
 
+  //user selected quantities
   const [value, setValue] = useState(1);
+
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
   const onConfirm = (event) => {
     event.preventDefault();
-    props.onConfirm();
+    props.onConfirm(totalAmount,props.user._id,props.user._id);
+
   };
 
   const onRecharge = (event) => {

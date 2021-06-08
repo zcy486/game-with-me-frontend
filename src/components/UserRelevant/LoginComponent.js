@@ -112,7 +112,7 @@ function LoginComponent(props) {
             variant={"contained"}
             color={"secondary"}
           >
-            Not Registered yet?
+            Not Registered Yet?
           </Button>
           <div>
             <Button className={classes.loginButton} onClick={props.onCancel}>

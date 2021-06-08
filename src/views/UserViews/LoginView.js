@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 
-import LoginComponent from "../components/UserRelevant/LoginComponent";
-import { login } from "../redux/actions";
-import backgroundPic from "../images/bg_postlist.png";
+import LoginComponent from "../../components/UserRelevant/LoginComponent";
+import { login } from "../../redux/actions";
+import backgroundPic from "../../images/bg_postlist.png";
 
 const useStyles = makeStyles(() => ({
   root: {

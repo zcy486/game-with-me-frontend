@@ -22,6 +22,9 @@ const theme = createMuiTheme({
       title: "Audiowide",
       intro: "Londrina Solid",
     },
+    button: {
+      textTransform: "none",
+    },
   },
 });
 

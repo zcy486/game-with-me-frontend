@@ -40,10 +40,12 @@ function UserMenu(props) {
     props.history.push("/");
   };
 
-  /*
   const onClickProfile = () => {
+    props.onClose();
+    props.history.push("/profile");
   };
 
+  /*
   const onClickMyOrders = () => {
   };
   */
@@ -58,8 +60,10 @@ function UserMenu(props) {
     >
       {user.user
         ? [
-            <MenuItem className={classes.menuItem}>Profile of: {user.user.username}</MenuItem>,
-            <MenuItem className={classes.menuItem}>My orders</MenuItem>,
+            <MenuItem className={classes.menuItem} onClick={onClickProfile}>
+              Profile of: {user.user.username}
+            </MenuItem>,
+            <MenuItem className={classes.menuItem}>My Orders</MenuItem>,
             <MenuItem className={classes.menuItem} onClick={onClickLogout}>
               Logout
             </MenuItem>,

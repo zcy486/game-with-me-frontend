@@ -9,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import { connect, useSelector } from "react-redux";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
@@ -82,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const classes = useStyles();
 
+  const user = useSelector((state) => state.user);
+
   const [userAnchor, setUserAnchor] = React.useState(null);
 
   const onClickTitle = () => {
@@ -89,7 +92,9 @@ function Header(props) {
   };
 
   const onClickChat = () => {
-    props.history.push("/login");
+    if (!user.user) {
+      props.history.push("/login");
+    }
   };
 
   return (

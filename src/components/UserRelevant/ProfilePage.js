@@ -121,6 +121,7 @@ function ProfilePage(props) {
   };
 
   const onChangeUserGender = (event) => {
+    
     setUserGender(event.target.value);
   };
 
@@ -224,7 +225,7 @@ function ProfilePage(props) {
           <Divider />
           <h2 className={classes.headerInner}>My Wallet</h2>
           <Grid className={classes.balanceArea}>
-            Balance: <ECoin />
+            Balance: {props.user.balance}<ECoin />
           </Grid>
           <Grid className={classes.buttons}>
             <Button

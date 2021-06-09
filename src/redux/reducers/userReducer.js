@@ -17,6 +17,7 @@ const getUser = () => {
                 age: userJson.age,
                 gender: userJson.gender,
                 isPremium: userJson.isPremium,
+                balance: userJson.balance,
             },
         };
     }

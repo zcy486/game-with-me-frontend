@@ -25,7 +25,7 @@ function PostDetailsView(props) {
   const classes = useStyles();
 
   const clickOrder = () => {
-    props.history.push(window.location.pathname + "order");
+    props.history.push(window.location.pathname + "/order");
   };
 
   return (

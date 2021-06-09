@@ -52,7 +52,6 @@ function CreateOrderView(props) {
             order={order.order}
             user={user.user}
             price={5}
-            balance={20}
             onConfirm={onConfirm}
             onCancel={onCancel}
             onRecharge={onRecharge}

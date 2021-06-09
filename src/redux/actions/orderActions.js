@@ -1,6 +1,31 @@
 import OrderService from "../../services/OrderService";
 
 
+export function getOrders() {
+    // when the backend call was successfull and the Orders are retrieved
+    // in the dispatcher the Orders will be added to the global state
+    function onSuccess(orders) {
+        return { type: "GETORDERS_SUCCESS", orders: orders };
+    }
+    // when the backend call was failed
+    function onFailure(error) {
+        // error handling
+        console.log("failed to get the orders", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            // ask for the Orders in the backend
+            let orders = await OrderService.getOrders();
+            // call onSuccess in context of redux
+            dispatch(onSuccess(orders));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+
 
 export function createOrder(price, companionId, gamerId)
     {
@@ -57,3 +82,22 @@ export const getOrder = (id) => {
         }
     };
 };
+
+
+export function deleteOrder(id) {
+    function onSuccess(orders) {
+        return { type: "DELETEORDER_SUCCESS", orders: orders };
+    }
+    function onFailure(error) {
+        console.log("delete order failure", error);
+    }
+    return async (dispatch) => {
+        try {
+            await OrderService.deleteOrder(id);
+            let orders = await OrderService.getOrders();
+            dispatch(onSuccess(orders));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}

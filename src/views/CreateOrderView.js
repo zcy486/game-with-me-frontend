@@ -4,6 +4,9 @@ import ScrollContainer from "../components/ScrollContainer";
 import backgroundPic from "../images/bg_postlist.png";
 import OrderBox from "../components/CreateOrderView/OrderBox";
 import CompanionBox from "../components/CreateOrderView/CompanionBox";
+import { createOrder } from "../redux/actions";
+import { connect, useSelector } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,16 +24,24 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateOrderView(props) {
   const classes = useStyles();
-  const onConfirm = () => {
-    console.log("aa");
+  const user = useSelector((state) => state.user);
+  const order = useSelector((state) => state.order);
+  
+
+  const onConfirm = (price, companionId, gamerId) => {
+    props.dispatch(createOrder(price, companionId, gamerId));
+    //TODO: change that to my order page!
+    props.history.push("/");
   };
 
   const onRecharge = () => {
     //TODO
   };
   const onCancel = () => {
-    props.history.push("/");
+    props.history.push(window.location.pathname.replace("/order",""));
   };
+
+
   return (
     <ScrollContainer>
       <div className={classes.root}>
@@ -38,8 +49,9 @@ function CreateOrderView(props) {
           <h1>Order Details</h1>
           <OrderBox
             gameName="league of legends"
+            order={order.order}
+            user={user.user}
             price={5}
-            balance={20}
             onConfirm={onConfirm}
             onCancel={onCancel}
             onRecharge={onRecharge}
@@ -47,7 +59,7 @@ function CreateOrderView(props) {
 
           <h1>Information about Gaming Companion</h1>
           <CompanionBox
-            username="Tom"
+            username="u"
             age={20}
             price={5}
             server="EU"
@@ -59,4 +71,4 @@ function CreateOrderView(props) {
   );
 }
 
-export default CreateOrderView;
+export default connect()(CreateOrderView);

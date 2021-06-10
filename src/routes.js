@@ -5,6 +5,7 @@ import SignUpView from "./views/UserViews/SignUpView";
 import LoginView from "./views/UserViews/LoginView";
 import CreateOrderView from "./views/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
+import CreatePostView from "./views/PostViews/CreatePostView";
 
 const routes = [
   {
@@ -37,6 +38,10 @@ const routes = [
   {
     path: "/profile",
     component: ProfileView,
+  },
+  {
+    path:'/createpost',
+    component: CreatePostView,
   },
 ];
 

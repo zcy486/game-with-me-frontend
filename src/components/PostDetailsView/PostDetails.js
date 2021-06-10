@@ -64,9 +64,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 function PostDetails(props) {
   const classes = useStyles();
 
+const clickOrder = () => {
+    props.clickOrder();
+  };
   return (
     <div>
       <div className={classes.title}>
@@ -112,7 +118,7 @@ function PostDetails(props) {
             >
               Chat
             </Button>
-            <Button variant={"contained"} color={"secondary"} size={"small"}>
+            <Button variant={"contained"} color={"secondary"} size={"small"} onClick={clickOrder}>
               Order
             </Button>
           </Grid>

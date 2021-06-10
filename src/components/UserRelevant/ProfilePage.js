@@ -121,6 +121,7 @@ function ProfilePage(props) {
   };
 
   const onChangeUserGender = (event) => {
+    
     setUserGender(event.target.value);
   };
 
@@ -132,6 +133,10 @@ function ProfilePage(props) {
   const onSave = () => {
     setEditMode(false);
     props.onSave(packUser());
+  };
+  
+  const clickCreate = () =>{
+    props.clickCreate();
   };
 
   return (
@@ -224,7 +229,7 @@ function ProfilePage(props) {
           <Divider />
           <h2 className={classes.headerInner}>My Wallet</h2>
           <Grid className={classes.balanceArea}>
-            Balance: <ECoin />
+            Balance: {props.user.balance}<ECoin />
           </Grid>
           <Grid className={classes.buttons}>
             <Button
@@ -246,7 +251,7 @@ function ProfilePage(props) {
               Create your first post to become a companion!
             </Grid>
             <Grid className={classes.centerRow}>
-              <Button variant={"contained"} color={"secondary"} size={"small"}>
+              <Button variant={"contained"} color={"secondary"} size={"small"} onClick={clickCreate}>
                 Create Post
               </Button>
             </Grid>

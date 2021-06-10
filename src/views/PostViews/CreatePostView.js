@@ -1,17 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect, useSelector } from "react-redux";
 
 import ScrollContainer from "../../components/ScrollContainer";
-import ProfilePage from "../../components/UserRelevant/ProfilePage";
-import { updateProfile } from "../../redux/actions";
+import CreatePostPage from "../../components/CreatePostPage";
 import backgroundPic from "../../images/bg_postlist.png";
+import { connect, useSelector } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundImage: `url(${backgroundPic})`,
     backgroundPosition: "center",
     backgroundRepeat: "repeat",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
   pageArea: {
     paddingTop: theme.spacing(12),
@@ -21,34 +25,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProfileView(props) {
+function CreatePostView(props) {
   const classes = useStyles();
+
+  const onCancel = () => {
+    props.history.push("/profile");
+  };
 
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (!user.user) {
-      props.history.push("/login");
-    }
-  }, [user, props.history]);
 
-  const onSave = (user) => {
-    props.dispatch(updateProfile(user));
-  };
-
-  const clickCreate = () => {
-    props.history.push("/createpost");
-  }
 
   return (
     <ScrollContainer>
       <div className={classes.root}>
+      
         <div className={classes.pageArea}>
-          <ProfilePage user={user.user} onSave={onSave} clickCreate={clickCreate} />
+        <h1>Create Your Post</h1>
+          <CreatePostPage user = {user.user} onCancel={onCancel}/>
         </div>
       </div>
     </ScrollContainer>
   );
 }
 
-export default connect()(ProfileView);
+export default CreatePostView;

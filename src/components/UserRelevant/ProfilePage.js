@@ -134,6 +134,10 @@ function ProfilePage(props) {
     setEditMode(false);
     props.onSave(packUser());
   };
+  
+  const clickCreate = () =>{
+    props.clickCreate();
+  };
 
   return (
     <div className={classes.root}>
@@ -247,7 +251,7 @@ function ProfilePage(props) {
               Create your first post to become a companion!
             </Grid>
             <Grid className={classes.centerRow}>
-              <Button variant={"contained"} color={"secondary"} size={"small"}>
+              <Button variant={"contained"} color={"secondary"} size={"small"} onClick={clickCreate}>
                 Create Post
               </Button>
             </Grid>

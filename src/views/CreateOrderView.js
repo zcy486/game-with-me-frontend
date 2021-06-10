@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React ,{ useEffect }from "react";
+import React from "react";
 import ScrollContainer from "../components/ScrollContainer";
 import backgroundPic from "../images/bg_postlist.png";
 import OrderBox from "../components/CreateOrderView/OrderBox";

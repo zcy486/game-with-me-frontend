@@ -5,6 +5,7 @@ import { connect, useSelector } from "react-redux";
 import ScrollContainer from "../../components/ScrollContainer";
 import ProfilePage from "../../components/UserRelevant/ProfilePage";
 import { updateProfile } from "../../redux/actions";
+import Loading from "../../components/Loading";
 import backgroundPic from "../../images/bg_postlist.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,13 +41,17 @@ function ProfileView(props) {
     props.history.push("/createpost");
   }
 
-  return (
+  return user.user ? (
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
           <ProfilePage user={user.user} onSave={onSave} clickCreate={clickCreate} />
         </div>
       </div>
+    </ScrollContainer>
+  ) : (
+    <ScrollContainer>
+      <Loading />
     </ScrollContainer>
   );
 }

@@ -76,6 +76,7 @@ function PostListView(props) {
     props.dispatch(getGames());
   };
 
+  //TODO add Loading with posts (useSelector) together
   return (
     <div className={classes.root}>
       <div className={classes.gameSelector}>
@@ -94,10 +95,34 @@ function PostListView(props) {
             <div className={classes.placeHolder} />
             <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
-          <PostBox username="Tom" price={5} rating={2.85} languages={["Español", "English"]} avatar={MockAvatar}/>
-          <PostBox username="Takahashi99" price={2} rating={3.5} languages={["日本語", "Deutsch", "English"]} avatar={MockAvatar}/>
-          <PostBox username="blabla" price={3} rating={4.4} languages={["Italiano", "Deutsch"]} avatar={MockAvatar}/>
-          <PostBox username="heiheihei" price={4} rating={4.9} languages={["English", "中文"]} avatar={MockAvatar}/>
+          <PostBox
+            username="Tom"
+            price={5}
+            rating={2.85}
+            languages={["Español", "English"]}
+            avatar={MockAvatar}
+          />
+          <PostBox
+            username="Takahashi99"
+            price={2}
+            rating={3.5}
+            languages={["日本語", "Deutsch", "English"]}
+            avatar={MockAvatar}
+          />
+          <PostBox
+            username="blabla"
+            price={3}
+            rating={4.4}
+            languages={["Italiano", "Deutsch"]}
+            avatar={MockAvatar}
+          />
+          <PostBox
+            username="heiheihei"
+            price={4}
+            rating={4.9}
+            languages={["English", "中文"]}
+            avatar={MockAvatar}
+          />
         </div>
       </ScrollContainer>
     </div>

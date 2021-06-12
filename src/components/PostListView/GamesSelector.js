@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GamesSelector() {
+function GamesSelector(props) {
   const classes = useStyles();
 
   const [openPopular, setOpenPopular] = React.useState(true);
@@ -46,7 +46,9 @@ function GamesSelector() {
       </ListItem>
 
       <Collapse in={openPopular} timeout="auto" unmountOnExit>
-        <PopularGamesSelector />
+        <PopularGamesSelector
+          games={props.games ? props.games.popular : []}
+        />
       </Collapse>
 
       <ListItem>
@@ -57,7 +59,8 @@ function GamesSelector() {
       </ListItem>
 
       <Collapse in={openAll} timeout="auto" unmountOnExit>
-        <AllGamesSelector />
+        <AllGamesSelector
+            games={props.games ? props.games.all : []}/>
       </Collapse>
     </List>
   );

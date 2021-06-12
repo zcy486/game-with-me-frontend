@@ -32,7 +32,6 @@ export default class HttpService {
             } else {
                 resp = await resp.json();
             }
-
             if (resp.error) {
                 onError(resp.error);
             } else {

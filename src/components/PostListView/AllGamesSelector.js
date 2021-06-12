@@ -28,111 +28,37 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-function AllGamesSelector() {
+function AllGamesSelector(props) {
   const classes = useStyles();
+
+  let data = props.games.reduce((r, e) => {
+    let group = e.name[0];
+    if (!r[group]) r[group] = { group, children: [e] };
+    else r[group].children.push(e);
+    return r;
+  }, {});
+  let result = Object.values(data);
 
   return (
     <List className={classes.root} subheader={<li />}>
       <li key={`section-A`} className={classes.listSection}>
         <ul className={classes.ul}>
-          <ListSubheader>{"A"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Apex Legends" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Animal Crossing: New Horizons" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Arena of Valor" />
-          </ListItemLink>
-          <ListSubheader>{"B"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Borderlands 3" />
-          </ListItemLink>
-          <ListSubheader>{"C"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="CS:GO" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Call of Duty" />
-          </ListItemLink>
-          <ListSubheader>{"D"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Dota2" />
-          </ListItemLink>
-          <ListSubheader>{"F"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Fortnight" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Fifa" />
-          </ListItemLink>
-          <ListSubheader>{"G"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Grand Theft Auto" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Golf" />
-          </ListItemLink>
-          <ListSubheader>{"H"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Humans Fall Flat" />
-          </ListItemLink>
-          <ListSubheader>{"L"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="League of Legends" />
-          </ListItemLink>
-          <ListSubheader>{"M"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Minecraft" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Monster Hunter" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Monopoly" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Mario Kart" />
-          </ListItemLink>
-          <ListSubheader>{"O"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Overwatch" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Overcooked" />
-          </ListItemLink>
-          <ListSubheader>{"P"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Portal" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="PUBG" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Pokemon" />
-          </ListItemLink>
-          <ListSubheader>{"R"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Rainbow Six" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Risk of Rain" />
-          </ListItemLink>
-          <ListSubheader>{"S"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Stardew Valley" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Super Smash Bros" />
-          </ListItemLink>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="Splatoon" />
-          </ListItemLink>
-          <ListSubheader>{"U"}</ListSubheader>
-          <ListItemLink href="#simple-list">
-            <ListItemText primary="UNO" />
-          </ListItemLink>
+          {result.map((section) => (
+            <div>
+              <ListSubheader>{section.group}</ListSubheader>
+              {Array.isArray(section.children) ? (
+                section.children.map((game) => (
+                  <ListItemLink href={game._id}>
+                    <ListItemText primary={game.name} />
+                  </ListItemLink>
+                ))
+              ) : (
+                <ListItemLink>
+                  <ListItemText primary={"test"} />
+                </ListItemLink>
+              )}
+            </div>
+          ))}
         </ul>
       </li>
     </List>

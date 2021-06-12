@@ -31,7 +31,13 @@ function ListItemLink(props) {
 function AllGamesSelector(props) {
   const classes = useStyles();
 
-  let data = props.games.reduce((r, e) => {
+  let sortedGames = props.games.sort(function (a, b) {
+    if (a.name < b.name) { return -1; }
+    if (a.name > b.name) { return 1; }
+    return 0;
+  })
+
+  let data = sortedGames.reduce((r, e) => {
     let group = e.name[0];
     if (!r[group]) r[group] = { group, children: [e] };
     else r[group].children.push(e);

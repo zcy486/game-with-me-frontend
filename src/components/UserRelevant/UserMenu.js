@@ -81,7 +81,7 @@ function UserMenu(props) {
 }
 
 //Type checking
-UserMenu.protoTypes = {
+UserMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
   anchor: PropTypes.element,
   open: PropTypes.bool.isRequired,

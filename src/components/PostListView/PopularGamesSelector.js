@@ -35,8 +35,8 @@ function PopularGamesSelector(props) {
   );
 }
 
-PopularGamesSelector.protoTypes = {
+PopularGamesSelector.propTypes = {
   games: PropTypes.array.isRequired,
-}
+};
 
 export default PopularGamesSelector;

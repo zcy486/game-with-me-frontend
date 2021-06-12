@@ -6,12 +6,14 @@ export function getGames() {
     }
 
     function onFailure(error) {
-        console.log("failed to get games".error);
+        console.log("failed to get games:", error);
     }
 
     return async (dispatch) => {
         try {
             let games = await GameService.readGames();
+
+            console.log(games);
             dispatch(onSuccess(games));
         } catch (e) {
             onFailure(e)

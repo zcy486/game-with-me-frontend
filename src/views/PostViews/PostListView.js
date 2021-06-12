@@ -1,3 +1,6 @@
+import React, { useEffect } from "react";
+import { connect, useSelector } from "react-redux";
+import { getGames } from "../../redux/actions";
 import { makeStyles } from "@material-ui/core/styles";
 import GamesSelector from "../../components/PostListView/GamesSelector";
 import FilterBox from "../../components/PostListView/FilterBox";
@@ -36,8 +39,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PostListView() {
+function PostListView(props) {
   const classes = useStyles();
+
+  const games = useSelector((state) => state.games.games);
 
   const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
@@ -61,10 +66,20 @@ function PostListView() {
   const Platforms = ["None", "PC", "Nintendo"];
   const sortBy = ["order", "ratings"];
 
+  useEffect(() => {
+    if(!games) {
+      loadGames();
+    }
+  }, [games]);
+
+  const loadGames = async () => {
+    props.dispatch(getGames());
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.gameSelector}>
-        <GamesSelector />
+        <GamesSelector games={games}/>
       </div>
       <ScrollContainer>
         <div className={classes.content}>
@@ -89,4 +104,4 @@ function PostListView() {
   );
 }
 
-export default PostListView;
+export default connect()(PostListView);

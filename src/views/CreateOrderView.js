@@ -41,7 +41,7 @@ function CreateOrderView(props) {
     props.history.push(window.location.pathname.replace("/order",""));
   };
 
-
+  //TODO add Loading with user/order (useSelector) together
   return (
     <ScrollContainer>
       <div className={classes.root}>

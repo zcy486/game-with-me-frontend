@@ -28,6 +28,7 @@ function PostDetailsView(props) {
     props.history.push(window.location.pathname + "/order");
   };
 
+  //TODO add Loading with post (useSelector) together
   return (
     <ScrollContainer>
       <div className={classes.root}>

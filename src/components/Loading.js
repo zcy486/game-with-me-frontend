@@ -17,11 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-/**
- * Loading screen
- * @param {props} props
- */
-function Loading(props) {
+function Loading() {
     const classes = useStyles();
 
     return (

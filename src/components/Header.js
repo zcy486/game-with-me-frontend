@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -10,10 +10,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
+import { getGames } from "../redux/actions";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import MessageIcon from "@material-ui/icons/Message";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { matchSorter } from "match-sorter";
 
 import UserMenu from "./UserRelevant/UserMenu";
 
@@ -66,14 +69,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "30ch",
-      },
-    },
+    width: "30ch",
   },
   iconButton: {
     color: "white",
@@ -83,9 +79,27 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const classes = useStyles();
 
+  const games = useSelector((state) => state.games.games);
+
   const user = useSelector((state) => state.user);
 
   const [userAnchor, setUserAnchor] = React.useState(null);
+
+  const [searchInput, setSearchInput] = React.useState("");
+  const [popUpClosed, setPopUpClosed] = React.useState(false);
+
+  const filterOptions = (options, { inputValue }) =>
+    matchSorter(options, inputValue);
+
+  useEffect(() => {
+    if (!games) {
+      loadGames();
+    }
+  }, [games]);
+
+  const loadGames = async () => {
+    props.dispatch(getGames());
+  };
 
   const onClickTitle = () => {
     props.history.push("/");
@@ -110,16 +124,32 @@ function Header(props) {
           GameWithMe
         </Typography>
         <div className={classes.placeHolder} />
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            classes={{ root: classes.inputRoot, input: classes.inputInput }}
-            placeholder={"Search..."}
-            inputProps={{ "aria-label": "search" }}
-          />
-        </div>
+        <Autocomplete
+          freeSolo
+          value={null}
+          onChange={(e) => {}}
+          inputValue={searchInput}
+          onInputChange={(e, v) => {
+            setSearchInput(v);
+          }}
+          onOpen={(e) => setPopUpClosed(false)}
+          onClose={(e) => setPopUpClosed(true)}
+          open={searchInput.length > 0 && !popUpClosed}
+          options={games && games.all.map((game) => game.name)}
+          filterOptions={filterOptions}
+          renderInput={(params) => (
+            <div className={classes.search} ref={params.InputProps.ref}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
+                placeholder={"Search posts by game or username"}
+                {...params.inputProps}
+              />
+            </div>
+          )}
+        />
         <IconButton className={classes.iconButton} onClick={onClickChat}>
           <MessageIcon />
         </IconButton>
@@ -135,4 +165,15 @@ function Header(props) {
   );
 }
 
-export default withRouter(Header);
+export default connect()(withRouter(Header));
+
+/*
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            classes={{ root: classes.inputRoot, input: classes.inputInput }}
+            placeholder={"Search..."}
+            inputProps={{ "aria-label": "search" }}
+          />
+ */

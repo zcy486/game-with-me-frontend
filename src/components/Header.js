@@ -166,14 +166,3 @@ function Header(props) {
 }
 
 export default connect()(withRouter(Header));
-
-/*
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            classes={{ root: classes.inputRoot, input: classes.inputInput }}
-            placeholder={"Search..."}
-            inputProps={{ "aria-label": "search" }}
-          />
- */

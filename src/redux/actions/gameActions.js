@@ -6,7 +6,7 @@ export function getGames() {
     }
 
     function onFailure(error) {
-        console.log("failed to get games".error);
+        console.log("failed to get games:", error);
     }
 
     return async (dispatch) => {
@@ -17,4 +17,22 @@ export function getGames() {
             onFailure(e)
         }
     };
+}
+
+export function getIdByName(gameName) {
+    function onSuccess(gameId) {
+        return { type: "GETIDBYNAME_SUCCESS", gameId: gameId};
+    }
+    function onFailure(error) {
+        console.log("failed to get game Id by name:", error);
+    }
+    return async (dispatch) => {
+        try {
+            console.log(gameName);
+            let resp = await GameService.getIdByName(gameName);
+            dispatch(onSuccess(resp.gameId));
+        } catch (e) {
+            onFailure(e)
+        }
+    }
 }

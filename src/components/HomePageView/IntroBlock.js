@@ -64,8 +64,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function IntroBlock() {
+function IntroBlock(props) {
   const classes = useStyles();
+
+  const onClick = (e) => {
+    e.preventDefault();
+    props.onClick();
+  }
 
   return (
     <div className={classes.root}>
@@ -85,6 +90,7 @@ function IntroBlock() {
           variant={"contained"}
           color={"secondary"}
           size={"large"}
+          onClick={onClick}
         >
           Get Started
         </Button>

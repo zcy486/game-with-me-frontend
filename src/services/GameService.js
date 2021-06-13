@@ -18,4 +18,19 @@ export default class GameService {
             );
         });
     }
+
+    static getIdByName(gameName) {
+        return new Promise( async (resolve, reject) => {
+            HttpService.post(
+                `${this.baseURL()}/getByName`,
+                {gameName: gameName},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

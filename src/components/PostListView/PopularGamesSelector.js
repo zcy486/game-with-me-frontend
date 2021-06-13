@@ -15,20 +15,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 function PopularGamesSelector(props) {
   const classes = useStyles();
+
+  const handleListItemClick = (event, id) => {
+    props.onSelectGame(id);
+  };
 
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         {props.games.map((game) => (
-          <ListItemLink href={game._id}>
+          <ListItem
+            button
+            selected={props.selectedId === game._id}
+            onClick={(event) => handleListItemClick(event, game._id)}
+          >
             <ListItemText primary={game.name} />
-          </ListItemLink>
+          </ListItem>
         ))}
       </List>
     </div>

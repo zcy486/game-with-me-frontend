@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";
+import { getPostsByGame } from "../../redux/actions";
+
 import { makeStyles } from "@material-ui/core/styles";
 import GamesSelector from "../../components/PostListView/GamesSelector";
 import FilterBox from "../../components/PostListView/FilterBox";
@@ -42,8 +44,6 @@ const useStyles = makeStyles((theme) => ({
 function PostListView(props) {
   const classes = useStyles();
 
-  const games = useSelector((state) => state.games.games);
-
   const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
     "None",
@@ -62,71 +62,88 @@ function PostListView(props) {
   ];
   const allTypes = ["None", "Carry", "Chill", "All types"];
   const allPrices = ["None", "0-5", "6-10", "11-20", "20+"];
-  const Servers = ["None", "EU", "CN", "JP"];
-  const Platforms = ["None", "PC", "Nintendo"];
   const sortBy = ["order", "ratings"];
 
+  let { match } = props;
+
+  const games = useSelector((state) => state.games.games);
+
+  const postsByGame = useSelector((state) => state.posts.response);
+
   useEffect(() => {
-    if(!games) {
+    if (!games) {
       loadGames();
     }
   }, [games]);
 
+  useEffect(() => {
+    let gameId = match.params.gameId;
+    props.getPostsByGame(gameId);
+  }, [match.params]);
+
   const loadGames = async () => {
-    props.dispatch(getGames());
+    props.getGames();
+  };
+
+  const onSelectGame = (gameId) => {
+    props.history.push("/games/" + gameId);
   };
 
   //TODO add Loading with posts (useSelector) together
   return (
     <div className={classes.root}>
       <div className={classes.gameSelector}>
-        <GamesSelector games={games}/>
+        <GamesSelector
+          games={games}
+          onSelectGame={onSelectGame}
+          selectedId={match.params.gameId}
+        />
       </div>
       <ScrollContainer>
         <div className={classes.content}>
-          <h1 className={classes.gameTitle}>League of Legends</h1>
+          <h1 className={classes.gameTitle}>
+            {postsByGame && postsByGame.name}
+          </h1>
           <div className={classes.filtersRow}>
             <FilterBox choices={allStatus} helperText="Status" />
             <FilterBox choices={allLanguages} helperText="Language" />
             <FilterBox choices={allTypes} helperText="Type" />
             <FilterBox choices={allPrices} helperText="Price" />
-            <FilterBox choices={Servers} helperText="Server" />
-            <FilterBox choices={Platforms} helperText="Platform" />
+            <FilterBox
+              choices={
+                postsByGame && Array.isArray(postsByGame.servers)
+                  ? postsByGame.servers
+                  : []
+              }
+              helperText="Server"
+            />
+            <FilterBox
+              choices={
+                postsByGame && Array.isArray(postsByGame.platforms)
+                  ? postsByGame.platforms
+                  : []
+              }
+              helperText="Platform"
+            />
             <div className={classes.placeHolder} />
             <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
-          <PostBox
-            username="Tom"
-            price={5}
-            rating={2.85}
-            languages={["Español", "English"]}
-            avatar={MockAvatar}
-          />
-          <PostBox
-            username="Takahashi99"
-            price={2}
-            rating={3.5}
-            languages={["日本語", "Deutsch", "English"]}
-            avatar={MockAvatar}
-          />
-          <PostBox
-            username="blabla"
-            price={3}
-            rating={4.4}
-            languages={["Italiano", "Deutsch"]}
-            avatar={MockAvatar}
-          />
-          <PostBox
-            username="heiheihei"
-            price={4}
-            rating={4.9}
-            languages={["English", "中文"]}
-            avatar={MockAvatar}
-          />
+          {postsByGame &&
+            postsByGame.posts.map((post) => {
+              return (
+                <PostBox
+                  username="Tom"
+                  price={post.price}
+                  rating={2.85}
+                  languages={post.language}
+                  avatar={MockAvatar}
+                />
+              );
+            })}
         </div>
       </ScrollContainer>
     </div>
   );
 }
 
-export default connect()(PostListView);
+export default connect(null, { getGames, getPostsByGame })(PostListView);

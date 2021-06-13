@@ -32,6 +32,10 @@ function GamesSelector(props) {
   const [openPopular, setOpenPopular] = React.useState(true);
   const [openAll, setOpenAll] = React.useState(true);
 
+  const onSelectGame = (gameId) => {
+    props.onSelectGame(gameId)
+  }
+
   return (
     <List
       component="nav"
@@ -48,6 +52,8 @@ function GamesSelector(props) {
       <Collapse in={openPopular} timeout="auto" unmountOnExit>
         <PopularGamesSelector
           games={props.games ? props.games.popular : []}
+          onSelectGame={onSelectGame}
+          selectedId = {props.selectedId}
         />
       </Collapse>
 
@@ -60,7 +66,10 @@ function GamesSelector(props) {
 
       <Collapse in={openAll} timeout="auto" unmountOnExit>
         <AllGamesSelector
-            games={props.games ? props.games.all : []}/>
+            games={props.games ? props.games.all : []}
+            onSelectGame={onSelectGame}
+            selectedId = {props.selectedId}
+        />
       </Collapse>
     </List>
   );

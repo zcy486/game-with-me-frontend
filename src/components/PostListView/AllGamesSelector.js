@@ -24,18 +24,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 function AllGamesSelector(props) {
   const classes = useStyles();
 
   let sortedGames = props.games.sort(function (a, b) {
-    if (a.name < b.name) { return -1; }
-    if (a.name > b.name) { return 1; }
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
     return 0;
-  })
+  });
 
   let data = sortedGames.reduce((r, e) => {
     let group = e.name[0];
@@ -45,6 +45,10 @@ function AllGamesSelector(props) {
   }, {});
   let result = Object.values(data);
 
+  const handleListItemClick = (event, id) => {
+    props.onSelectGame(id)
+  };
+
   return (
     <List className={classes.root} subheader={<li />}>
       <li key={`section-A`} className={classes.listSection}>
@@ -52,16 +56,16 @@ function AllGamesSelector(props) {
           {result.map((section) => (
             <div>
               <ListSubheader>{section.group}</ListSubheader>
-              {Array.isArray(section.children) ? (
+              {Array.isArray(section.children) && (
                 section.children.map((game) => (
-                  <ListItemLink href={game._id}>
+                  <ListItem
+                    button
+                    selected={props.selectedId === game._id}
+                    onClick={(event) => handleListItemClick(event, game._id)}
+                  >
                     <ListItemText primary={game.name} />
-                  </ListItemLink>
+                  </ListItem>
                 ))
-              ) : (
-                <ListItemLink>
-                  <ListItemText primary={"test"} />
-                </ListItemLink>
               )}
             </div>
           ))}

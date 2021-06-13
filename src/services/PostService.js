@@ -19,4 +19,21 @@ export default class PostService {
             );
         });
     }
+
+    static getPostByGame(gameId) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${PostService.baseURL()}/ofgame`,
+                {gameId: gameId},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        })
+    }
+
+
 }

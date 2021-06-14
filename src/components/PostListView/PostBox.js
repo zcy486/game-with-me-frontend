@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Helvetica",
     padding: theme.spacing(2),
     marginBottom: theme.spacing(1),
+    minWidth: 800,
   },
   paperContent: {
     display: "flex",
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: 128,
     height: 128,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   img: {
     margin: "auto",
@@ -54,48 +55,54 @@ const useStyles = makeStyles((theme) => ({
 function PostBox(props) {
   const classes = useStyles();
 
+  const onClick = (event) => {
+    event.preventDefault();
+    props.onClick(props.post._id);
+  }
+
   return (
-    <Paper className={classes.paper}>
-      <Grid className={classes.paperContent}>
-        <Grid item>
-          <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="avatar" src={props.avatar} />
-          </ButtonBase>
-        </Grid>
-        <Grid className={classes.paperColumn}>
-          <Typography>{props.username}</Typography>
-          <Grid className={classes.priceInfo}>
-            {props.price}
-            <span>&nbsp;</span>
-            <ECoin></ECoin>
-            <span>&nbsp;</span>/ Game
-          </Grid>
-        </Grid>
-        <Grid className={classes.placeHolder} />
-        <Grid className={classes.paperColumn}>
-          <Grid className={classes.ratingStars}>
-            <Rating
-              defaultValue={props.rating}
-              precision={0.5}
-              readOnly
-            />
-          </Grid>
+    <ButtonBase
+        onClick={onClick}
+    >
+      <Paper className={classes.paper}>
+        <Grid className={classes.paperContent}>
           <Grid item>
-            <div className={classes.languageRow}>
-              Language:
-              {props.languages.map(function (language, i) {
-                return (
-                  <div className={classes.languageColumn}>
-                    {i > 0 ? "," : ""}
-                    <span>&nbsp;</span>{language}
-                  </div>
-                );
-              })}
-            </div>
+            <ButtonBase className={classes.image}>
+              <img className={classes.img} alt="avatar" src={props.avatar} />
+            </ButtonBase>
+          </Grid>
+          <Grid className={classes.paperColumn}>
+            <Typography>{props.username}</Typography>
+            <Grid className={classes.priceInfo}>
+              {props.price}
+              <span>&nbsp;</span>
+              <ECoin></ECoin>
+              <span>&nbsp;</span>/ Game
+            </Grid>
+          </Grid>
+          <Grid className={classes.placeHolder} />
+          <Grid className={classes.paperColumn}>
+            <Grid className={classes.ratingStars}>
+              <Rating defaultValue={props.rating} precision={0.5} readOnly />
+            </Grid>
+            <Grid item>
+              <div className={classes.languageRow}>
+                Language:
+                {props.languages.map(function (language, i) {
+                  return (
+                    <div className={classes.languageColumn}>
+                      {i > 0 ? "," : ""}
+                      <span>&nbsp;</span>
+                      {language}
+                    </div>
+                  );
+                })}
+              </div>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </ButtonBase>
   );
 }
 

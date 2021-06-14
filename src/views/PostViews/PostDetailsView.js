@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect, useSelector } from "react-redux";
 import PostDetails from "../../components/PostDetailsView/PostDetails";
 import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
+import {getPost} from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +22,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function PostDetailsView(props) {
   const classes = useStyles();
+
+  let { match } = props;
+
+  const post = useSelector((state) => state.posts.post)
+
+  useEffect(() => {
+    props.dispatch(getPost(match.params.postId));
+  }, [match.params]);
 
   const clickOrder = () => {
     props.history.push(window.location.pathname + "/order");
@@ -34,15 +43,16 @@ function PostDetailsView(props) {
       <div className={classes.root}>
         <div className={classes.pageArea}>
           <PostDetails
-            price={5}
+            price={post && post.price}
             gameName={"League of Legends"}
             username={"Tom"}
+            introduction={post && post.introduction}
             age={20}
             ratings={3.5}
             served={40}
-            companionType={"Carry"}
-            server="EU"
-            platform="PC"
+            companionType={post && post.postType}
+            server={post && post.servers}
+            platform={post && post.platforms}
             avatar={MockAvatar}
             clickOrder={clickOrder}
           />
@@ -61,4 +71,4 @@ function PostDetailsView(props) {
   );
 }
 
-export default PostDetailsView;
+export default connect()(PostDetailsView);

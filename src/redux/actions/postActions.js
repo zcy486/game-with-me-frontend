@@ -18,6 +18,24 @@ export function createPost(post) {
     };
 }
 
+export function getPost(postId) {
+    function onSuccess(post) {
+        return { type: "GETPOST_SUCCESS", post: post };
+    }
+    function onFailure(error) {
+        console.log("get post failure", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            let post = await PostService.getPost(postId);
+            dispatch(onSuccess(post));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export function getPostsByGame(gameId) {
     function onSuccess(response) {
         return { type: "GETPOSTSBYGAME_SUCCESS", response: response};

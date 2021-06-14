@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -10,12 +10,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
+import { search } from "../redux/actions";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import MessageIcon from "@material-ui/icons/Message";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserMenu from "./UserRelevant/UserMenu";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -66,14 +69,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "30ch",
-      },
-    },
+    width: "30ch",
   },
   iconButton: {
     color: "white",
@@ -81,14 +77,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props) {
-  const classes = useStyles();
+  const classes = useStyles()
+
+  //the matched result from backend
+  const searchOptions = useSelector((state) => state.options.options);
 
   const user = useSelector((state) => state.user);
 
   const [userAnchor, setUserAnchor] = React.useState(null);
 
+  const [searchValue, setSearchValue] = React.useState(null);
+  const [searchInput, setSearchInput] = React.useState("");
+  const [popUpClosed, setPopUpClosed] = React.useState(false);
+
   const onClickTitle = () => {
     props.history.push("/");
+  };
+
+  const onSearchInputChange = (event, value) => {
+    setSearchInput(value);
+    if(value.length > 0) {
+      props.dispatch(search(value));
+    }
+  };
+
+  const onSelectResult = (event, value, reason) => {
+    if(reason === "select-option") {
+      setSearchInput("");
+      setSearchValue(null);
+      if(value.group === "Games") {
+        const gameId = value.id;
+        props.history.push("/games/"+gameId);
+      }
+      //TODO add route for users!
+    }
   };
 
   const onClickChat = () => {
@@ -110,16 +132,32 @@ function Header(props) {
           GameWithMe
         </Typography>
         <div className={classes.placeHolder} />
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            classes={{ root: classes.inputRoot, input: classes.inputInput }}
-            placeholder={"Search..."}
-            inputProps={{ "aria-label": "search" }}
-          />
-        </div>
+        <Autocomplete
+          freeSolo
+          value={searchValue}
+          onChange={onSelectResult}
+          inputValue={searchInput}
+          onInputChange={onSearchInputChange}
+          onOpen={(e) => setPopUpClosed(false)}
+          onClose={(e) => setPopUpClosed(true)}
+          open={searchInput.length > 0 && !popUpClosed}
+          options={searchOptions? searchOptions : []}
+          groupBy={(option) => option.group}
+          getOptionLabel={(option) => option.name}
+          filterOptions={(options) => options}
+          renderInput={(params) => (
+            <div className={classes.search} ref={params.InputProps.ref}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
+                placeholder={"Search posts by game or username"}
+                {...params.inputProps}
+              />
+            </div>
+          )}
+        />
         <IconButton className={classes.iconButton} onClick={onClickChat}>
           <MessageIcon />
         </IconButton>
@@ -135,4 +173,4 @@ function Header(props) {
   );
 }
 
-export default withRouter(Header);
+export default connect()(withRouter(Header));

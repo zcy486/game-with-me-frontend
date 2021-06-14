@@ -28,7 +28,6 @@ export function getIdByName(gameName) {
     }
     return async (dispatch) => {
         try {
-            console.log(gameName);
             let resp = await GameService.getIdByName(gameName);
             dispatch(onSuccess(resp.gameId));
         } catch (e) {

@@ -28,7 +28,6 @@ export function getPostsByGame(gameId) {
     return async (dispatch) => {
         try {
             let response = await PostService.getPostByGame(gameId);
-            console.log(response);
             dispatch(onSuccess(response));
         } catch (e) {
             onFailure(e);

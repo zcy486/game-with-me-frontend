@@ -10,15 +10,15 @@ import {
   Typography,
 } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
-import { getGames } from "../redux/actions";
+import { search } from "../redux/actions";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
 import MessageIcon from "@material-ui/icons/Message";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { matchSorter } from "match-sorter";
 
 import UserMenu from "./UserRelevant/UserMenu";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -77,32 +77,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props) {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const games = useSelector((state) => state.games.games);
+  //the matched result from backend
+  const searchOptions = useSelector((state) => state.options.options);
 
   const user = useSelector((state) => state.user);
 
   const [userAnchor, setUserAnchor] = React.useState(null);
 
+  const [searchValue, setSearchValue] = React.useState(null);
   const [searchInput, setSearchInput] = React.useState("");
   const [popUpClosed, setPopUpClosed] = React.useState(false);
 
-  const filterOptions = (options, { inputValue }) =>
-    matchSorter(options, inputValue);
-
-  useEffect(() => {
-    if (!games) {
-      loadGames();
-    }
-  }, [games]);
-
-  const loadGames = async () => {
-    props.dispatch(getGames());
-  };
-
   const onClickTitle = () => {
     props.history.push("/");
+  };
+
+  const onSearchInputChange = (event, value) => {
+    setSearchInput(value);
+    if(value.length > 0) {
+      props.dispatch(search(value));
+    }
+  };
+
+  const onSelectResult = (event, value, reason) => {
+    if(reason === "select-option") {
+      setSearchInput("");
+      setSearchValue(null);
+      if(value.group === "Games") {
+        const gameId = value.id;
+        props.history.push("/games/"+gameId);
+      }
+      //TODO add route for users!
+    }
   };
 
   const onClickChat = () => {
@@ -126,17 +134,17 @@ function Header(props) {
         <div className={classes.placeHolder} />
         <Autocomplete
           freeSolo
-          value={null}
-          onChange={(e) => {}}
+          value={searchValue}
+          onChange={onSelectResult}
           inputValue={searchInput}
-          onInputChange={(e, v) => {
-            setSearchInput(v);
-          }}
+          onInputChange={onSearchInputChange}
           onOpen={(e) => setPopUpClosed(false)}
           onClose={(e) => setPopUpClosed(true)}
           open={searchInput.length > 0 && !popUpClosed}
-          options={games && games.all.map((game) => game.name)}
-          filterOptions={filterOptions}
+          options={searchOptions? searchOptions : []}
+          groupBy={(option) => option.group}
+          getOptionLabel={(option) => option.name}
+          filterOptions={(options) => options}
           renderInput={(params) => (
             <div className={classes.search} ref={params.InputProps.ref}>
               <div className={classes.searchIcon}>

@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import {connect, useSelector} from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import ScrollContainer from "../components/ScrollContainer";
 import IntroBlock from "../components/HomePageView/IntroBlock";
 import ThreeSteps from "../components/HomePageView/ThreeSteps";
-import {getIdByName} from "../redux/actions";
+import { getIdByName } from "../redux/actions";
 
 import backgroundPic from "../images/bg_homepage.png";
 
@@ -23,7 +23,7 @@ function HomePageView(props) {
   const firstGameId = useSelector((state) => state.games.gameId);
 
   useEffect(() => {
-    if(!firstGameId) {
+    if (!firstGameId) {
       loadFirstId();
     }
   }, [firstGameId]);
@@ -33,13 +33,15 @@ function HomePageView(props) {
   };
 
   const onClick = () => {
-    props.history.push("/games/" + firstGameId);
+    if (firstGameId) {
+      props.history.push("/games/" + firstGameId);
+    }
   };
 
   return (
     <ScrollContainer>
       <div className={classes.root}>
-        <IntroBlock onClick={onClick}/>
+        <IntroBlock onClick={onClick} />
         <ThreeSteps />
       </div>
     </ScrollContainer>

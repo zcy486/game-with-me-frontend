@@ -6,7 +6,7 @@ import ControllStar from "../components/ReviewView/ControllStar";
 import Labels from "../components/ReviewView/Labels";
 import CheckboxLabels from "../components/ReviewView/CheckboxForLabel";
 import ReviewTextField from "../components/ReviewView/ReviewTextField";
-import SubmitButton from "../components/ReviewView/SubmitButton";
+import Submitmsg from "../components/ReviewView/Submitmsg";
 import CancelButton from "../components/ReviewView/CancelButton";
 import backgroundPic from "../images/bg_postlist.png";
 import { ArrowRight } from "@material-ui/icons";
@@ -38,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   buttomS: {
-    
-    spacing: 10,
+    display: "flex",
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(2),
   }
 
 }));
@@ -61,14 +62,21 @@ function CreateReviewView() {
             <CheckboxLabels/>
           <h3 className={classes.subTitle}>Write a review(Optional)</h3>
             <ReviewTextField/>
+         
           <div className={classes.buttomS}>
-             <SubmitButton/> &nbsp; &nbsp; &nbsp; &nbsp;
-             <CancelButton/>
-          </div>
+           <Submitmsg/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+           <CancelButton/>
+          </div> 
+           
+          
            
           
       
         </div>
+        
+
+
+      
         
       
   

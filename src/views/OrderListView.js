@@ -4,14 +4,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
-import OrderGrid from "../MyOrdersView/OrderGrid";
+import OrderGrid from "../components/MyOrdersView/OrderGrid";
+import backgroundPic from "../images/bg_postlist.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    height: 400,
-    maxWidth: 300,
+    display: "flex",
+    flexDirection: "row",
+    //width: 2000,
+    //height: 1000,
+    //maxWidth: 3000,
     background: `url(${backgroundPic})`,
+    backgroundSize: "cover",
     backgroundRepeat: "repeat",
   },
 }));
@@ -36,7 +40,7 @@ export default function VirtualizedList() {
 
   return (
     <div className={classes.root}>
-      <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
+      <FixedSizeList height={800} width={570} itemSize={200} itemCount={200}>
         {renderRow}
       </FixedSizeList>
     </div>

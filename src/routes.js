@@ -5,7 +5,8 @@ import SignUpView from "./views/SignUpView";
 import LoginView from "./views/LoginView";
 import CreateReviewView from "./views/CreateReviewView";
 import MyOrderDetailView from "./views/MyOrderDetailView";
-
+//import MyOrdersView from "./views/MyOrdersView";
+import OrderListView from "./views/OrderListView";
 const routes = [
     {
         path: "/",
@@ -36,6 +37,10 @@ const routes = [
     {
         path: "/orderDetails",
         component:MyOrderDetailView,
+    },
+    {
+        path: "/myorders",
+        component:OrderListView,
     },
 ];
 

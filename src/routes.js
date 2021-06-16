@@ -8,6 +8,9 @@ import CreateOrderView from "./views/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
+import CreateReviewView from "./views/CreateReviewView";
+import MyOrderDetailView from "./views/MyOrderDetailView";
+import OrderListView from "./views/OrderListView";
 
 const routes = [
   {
@@ -54,6 +57,18 @@ const routes = [
     path: "/chat",
     component: ChatView,
   },
+  {
+    path: "/review",
+    component:CreateReviewView,
+},
+{
+    path: "/orderDetails",
+    component:MyOrderDetailView,
+},
+{
+    path: "/myorders",
+    component:OrderListView,
+},
 ];
 
 export default routes;

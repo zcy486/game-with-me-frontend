@@ -112,7 +112,6 @@ function CreatePostPage(props) {
   const [availableTime, setAvailableTime] = React.useState([]);
 
   const languages = [
-    "None",
     "Deutsch",
     "English",
     "Español",

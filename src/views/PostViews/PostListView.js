@@ -46,7 +46,6 @@ function PostListView(props) {
 
   const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
-    "None",
     "Deutsch",
     "English",
     "Español",
@@ -79,7 +78,7 @@ function PostListView(props) {
   useEffect(() => {
     let gameId = match.params.gameId;
     props.getPostsByGame(gameId);
-  }, [match.params]);
+  }, [match.params.gameId]);
 
   const loadGames = async () => {
     props.getGames();

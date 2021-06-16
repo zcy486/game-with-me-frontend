@@ -61,7 +61,7 @@ function OrderBox(props) {
 
   var totalAmount = value * props.price;
   var insufficient = totalAmount > props.user.balance;
-  var wrongAmount = totalAmount < 0;
+  var wrongAmount = totalAmount <= 0;
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={2}>
@@ -85,6 +85,7 @@ function OrderBox(props) {
             error={value < 1}
             variant="outlined"
             defaultValue={1}
+            required={true}
             onChange={handleChange}
             InputProps={{ inputProps: { min: 1 } }}
           />

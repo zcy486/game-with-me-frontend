@@ -106,6 +106,7 @@ function CreatePostPage(props) {
   const [gamePlatforms, setGamePlatforms] = React.useState([]);
 
   const [price, setPrice] = React.useState(1);
+  const [serviceType, setserviceType] = React.useState("");
   const [introduction, setIntroduction] = React.useState("");
   const [language, setLanguage] = React.useState([]);
   const [availableTime, setAvailableTime] = React.useState([]);
@@ -135,6 +136,8 @@ function CreatePostPage(props) {
     "Saturday",
     "Sunday",
   ];
+
+  const serviceTypes = ["Carry", "Chill", "All Types"];
 
   function getStyles(gamename, gameName) {
     return {
@@ -173,15 +176,19 @@ function CreatePostPage(props) {
     setIntroduction(event.target.value);
   };
 
+  const handleServiceTypeChange = (event) => {
+    setserviceType(event.target.value);
+  };
+
   const packPost = () => {
     const post = {
       price: price,
-      postType: "All Types", //TODO
+      postType: serviceType,
       introduction: introduction,
       language: language,
       servers: gameServers,
       platforms: gamePlatforms,
-      screenshots: [],
+      screenshots: [], //TODO: add screenshots
       availableTime: availableTime,
       gameId: currentGame._id,
       companionId: props.user._id,
@@ -392,6 +399,31 @@ function CreatePostPage(props) {
                     </FormControl>
                     <FormControl className={classes.formControl}>
                       <ECoin />
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item className={classes.box}>
+                    <FormControl className={classes.formControl}>
+                      Service Type:
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      <InputLabel id="servicetype-label">Type</InputLabel>
+                      <Select
+                        labelId="servicetype-label"
+                        id="servicetype"
+                        value={serviceType}
+                        onChange={handleServiceTypeChange}
+                        label="ServiceType"
+                      >
+                        {serviceTypes.map((type) => (
+                          <MenuItem key={type} value={type}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </FormControl>
                   </Grid>
 

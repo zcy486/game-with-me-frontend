@@ -64,13 +64,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 function PostDetails(props) {
   const classes = useStyles();
 
-const clickOrder = () => {
+  const clickOrder = () => {
     props.clickOrder();
   };
   return (
@@ -103,8 +100,7 @@ const clickOrder = () => {
                 {" "}
                 Introduction:
                 <Typography variant="subtitle1" gutterBottom>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                  blanditiis tenetur
+                  {props.introduction}
                 </Typography>
               </Grid>
             </Grid>
@@ -118,7 +114,12 @@ const clickOrder = () => {
             >
               Chat
             </Button>
-            <Button variant={"contained"} color={"secondary"} size={"small"} onClick={clickOrder}>
+            <Button
+              variant={"contained"}
+              color={"secondary"}
+              size={"small"}
+              onClick={clickOrder}
+            >
               Order
             </Button>
           </Grid>
@@ -166,8 +167,18 @@ const clickOrder = () => {
             Price: {props.price} <span>&nbsp;</span>
             <ECoin /> <span>&nbsp;</span>/ Game{" "}
           </Grid>
-          <Grid item>Server: {props.server}</Grid>
-          <Grid item>Platform: {props.platform}</Grid>
+          <Grid item>
+            Server:
+            {Array.isArray(props.server) && props.server.map((s) => {
+              <p>{s}, </p>
+            })}
+          </Grid>
+          <Grid item>
+            Platform:
+            {Array.isArray(props.platform) && props.platform.map((p) => {
+              <p>{p}, </p>
+            })}
+          </Grid>
         </Grid>
       </Paper>
     </div>

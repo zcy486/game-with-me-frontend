@@ -89,6 +89,11 @@ function PostListView(props) {
     props.history.push("/games/" + gameId);
   };
 
+  const onClickPost = (postId) => {
+    const postRoute = "/games/" + match.params.gameId + "/detail/" + postId;
+    props.history.push(postRoute);
+  };
+
   //TODO add Loading with posts (useSelector) together
   return (
     <div className={classes.root}>
@@ -132,11 +137,13 @@ function PostListView(props) {
             postsByGame.posts.map((post) => {
               return (
                 <PostBox
-                  username="Tom"
+                  username="Tom" //TODO
                   price={post.price}
-                  rating={2.85}
+                  rating={2.85} //TODO
                   languages={post.language}
                   avatar={MockAvatar}
+                  onClick={onClickPost}
+                  post={post}
                 />
               );
             })}

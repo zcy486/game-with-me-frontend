@@ -20,6 +20,24 @@ export default class PostService {
         });
     }
 
+    static getPost(postId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${PostService.baseURL()}/${postId}`,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving post!")
+                    }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            )
+        })
+    }
+
     static getPostByGame(gameId) {
         return new Promise((resolve, reject) => {
             HttpService.post(
@@ -34,6 +52,4 @@ export default class PostService {
             );
         })
     }
-
-
 }

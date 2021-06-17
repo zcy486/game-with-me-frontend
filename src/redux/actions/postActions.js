@@ -20,7 +20,7 @@ export function createPost(post) {
 
 export function getPost(postId) {
     function onSuccess(post) {
-        return { type: "GETPOST_SUCCESS", post: post };
+        return { type: "GETPOST_SUCCESS", post: post};
     }
     function onFailure(error) {
         console.log("get post failure", error);
@@ -28,8 +28,8 @@ export function getPost(postId) {
 
     return async (dispatch) => {
         try {
-            let post = await PostService.getPost(postId);
-            dispatch(onSuccess(post));
+            let fullPost = await PostService.getPost(postId);
+            dispatch(onSuccess(fullPost));
         } catch (e) {
             onFailure(e);
         }

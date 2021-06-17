@@ -31,7 +31,7 @@ function PostDetailsView(props) {
 
   useEffect(() => {
     props.dispatch(getPost(match.params.postId));
-  }, [match.params]);
+  }, [match.params.postId]);
 
   const clickOrder = () => {
     props.history.push(window.location.pathname + "/order");
@@ -44,12 +44,12 @@ function PostDetailsView(props) {
         <div className={classes.pageArea}>
           <PostDetails
             price={post && post.price}
-            gameName={"League of Legends"}
-            username={"Tom"}
+            gameName={post && post.gameName}
+            username={post && post.companionName}
+            age={post && post.companionAge}
             introduction={post && post.introduction}
-            age={20}
-            ratings={3.5}
-            served={40}
+            ratings={0} //TODO
+            served={0} //TODO
             companionType={post && post.postType}
             server={post && post.servers}
             platform={post && post.platforms}

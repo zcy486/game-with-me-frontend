@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(4),
   },
   content: {
+    width: 1000,
     textAlign: "right",
     paddingTop: theme.spacing(12),
     paddingBottom: theme.spacing(8),
@@ -46,7 +47,6 @@ function PostListView(props) {
 
   const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
-    "None",
     "Deutsch",
     "English",
     "Español",
@@ -79,7 +79,7 @@ function PostListView(props) {
   useEffect(() => {
     let gameId = match.params.gameId;
     props.getPostsByGame(gameId);
-  }, [match.params]);
+  }, [match.params.gameId]);
 
   const loadGames = async () => {
     props.getGames();
@@ -137,9 +137,9 @@ function PostListView(props) {
             postsByGame.posts.map((post) => {
               return (
                 <PostBox
-                  username="Tom" //TODO
+                  username={post.companionName}
                   price={post.price}
-                  rating={2.85} //TODO
+                  rating={0} //TODO
                   languages={post.language}
                   avatar={MockAvatar}
                   onClick={onClickPost}

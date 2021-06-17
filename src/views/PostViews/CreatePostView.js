@@ -40,6 +40,7 @@ function CreatePostView(props) {
 
   const onCreate = (post) => {
     props.dispatch(createPost(post));
+    props.history.push("/profile");
   };
 
   const loadGames = async () => {

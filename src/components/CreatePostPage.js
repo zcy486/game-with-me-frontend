@@ -107,12 +107,11 @@ function CreatePostPage(props) {
 
   const [price, setPrice] = React.useState(1);
   const [serviceType, setserviceType] = React.useState("");
-  const [introduction, setIntroduction] = React.useState("");
+  const [introduction, setIntroduction] = React.useState("Hey, i am using the GameWithMe!");
   const [language, setLanguage] = React.useState([]);
   const [availableTime, setAvailableTime] = React.useState([]);
 
   const languages = [
-    "None",
     "Deutsch",
     "English",
     "Español",

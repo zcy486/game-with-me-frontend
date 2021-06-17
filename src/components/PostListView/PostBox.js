@@ -9,10 +9,10 @@ import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    width: 840,
     fontFamily: "Helvetica",
     padding: theme.spacing(2),
     marginBottom: theme.spacing(1),
-    minWidth: 800,
   },
   paperContent: {
     display: "flex",

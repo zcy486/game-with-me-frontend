@@ -168,16 +168,12 @@ function PostDetails(props) {
             <ECoin /> <span>&nbsp;</span>/ Game{" "}
           </Grid>
           <Grid item>
-            Server:
-            {Array.isArray(props.server) && props.server.map((s) => {
-              <p>{s}, </p>
-            })}
+            Server: <span>&nbsp;&nbsp;</span>
+            {Array.isArray(props.server) && props.server.join(", ")}
           </Grid>
           <Grid item>
-            Platform:
-            {Array.isArray(props.platform) && props.platform.map((p) => {
-              <p>{p}, </p>
-            })}
+            Platform: <span>&nbsp;&nbsp;</span>
+            {Array.isArray(props.platform) && props.platform.join(", ")}
           </Grid>
         </Grid>
       </Paper>

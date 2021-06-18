@@ -2,6 +2,7 @@ import PostService from "../../services/PostService";
 
 export function createPost(post) {
     function onSuccess() {
+        console.log(post)
         return { type: "CREATEPOST_SUCCESS" };
     }
     function onFailure(error) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
-import { search } from "../redux/actions";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
@@ -18,7 +17,8 @@ import MessageIcon from "@material-ui/icons/Message";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserMenu from "./UserRelevant/UserMenu";
-import Button from "@material-ui/core/Button";
+import SearchService from "../services/SearchService";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -77,40 +77,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props) {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  //the matched result from backend
-  const searchOptions = useSelector((state) => state.options.options);
-
+  //UserMenu-relevant
   const user = useSelector((state) => state.user);
-
   const [userAnchor, setUserAnchor] = React.useState(null);
 
-  const [searchValue, setSearchValue] = React.useState(null);
-  const [searchInput, setSearchInput] = React.useState("");
-  const [popUpClosed, setPopUpClosed] = React.useState(false);
+  //----all you need with the search bar is on below!----
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const [value, setValue] = React.useState(null);
+  const [inputValue, setInputValue] = React.useState("");
+  const [loadingText, setLoadingText] = React.useState("Loading...");
+  const loading = open && options.length === 0 && inputValue.length > 0;
 
-  const onClickTitle = () => {
-    props.history.push("/");
-  };
+  const doSearch = async (value) => {
+    const response = await SearchService.search(value);
+    setOptions(response);
+    if (response.length === 0) {
+      setLoadingText("No matches");
+    }
+  }
 
-  const onSearchInputChange = (event, value) => {
-    setSearchInput(value);
-    if(value.length > 0) {
-      props.dispatch(search(value));
+  const debounceSearch = _.debounce(doSearch, 200);
+
+  const onInputChange = async (event, value) => {
+    setInputValue(value);
+    setOptions([]);
+    setLoadingText("Loading...");
+    if (value.length > 0) {
+      debounceSearch(value);
     }
   };
 
-  const onSelectResult = (event, value, reason) => {
+  const onChange = (event, value, reason) => {
+    setValue(value);
     if(reason === "select-option") {
-      setSearchInput("");
-      setSearchValue(null);
       if(value.group === "Games") {
         const gameId = value.id;
-        props.history.push("/games/"+gameId);
+        props.history.push("/games/" + gameId);
       }
       //TODO add route for users!
     }
+  };
+  //----all you need with the search bar is on above!----
+
+  const onClickTitle = () => {
+    props.history.push("/");
   };
 
   const onClickChat = () => {
@@ -134,21 +147,28 @@ function Header(props) {
         <div className={classes.placeHolder} />
         <Autocomplete
           freeSolo
-          value={searchValue}
-          onChange={onSelectResult}
-          inputValue={searchInput}
-          onInputChange={onSearchInputChange}
-          onOpen={(e) => setPopUpClosed(false)}
-          onClose={(e) => setPopUpClosed(true)}
-          open={searchInput.length > 0 && !popUpClosed}
-          options={searchOptions? searchOptions : []}
+          //value-relevant, these two values are independent
+          value={value}
+          onChange={onChange}
+          inputValue={inputValue}
+          onInputChange={onInputChange}
+          //popup-relevant
+          open={open}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          //loading-relevant
+          loading={loading}
+          loadingText={loadingText}
+          //options-relevant
+          options={options}
           groupBy={(option) => option.group}
-          getOptionLabel={(option) => option.name}
-          filterOptions={(options) => options}
+          filterOptions={(x) => x}
+          getOptionLabel={(option) => option.name? option.name : option}
+          //render-input-relevant
           renderInput={(params) => (
             <div className={classes.search} ref={params.InputProps.ref}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon className={classes.iconButton}/>
               </div>
               <InputBase
                 classes={{ root: classes.inputRoot, input: classes.inputInput }}

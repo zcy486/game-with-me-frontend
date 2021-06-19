@@ -79,7 +79,7 @@ function PostListView(props) {
   useEffect(() => {
     let gameId = match.params.gameId;
     props.getPostsByGame(gameId);
-  }, [match.params.gameId]);
+  });
 
   const loadGames = async () => {
     props.getGames();

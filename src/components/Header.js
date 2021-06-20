@@ -18,7 +18,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserMenu from "./UserRelevant/UserMenu";
 import SearchService from "../services/SearchService";
-import _ from "lodash";
+//import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -76,6 +76,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function sleep(delay = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
+
 function Header(props) {
   const classes = useStyles();
 
@@ -91,6 +97,7 @@ function Header(props) {
   const [loadingText, setLoadingText] = React.useState("Loading...");
   const loading = open && options.length === 0 && inputValue.length > 0;
 
+  /* alternative
   const doSearch = async (value) => {
     const response = await SearchService.search(value);
     setOptions(response);
@@ -98,16 +105,46 @@ function Header(props) {
       setLoadingText("No matches");
     }
   }
-
   const debounceSearch = _.debounce(doSearch, 200);
+  */
 
-  const onInputChange = async (event, value) => {
-    setInputValue(value);
-    setOptions([]);
-    setLoadingText("Loading...");
-    if (value.length > 0) {
-      debounceSearch(value);
+  useEffect(() => {
+    let active = true;
+
+    if(!loading) {
+      return undefined;
     }
+
+    (async () => {
+      const response = await SearchService.search(inputValue);
+      await sleep(200);
+
+      if(active) {
+        setOptions(response)
+        if(response.length === 0) {
+          setLoadingText("No matches");
+        }
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [inputValue, loading]);
+
+  useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
+
+  const onInputChange = (event, value) => {
+    setOptions([]);
+    setInputValue(value);
+    setLoadingText("Loading...");
+    //if (value.length > 0) {
+    //  debounceSearch(value);
+    //}
   };
 
   const onChange = (event, value, reason) => {

@@ -37,10 +37,12 @@ function OrderBox(props) {
 
   const handleChange = (e) => {
     setValue(e.target.value);
+
   };
+
   const onConfirm = (event) => {
     event.preventDefault();
-    props.onConfirm(totalAmount,props.user._id,props.user._id);
+    props.onConfirm(totalAmount, props.user._id, props.post._id);
 
   };
 

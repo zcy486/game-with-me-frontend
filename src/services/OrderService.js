@@ -5,7 +5,7 @@ export default class OrderService {
         return "http://localhost:4000/order";
     }
 
-    static createOrder(price, gamerId, companionId
+    static createOrder(price, gamerId, postId
         ) {
         return new Promise((resolve, reject) => {
             HttpService.post(
@@ -13,7 +13,7 @@ export default class OrderService {
                 {
                     orderPrice: price,
                     gamerId: gamerId,
-                    companionId: companionId
+                    postId: postId
                 },
                 function (data) {
                     resolve(data);

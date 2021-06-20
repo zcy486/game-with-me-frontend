@@ -27,7 +27,7 @@ export function getOrders() {
 
 
 
-export function createOrder(price, companionId, gamerId)
+export function createOrder(price, postId, gamerId)
     {
     function onSuccess() {
         return { type: "CREATEORDER_SUCCESS" };
@@ -38,7 +38,7 @@ export function createOrder(price, companionId, gamerId)
 
     return async (dispatch) => {
         try {
-            let order = await OrderService.createOrder(price, companionId, gamerId);
+            let order = await OrderService.createOrder(price, postId, gamerId);
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);

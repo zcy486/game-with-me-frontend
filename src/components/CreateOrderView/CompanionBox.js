@@ -43,8 +43,7 @@ function CompanionBox(props) {
             {" "}
             Introduction:
             <Typography variant="subtitle1" gutterBottom>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-              blanditiis tenetur
+              {props.introduction}
             </Typography>
           </Grid>
         </Grid>

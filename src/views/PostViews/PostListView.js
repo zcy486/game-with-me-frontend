@@ -79,7 +79,7 @@ function PostListView(props) {
   useEffect(() => {
     let gameId = match.params.gameId;
     props.getPostsByGame(gameId);
-  });
+  }, [match.params]);
 
   const loadGames = async () => {
     props.getGames();
@@ -134,9 +134,10 @@ function PostListView(props) {
             <FilterBox choices={sortBy} helperText="Sort by:" />
           </div>
           {postsByGame &&
-            postsByGame.posts.map((post) => {
+            postsByGame.posts.map((post, i) => {
               return (
                 <PostBox
+                  key={i}
                   username={post.companionName}
                   price={post.price}
                   rating={0} //TODO

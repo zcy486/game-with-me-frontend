@@ -31,7 +31,7 @@ function PostDetailsView(props) {
 
   useEffect(() => {
     props.dispatch(getPost(match.params.postId));
-  }, [match.params.postId]);
+  }, [match.params]);
 
   const clickOrder = () => {
     props.history.push(window.location.pathname + "/order");

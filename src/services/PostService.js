@@ -52,4 +52,19 @@ export default class PostService {
             );
         })
     }
+
+    static getPostByCompanion(companionId) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${PostService.baseURL()}/ofcompanion`,
+                {companionId: companionId},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

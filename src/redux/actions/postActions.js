@@ -37,8 +37,9 @@ export function getPost(postId) {
     };
 }
 
-export function getPostsByGame(gameId) {
+export function getPostsByGame(filters) {
     function onSuccess(response) {
+        console.log(response)
         return { type: "GETPOSTSBYGAME_SUCCESS", response: response};
     }
     function onFailure(error) {
@@ -46,7 +47,7 @@ export function getPostsByGame(gameId) {
     }
     return async (dispatch) => {
         try {
-            let response = await PostService.getPostByGame(gameId);
+            let response = await PostService.getPostByGame(filters);
             dispatch(onSuccess(response));
         } catch (e) {
             onFailure(e);

@@ -10,6 +10,7 @@ import PostBox from "../../components/PostListView/PostBox";
 import ScrollContainer from "../../components/ScrollContainer";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
+import posts from "../../redux/reducers/postReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function PostListView(props) {
   const classes = useStyles();
 
-  const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
+  const allStatus = ["Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
     "Deutsch",
     "English",
@@ -60,8 +61,8 @@ function PostListView(props) {
     "Tiếng Việt",
     "中文",
   ];
-  const allTypes = ["None", "Carry", "Chill", "All types"];
-  const allPrices = ["None", "0-5", "6-10", "11-20", "20+"];
+  const allTypes = ["Carry", "Chill", "All types"];
+  const allPrices = ["0-5", "6-10", "11-20", "20+"];
   const sortBy = ["order", "ratings"];
 
   let { match } = props;
@@ -70,6 +71,18 @@ function PostListView(props) {
 
   const postsByGame = useSelector((state) => state.posts.response);
 
+  const [language, setLanguage] = React.useState("");
+
+  const [postType, setPostType] = React.useState("");
+
+  const [price, setPrice] = React.useState("");
+
+  const [server, setServer] = React.useState("");
+
+  const [platform, setPlatform] = React.useState("");
+
+  const [filters, setFilters] = React.useState({gameId: match.params.gameId});
+
   useEffect(() => {
     if (!games) {
       loadGames();
@@ -77,8 +90,9 @@ function PostListView(props) {
   }, [games]);
 
   useEffect(() => {
-    let gameId = match.params.gameId;
-    props.getPostsByGame(gameId);
+
+  //  let gameId = match.params.gameId;
+    props.getPostsByGame(filters);
   }, [match.params]);
 
   const loadGames = async () => {
@@ -93,6 +107,62 @@ function PostListView(props) {
     const postRoute = "/games/" + match.params.gameId + "/detail/" + postId;
     props.history.push(postRoute);
   };
+
+  const handleChangeLanguage = (value) => {
+    setLanguage(value);
+   // packFilters();
+    setFilters({
+      ...filters,
+      language: value
+    })
+  };
+
+  const handleChangeType = (value) => {
+    setPostType(value);
+    //packFilters();
+    setFilters({
+      ...filters,
+      postType: value
+    })
+  };
+
+  const handleChangePrice = (value) => {
+    setPrice(value);
+   // packFilters();
+    setFilters({
+      ...filters,
+      price: value
+    })
+  };
+
+  const handleChangeServer = (value) => {
+    setServer(value);
+   // packFilters();
+    setFilters({
+      ...filters,
+      servers: value
+    })
+  };
+
+  const handleChangePlatform = (value) => {
+    setPlatform(value);
+  //  packFilters();
+    setFilters({
+      ...filters,
+      platforms: value
+    })
+  };
+
+  const packFilters = () => {
+    const req = {
+      gameId: match.params.gameId,
+      language: language,
+      postType: postType,
+      price: price,
+      servers: server,
+      platforms: platform
+    };
+  }
 
   //TODO add Loading with posts (useSelector) together
   return (
@@ -111,24 +181,35 @@ function PostListView(props) {
           </h1>
           <div className={classes.filtersRow}>
             <FilterBox choices={allStatus} helperText="Status" />
-            <FilterBox choices={allLanguages} helperText="Language" />
-            <FilterBox choices={allTypes} helperText="Type" />
-            <FilterBox choices={allPrices} helperText="Price" />
             <FilterBox
-              choices={
-                postsByGame && Array.isArray(postsByGame.servers)
-                  ? postsByGame.servers
-                  : []
-              }
-              helperText="Server"
+              choices={allLanguages}
+              helperText="Language"
+              handleChange={handleChangeLanguage}
+              value={language}
             />
             <FilterBox
-              choices={
-                postsByGame && Array.isArray(postsByGame.platforms)
-                  ? postsByGame.platforms
-                  : []
-              }
+              choices={allTypes}
+              helperText="Type"
+              handleChange={handleChangeType}
+              value={postType}
+            />
+            <FilterBox
+              choices={allPrices}
+              helperText="Price"
+              handleChange={handleChangePrice}
+              value={price}
+            />
+            <FilterBox
+              choices={postsByGame && Array.isArray(postsByGame.servers) && postsByGame.servers}
+              helperText="Server"
+              handleChange={handleChangeServer}
+              value={server}
+            />
+            <FilterBox
+              choices={postsByGame && Array.isArray(postsByGame.platforms) && postsByGame.platforms}
               helperText="Platform"
+              handleChange={handleChangePlatform}
+              value={platform}
             />
             <div className={classes.placeHolder} />
             <FilterBox choices={sortBy} helperText="Sort by:" />

@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import React, {useEffect}from "react";
+import React, { useEffect } from "react";
 import ScrollContainer from "../components/ScrollContainer";
 import backgroundPic from "../images/bg_postlist.png";
 import OrderBox from "../components/CreateOrderView/OrderBox";
@@ -7,7 +7,7 @@ import CompanionBox from "../components/CreateOrderView/CompanionBox";
 import { createOrder } from "../redux/actions";
 import { connect, useSelector } from "react-redux";
 import { getPost } from "../redux/actions";
-
+import RechargePage from "../components/CreateOrderView/RechargePage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,7 +34,7 @@ function CreateOrderView(props) {
 
     useEffect(() => {
         props.dispatch(getPost(match.params.postId));
-      }, [match.params.postId]);
+    }, [match.params.postId]);
 
 
     const onConfirm = (price, postId, gamerId) => {
@@ -44,8 +44,19 @@ function CreateOrderView(props) {
     };
 
     const onRecharge = () => {
-        //TODO
+        handleClickOpen();
+    }
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
     };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
     const onCancel = () => {
         props.history.push(window.location.pathname.replace("/order", ""));
     };
@@ -56,6 +67,12 @@ function CreateOrderView(props) {
             <div className={classes.root}>
                 <div className={classes.pageArea}>
                     <h1>Order Details</h1>
+                    
+                    {open ? (<RechargePage
+                        open={open}
+                        handleClose={handleClose}
+
+                    ></RechargePage>) : null}
                     <OrderBox
                         post={post}
                         gameName={post && post.gameName}
@@ -71,7 +88,7 @@ function CreateOrderView(props) {
                     <CompanionBox
                         username={post && post.companionName}
                         age={post && post.companionAge}
-                        introduction = {post && post.introduction}
+                        introduction={post && post.introduction}
                         price={post && post.price}
                         server={post && post.servers}
                         platform={post && post.platforms}

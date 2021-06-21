@@ -7,7 +7,7 @@ import ScrollContainer from "../../components/ScrollContainer";
 import CreatePostPage from "../../components/CreatePostPage";
 import backgroundPic from "../../images/bg_postlist.png";
 import Loading from "../../components/Loading";
-import {createPost} from "../../redux/actions/postActions";
+import {createPost} from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -53,3 +53,20 @@ export function getPostsByGame(gameId) {
     }
 
 }
+
+export function getPostsByCompanion(companionId) {
+    function onSuccess(response) {
+        return { type: "COMPANIONPOST", companion: response};
+    }
+    function onFailure(error) {
+        console.log("get posts by companion failure", error);
+    }
+    return async (dispatch) => {
+        try {
+            let response = await PostService.getPostByCompanion(companionId);
+            dispatch(onSuccess(response));
+        } catch (e) {
+            onFailure(e);
+        }
+    }
+}

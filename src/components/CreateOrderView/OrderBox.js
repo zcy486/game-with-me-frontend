@@ -167,7 +167,7 @@ function OrderBox(props) {
               </span>
             </Tooltip>
             <span>&nbsp;</span>
-            <Button classNaßme={classes.Button} onClick={props.onCancel}>
+            <Button className={classes.Button} onClick={props.onCancel}>
               Cancel
             </Button>
           </div>

@@ -1,5 +1,6 @@
 import HomePageView from "./views/HomePageView";
 import PostListView from "./views/PostViews/PostListView";
+import CompanionPostView from "./views/PostViews/CompanionPostView";
 import PostDetailsView from "./views/PostViews/PostDetailsView";
 import SignUpView from "./views/UserViews/SignUpView";
 import LoginView from "./views/UserViews/LoginView";
@@ -26,6 +27,10 @@ const routes = [
   {
     path: "/games/:gameId/detail/:postId/order",
     component: CreateOrderView,
+  },
+  {
+    path: "/companion/:companionId",
+    component: CompanionPostView,
   },
   {
     path: "/login",

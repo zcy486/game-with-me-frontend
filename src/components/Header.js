@@ -155,6 +155,10 @@ function Header(props) {
         props.history.push("/games/" + gameId);
       }
       //TODO add route for users!
+      else if(value.group === "Companions") {
+        const companionId = value.id;
+        props.history.push("/companion/" + companionId);
+      }
     }
   };
   //----all you need with the search bar is on above!----

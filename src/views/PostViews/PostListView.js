@@ -76,7 +76,7 @@ function PostListView(props) {
   ];
   const allTypes = ["Carry", "Chill"];
   const allPrices = ["0-5", "6-10", "11-20", "20+"];
-  const sortBy = ["order", "ratings"];
+  const sortBy = ["orders", "ratings"];
 
   const [status, setStatus] = React.useState("");
   const [language, setLanguage] = React.useState("");
@@ -84,6 +84,7 @@ function PostListView(props) {
   const [price, setPrice] = React.useState("");
   const [server, setServer] = React.useState("");
   const [platform, setPlatform] = React.useState("");
+  const [sort, setSort] = React.useState("orders")
 
   const packFilters = () => {
     return {
@@ -93,12 +94,13 @@ function PostListView(props) {
       price: price,
       servers: server,
       platforms: platform,
+      sortBy: sort,
     };
   }
 
   useEffect(() => {
     props.dispatch(getPostsWithFilters(packFilters()));
-  }, [status, language, type, price, server, platform]);
+  }, [status, language, type, price, server, platform, sort]);
 
   //all you need with filters is on above!
 
@@ -236,8 +238,20 @@ function PostListView(props) {
               </Select>
             </FormControl>
 
-
             <div className={classes.placeHolder} />
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Sort by</InputLabel>
+              <Select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+              >
+                {sortBy.map((sortType) => {
+                  return <MenuItem value={sortType}>{sortType}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
           </div>
           {posts &&
             posts.posts.map((post, i) => {

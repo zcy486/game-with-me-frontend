@@ -33,4 +33,18 @@ export default class GameService {
             );
         });
     }
+
+    static getGameInfoById(gameId) {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                `${this.baseURL()}/${gameId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

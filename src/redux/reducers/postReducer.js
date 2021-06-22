@@ -4,7 +4,7 @@ export default function posts(state = {}, action) {
             return {...state};
         case "GETPOST_SUCCESS":
             return { post: action.post };
-        case "GETPOSTSBYGAME_SUCCESS":
+        case "GETPOSTSWITHFILTERS_SUCCESS":
             return { response: action.response };
         case "COMPANIONPOST":
             return { companion: action.companion };

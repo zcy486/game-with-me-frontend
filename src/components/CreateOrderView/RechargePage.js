@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -43,45 +47,127 @@ function RechargePage(props) {
         return actions.order.create({
             purchase_units: [
                 {
+
+                    description: "RechargeEcoin",
                     amount: {
                         value: payValue,
+                        breakdown: {
+                            item_total: {
+                                currency_code: "EUR",
+                                value: payValue,
+                            },
+
+                            shipping: {
+                                currency_code: "EUR",
+                                value: "0",
+                            },
+                            tax_total: {
+                                currency_code: "EUR",
+                                value: "0",
+                            },
+                            discount: {
+                                currency_code: "EUR",
+                                value: "0",
+                            },
+                            handling: {
+                                currency_code: "EUR",
+                                value: "0",
+                            }
+
+                        },
+                        insurance: {
+                            currency_code: "EUR",
+                            value: "0",
+                        },
+                        shipping_discount: {
+                            currency_code: "EUR",
+                            value: "0",
+                        },
+
                     },
+                    items: [
+                        {
+
+
+                            name: "Ecoin",
+                            price: "1",
+
+                            quantity: value,
+                            unit_amount: {
+                                currency_code: "EUR",
+                                value: "1.1",
+                            }
+                        },
+
+
+                    ],
                 },
-            ],
+
+
+
+            ]
         });
     };
 
 
-    const onApprove = (data, actions) => {
-        return actions.order.capture();
+
+    const onCancel = (data) => {
+        props.handleRecharge("40");
+       
+        props.handleClose();
     };
 
-    //user selected quantities
-    const [value, setValue] = useState(1);
+    const onError = (err) => {
+        console.log(err)
+    }
 
+    const onApprove = (data, actions) => {
+        return actions.order.capture().then(function (details) {
+            // This function shows a transaction success message to your buyer.
+            props.handleClose();
+            props.handleRecharge(details.purchase_units[0].items[0].quantity);
+            console.log("aa");
+        });
+
+
+
+    };
+
+    //user selected radio quantities
+    const [value, setValue] = useState(10);
+
+    //user inputed quantities
+    const [inputValue, setInputValue] = useState(100);
+
+
+
+    const invalidValue = (value <= 0);
+
+
+    const handleInputChange = (e) => {
+
+        setInputValue(e.target.value);
+        setValue(e.target.value);
+
+    };
 
     const handleChange = (e) => {
         setValue(e.target.value);
 
     };
 
-    const onConfirm = (event) => {
-        event.preventDefault();
 
-
-    };
-
-    const onRecharge = (event) => {
-        event.preventDefault();
-        props.onRecharge();
-    };
 
 
     const handleClose = () => {
+        props.handleRecharge("40");
+       
         props.handleClose();
     };
 
-    var payValue = Math.round((value * 1.1) * 100)/100;
+    var payValue = Math.round((value * 1.1) * 100) / 100;
+
+
     return (
         <Dialog
             open={props.open}
@@ -98,38 +184,53 @@ function RechargePage(props) {
                 <DialogContentText id="dialog-description">
                     Please choose the amount of E-coins you want to charge:
                 </DialogContentText>
-                <Grid item container alignItems="center" flex="row">
-                    Amount:
-                    <span>&nbsp;</span>
-                    <TextField
-                        id="outlined-number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        error={value < 1}
-                        variant="outlined"
-                        defaultValue={1}
-                        required={true}
-                        onChange={handleChange}
-                        InputProps={{ inputProps: { min: 1 } }}
-                    />
-                </Grid>
+                <FormControl>
+                    <FormLabel> Amount</FormLabel>
+                    <RadioGroup aria-label="amount" name="amount" value={value.toString()} onChange={handleChange}>
+                        <FormControlLabel value="10" control={<Radio />} label="10" />
+                        <FormControlLabel value="20" control={<Radio />} label="20" />
+                        <FormControlLabel value="50" control={<Radio />} label="50" />
+                        <FormControlLabel value={inputValue.toString()} control={<Radio />} label={<TextField
+                            id="standard-number"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            error={inputValue < 0}
+                            variant="outlined"
+                            defaultValue={100}
+                            required={true}
+                            onChange={handleInputChange}
+                            InputProps={{ inputProps: { min: 1 } }}
 
-                <DialogContentText id="dialog-description">
-                    You will have to pay {payValue} EURO to get {value} ecoins.
-                </DialogContentText>
-                <Grid>
-                    <PayPalButton createOrder={(data, actions) => createPayPalOrder(data, actions)}
-                        onApprove={(data, actions) => onApprove(data, actions)}></PayPalButton>
-                </Grid>
+                        />} >
+
+                        </FormControlLabel>
+
+
+
+
+                    </RadioGroup>
+                </FormControl>
+
+                {invalidValue ?
+                    <DialogContentText id="dialog-description">
+                        Please choose a valid amount.
+                    </DialogContentText> : <Grid>
+                        <DialogContentText id="dialog-description">
+                            You will have to pay {payValue} EURO to get {Number(value)} ecoins.
+                        </DialogContentText>
+
+                        <Grid>
+                            <PayPalButton createOrder={(data, actions) => createPayPalOrder(data, actions)}
+                                onApprove={(data, actions) => onApprove(data, actions)} onCancel={(data) => onCancel(data)}
+                                onError={(err) => onError(err)}></PayPalButton>
+                        </Grid>
+                    </Grid>}
             </DialogContent>
             <DialogActions>
 
 
-                <Button onClick={onConfirm} color="Secondary" autoFocus>
-                    Pay
-                </Button>
                 <Button onClick={handleClose}>Cancel</Button>
             </DialogActions>
         </Dialog>

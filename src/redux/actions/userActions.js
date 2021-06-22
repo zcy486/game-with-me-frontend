@@ -62,4 +62,25 @@ export function updateProfile(updatedUser) {
             dispatch(onFailure(e));
         }
     };
+
+}
+
+
+export function updateBalance(user, balance) {
+    function onSuccess() {
+        return { type: "UPDATEBALANCE_SUCCESS", user: user };
+    }
+
+    function onFailure(error) {
+        return { type: "UPDATEBALANCE_FAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.updateBalance(user, balance);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
 }

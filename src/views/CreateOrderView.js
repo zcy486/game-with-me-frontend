@@ -8,6 +8,8 @@ import { createOrder } from "../redux/actions";
 import { connect, useSelector } from "react-redux";
 import { getPost } from "../redux/actions";
 import RechargePage from "../components/CreateOrderView/RechargePage";
+import { updateBalance } from "../redux/actions";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +58,12 @@ function CreateOrderView(props) {
         setOpen(false);
     };
 
+   
+    const handleRecharge = (amount) => {
+        props.dispatch(updateBalance(user, amount));
+
+    };
+
 
     const onCancel = () => {
         props.history.push(window.location.pathname.replace("/order", ""));
@@ -71,7 +79,7 @@ function CreateOrderView(props) {
                     {open ? (<RechargePage
                         open={open}
                         handleClose={handleClose}
-
+                        handleRecharge= {handleRecharge}
                     ></RechargePage>) : null}
                     <OrderBox
                         post={post}

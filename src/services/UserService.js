@@ -56,6 +56,26 @@ export default class UserService {
         });
     }
 
+
+
+    static updateBalance(user, balance) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${UserService.baseURL()}/balance/${user._id}`,
+                {
+                    balance: balance,
+                 
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static logout() {
         window.localStorage.removeItem("jwtToken");
     }

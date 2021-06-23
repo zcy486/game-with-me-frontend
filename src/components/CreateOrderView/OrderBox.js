@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 function OrderBox(props) {
   const classes = useStyles();
 
+
+
   //user selected quantities
   const [value, setValue] = useState(1);
 
@@ -62,7 +64,7 @@ function OrderBox(props) {
   };
 
   var totalAmount = value * props.price;
-  var insufficient = totalAmount > props.user.balance;
+  var insufficient = totalAmount > props.balance;
   var wrongAmount = totalAmount <= 0;
   return (
     <Paper className={classes.paper}>
@@ -99,7 +101,7 @@ function OrderBox(props) {
           <span>&nbsp;</span>
         </Grid>
         <Grid item container flex="row">
-          My wallet: {props.user.balance}
+          My wallet: {props.balance}
           <span>&nbsp;</span>
           <Ecoin></Ecoin>
           <span>&nbsp;</span>
@@ -154,7 +156,7 @@ function OrderBox(props) {
                     </DialogContentText>
                     <DialogContentText id="alert-dialog-description">
                       Your wallet balance after this order will be{" "}
-                      {props.user.balance - totalAmount} ecoins.
+                      {props.balance - totalAmount} ecoins.
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>

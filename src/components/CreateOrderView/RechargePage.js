@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +16,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Ecoin from "../ECoin";
+import { updateBalance } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,8 +42,13 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 
 
+
+
+
 function RechargePage(props) {
     const classes = useStyles();
+
+
 
     const createPayPalOrder = (data, actions, err) => {
         return actions.order.create({
@@ -112,8 +119,6 @@ function RechargePage(props) {
 
 
     const onCancel = (data) => {
-        props.handleRecharge("40");
-       
         props.handleClose();
     };
 
@@ -125,8 +130,9 @@ function RechargePage(props) {
         return actions.order.capture().then(function (details) {
             // This function shows a transaction success message to your buyer.
             props.handleClose();
-            props.handleRecharge(details.purchase_units[0].items[0].quantity);
-            console.log("aa");
+            const newBalance = props.currentBalance + Number(details.purchase_units[0].items[0].quantity);
+            props.handleRecharge(newBalance);
+
         });
 
 
@@ -160,8 +166,11 @@ function RechargePage(props) {
 
 
     const handleClose = () => {
-        props.handleRecharge("40");
-       
+
+        //Test
+        const newBalance = props.currentBalance + Number("20");
+        props.handleRecharge(newBalance);
+
         props.handleClose();
     };
 

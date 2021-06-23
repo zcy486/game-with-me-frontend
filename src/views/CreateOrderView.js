@@ -9,7 +9,7 @@ import { connect, useSelector } from "react-redux";
 import { getPost } from "../redux/actions";
 import RechargePage from "../components/CreateOrderView/RechargePage";
 import { updateBalance } from "../redux/actions";
-
+import { updateProfile } from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,15 +28,14 @@ const useStyles = makeStyles((theme) => ({
 function CreateOrderView(props) {
     const classes = useStyles();
     const user = useSelector((state) => state.user.user);
-    const order = useSelector((state) => state.order.order);
-    const post = useSelector((state) => state.posts.post)
+    const post = useSelector((state) => state.posts.post);
 
 
     let { match } = props;
 
     useEffect(() => {
         props.dispatch(getPost(match.params.postId));
-    }, [match.params.postId]);
+    }, [user, match.params]);
 
 
     const onConfirm = (price, postId, gamerId) => {
@@ -61,7 +60,6 @@ function CreateOrderView(props) {
    
     const handleRecharge = (amount) => {
         props.dispatch(updateBalance(user, amount));
-
     };
 
 
@@ -79,13 +77,14 @@ function CreateOrderView(props) {
                     {open ? (<RechargePage
                         open={open}
                         handleClose={handleClose}
+                        currentBalance={user.balance}
+                        user={user}
                         handleRecharge= {handleRecharge}
                     ></RechargePage>) : null}
                     <OrderBox
                         post={post}
                         gameName={post && post.gameName}
-                        order={order}
-                        user={user}
+                        balance = {user.balance}
                         price={post && post.price}
                         onConfirm={onConfirm}
                         onCancel={onCancel}

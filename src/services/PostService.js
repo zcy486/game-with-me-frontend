@@ -38,11 +38,12 @@ export default class PostService {
         })
     }
 
-    static getPostByGame(gameId) {
+    //TODO
+    static getPostWithFilters(filters) {
         return new Promise((resolve, reject) => {
             HttpService.post(
-                `${PostService.baseURL()}/ofgame`,
-                {gameId: gameId},
+                `${PostService.baseURL()}/filters`,
+                filters,
                 function (data) {
                     resolve(data);
                 },

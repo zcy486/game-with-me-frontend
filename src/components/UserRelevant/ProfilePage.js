@@ -139,6 +139,9 @@ function ProfilePage(props) {
     props.clickCreate();
   };
 
+  const onRecharge = () => {
+      props.onRecharge();
+  }
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -239,7 +242,7 @@ function ProfilePage(props) {
             >
               Withdraw
             </Button>
-            <Button variant={"contained"} color={"secondary"} size={"small"}>
+            <Button variant={"contained"} color={"secondary"} size={"small"} onClick={onRecharge}>
               Charge
             </Button>
           </Grid>

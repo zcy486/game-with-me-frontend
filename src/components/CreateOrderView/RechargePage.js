@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -16,7 +15,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Ecoin from "../ECoin";
-import { updateBalance } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,8 +45,6 @@ const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function RechargePage(props) {
     const classes = useStyles();
-
-
 
     const createPayPalOrder = (data, actions, err) => {
         return actions.order.create({
@@ -166,11 +162,6 @@ function RechargePage(props) {
 
 
     const handleClose = () => {
-
-        //Test
-        const newBalance = props.currentBalance + Number("20");
-        props.handleRecharge(newBalance);
-
         props.handleClose();
     };
 

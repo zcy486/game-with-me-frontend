@@ -9,7 +9,6 @@ import { connect, useSelector } from "react-redux";
 import { getPost } from "../redux/actions";
 import RechargePage from "../components/CreateOrderView/RechargePage";
 import { updateBalance } from "../redux/actions";
-import { updateProfile } from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,7 +34,14 @@ function CreateOrderView(props) {
 
     useEffect(() => {
         props.dispatch(getPost(match.params.postId));
-    }, [user, match.params]);
+    }, [match.params]);
+
+    useEffect(() => {
+        if (!user) {
+          props.history.push("/login");
+        }
+      
+      }, [user, props.history]);
 
 
     const onConfirm = (price, postId, gamerId) => {
@@ -59,7 +65,7 @@ function CreateOrderView(props) {
 
    
     const handleRecharge = (amount) => {
-        props.dispatch(updateBalance(user, amount));
+        props.dispatch(updateBalance(user._id, amount));
     };
 
 
@@ -84,7 +90,7 @@ function CreateOrderView(props) {
                     <OrderBox
                         post={post}
                         gameName={post && post.gameName}
-                        balance = {user.balance}
+                        user= {user}
                         price={post && post.price}
                         onConfirm={onConfirm}
                         onCancel={onCancel}

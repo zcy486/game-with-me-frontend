@@ -58,10 +58,10 @@ export default class UserService {
 
 
 
-    static updateBalance(user, balance) {
+    static updateBalance(id, balance) {
         return new Promise((resolve, reject) => {
             HttpService.put(
-                `${UserService.baseURL()}/balance/${user._id}`,
+                `${UserService.baseURL()}/balance/${id}`,
                 {
                     balance: balance,
                  

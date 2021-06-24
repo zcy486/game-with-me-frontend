@@ -56,6 +56,20 @@ export default class UserService {
         });
     }
 
+    static getCompanionProfile(userId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${UserService.baseURL()}/companion/${userId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static logout() {
         window.localStorage.removeItem("jwtToken");
     }

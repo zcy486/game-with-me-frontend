@@ -10,6 +10,7 @@ export default class HttpService {
                 age: userJson.age,
                 gender: userJson.gender,
                 isPremium: userJson.isPremium,
+                balance: userJson.balance,
             },
         };
     }

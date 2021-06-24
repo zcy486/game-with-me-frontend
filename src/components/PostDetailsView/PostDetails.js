@@ -134,8 +134,7 @@ function PostDetails(props) {
             <Typography variant={"h6"}>Rating score:</Typography>
             <div className={classes.rating}>
               <Rating
-                name="read-only"
-                value={props.ratings}
+                value={props.ratings? props.ratings : 0}
                 precision={0.1}
                 readOnly
               />

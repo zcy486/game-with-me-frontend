@@ -154,7 +154,6 @@ function Header(props) {
         const gameId = value.id;
         props.history.push("/games/" + gameId);
       }
-      //TODO add route for users!
       else if(value.group === "Companions") {
         const companionId = value.id;
         props.history.push("/companion/" + companionId);

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ratingStars: {
     display: "flex",
-    justifyContent: "flex-end",
+    alignItems: "center",
   },
   languageRow: {
     display: "table",
@@ -71,14 +71,19 @@ function PostBox(props) {
             <Grid className={classes.priceInfo}>
               {props.price}
               <span>&nbsp;</span>
-              <ECoin></ECoin>
+              <ECoin />
               <span>&nbsp;</span>/ Game
             </Grid>
           </Grid>
           <Grid className={classes.placeHolder} />
           <Grid className={classes.paperColumn}>
             <Grid className={classes.ratingStars}>
-              <Rating defaultValue={props.rating} precision={0.5} readOnly />
+              <Rating
+                value={props.ratings ? props.ratings : 0}
+                precision={0.1}
+                readOnly
+              />
+              <Typography>({props.reviewNumber})</Typography>
             </Grid>
             <Grid item>
               <div className={classes.languageRow}>

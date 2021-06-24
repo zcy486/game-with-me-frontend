@@ -7,6 +7,7 @@ import ProfilePage from "../../components/UserRelevant/ProfilePage";
 import { updateProfile } from "../../redux/actions";
 import Loading from "../../components/Loading";
 import backgroundPic from "../../images/bg_postlist.png";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +28,22 @@ function ProfileView(props) {
 
   const user = useSelector((state) => state.user);
 
+  const [companion, setCompanion] = React.useState(null);
+
   useEffect(() => {
     if (!user.user) {
       props.history.push("/login");
     }
   }, [user, props.history]);
+
+  useEffect(async () => {
+    if (user.user) {
+      let plusFields = await UserService.getCompanionProfile(user.user._id);
+      if (Object.keys(plusFields).length > 0) {
+        setCompanion(plusFields);
+      }
+    }
+  }, [props.history]);
 
   const onSave = (user) => {
     props.dispatch(updateProfile(user));
@@ -39,13 +51,18 @@ function ProfileView(props) {
 
   const clickCreate = () => {
     props.history.push("/createpost");
-  }
+  };
 
   return user.user ? (
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
-          <ProfilePage user={user.user} onSave={onSave} clickCreate={clickCreate} />
+          <ProfilePage
+            user={user.user}
+            companion={companion}
+            onSave={onSave}
+            clickCreate={clickCreate}
+          />
         </div>
       </div>
     </ScrollContainer>

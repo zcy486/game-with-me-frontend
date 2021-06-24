@@ -9,7 +9,9 @@ import {
   TextField,
   Select,
   MenuItem,
+  Typography,
 } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
 
 import MockAvatar from "../../images/avatar.svg";
 import ECoin from "../ECoin";
@@ -75,6 +77,11 @@ const useStyles = makeStyles((theme) => ({
   input: {
     padding: theme.spacing(0),
     textAlign: "left",
+  },
+  companionRow: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -247,22 +254,48 @@ function ProfilePage(props) {
           </Grid>
           <Divider />
           <h2 className={classes.headerInner}>Companion Profile</h2>
-          {}
-          <Grid className={classes.centerArea}>
-            <Grid className={classes.centerRow}>
-              Create your first post to become a companion!
+          {props.companion ? (
+            <Grid>
+              <div className={classes.companionRow}>
+                <Typography>Served: {props.companion.orderNumber}</Typography>
+              </div>
+              <div className={classes.companionRow}>
+                <Typography>Ratings:</Typography>
+                <Rating
+                  value={props.companion.ratings ? props.companion.ratings : 0}
+                  precision={0.1}
+                  readOnly
+                />
+                <Typography>{props.companion.ratings} / 5</Typography>
+              </div>
+              <Grid className={classes.centerArea}>
+                <Button
+                  variant={"contained"}
+                  color={"secondary"}
+                  size={"small"}
+                  onClick={clickCreate}
+                >
+                  Create Post
+                </Button>
+              </Grid>
             </Grid>
-            <Grid className={classes.centerRow}>
-              <Button
-                variant={"contained"}
-                color={"secondary"}
-                size={"small"}
-                onClick={clickCreate}
-              >
-                Create Post
-              </Button>
+          ) : (
+            <Grid className={classes.centerArea}>
+              <Grid className={classes.centerRow}>
+                Create your first post to become a companion!
+              </Grid>
+              <Grid className={classes.centerRow}>
+                <Button
+                  variant={"contained"}
+                  color={"secondary"}
+                  size={"small"}
+                  onClick={clickCreate}
+                >
+                  Create Post
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Grid>
       </Paper>
     </div>

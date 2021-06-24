@@ -47,7 +47,6 @@ export function getPostsWithFilters(filters) {
     }
     return async (dispatch) => {
         try {
-            console.log(filters)
             let response = await PostService.getPostWithFilters(filters);
             dispatch(onSuccess(response));
         } catch (e) {

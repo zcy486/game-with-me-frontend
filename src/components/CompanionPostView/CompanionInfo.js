@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Grid, Paper } from "@material-ui/core";
+import {Button, Grid, Paper, Divider, Typography, Box} from "@material-ui/core";
 
 import MockAvatar from "../../images/avatar.svg";
+import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +33,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
   },
+  ratingRow: {
+    display: "flex",
+  },
+  box: {
+    flexGrow: 1,
+    marginTop: theme.spacing(3),
+  },
+  rating: {
+    display: "flex",
+    alignItems: "center",
+  }
 }));
 
 function CompanionInfo(props) {
@@ -55,6 +68,33 @@ function CompanionInfo(props) {
           <Button variant={"contained"} color={"primary"}>
             Chat
           </Button>
+        </Grid>
+        <Divider />
+        <Grid className={classes.ratingRow}>
+          <Box
+              className={classes.box}
+              component="fieldset"
+              borderColor="transparent"
+          >
+            <Typography variant={"h6"}>Rating score:</Typography>
+            <div className={classes.rating}>
+              <Rating
+                  value={props.ratings? props.ratings : 0}
+                  precision={0.1}
+                  readOnly
+              />
+              <Typography>({props.reviewNumber})</Typography>
+            </div>
+            <Typography>{props.ratings} / 5</Typography>
+          </Box>
+          <Box
+              className={classes.box}
+              component="fieldset"
+              borderColor="transparent"
+          >
+            <Typography variant={"h6"}>Served:</Typography>
+            <Typography>{props.orderNumber}</Typography>
+          </Box>
         </Grid>
       </Grid>
     </Paper>

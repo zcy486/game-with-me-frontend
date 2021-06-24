@@ -48,8 +48,8 @@ function PostDetailsView(props) {
             username={post && post.companionName}
             age={post && post.companionAge}
             introduction={post && post.introduction}
-            ratings={0} //TODO
-            served={0} //TODO
+            ratings={post && post.ratings}
+            served={post && post.orderNumber}
             companionType={post && post.postType}
             server={post && post.servers}
             platform={post && post.platforms}
@@ -57,7 +57,8 @@ function PostDetailsView(props) {
             clickOrder={clickOrder}
           />
           <Comments
-            numComments={10}
+            numComments={post && post.reviewNumber}
+            //TODO change mock data to reviews!
             labels={[
               { num: 10, name: "Carry in game" },
               { num: 5, name: "Humorous" },

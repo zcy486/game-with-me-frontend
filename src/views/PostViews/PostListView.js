@@ -100,7 +100,7 @@ function PostListView(props) {
 
   useEffect(() => {
     props.dispatch(getPostsWithFilters(packFilters()));
-  }, [status, language, type, price, server, platform, sort]);
+  }, [match.params, status, language, type, price, server, platform, sort]);
 
   //all you need with filters is on above!
 
@@ -114,8 +114,6 @@ function PostListView(props) {
     let gameId = match.params.gameId;
     let current = await GameService.getGameInfoById(gameId);
     setCurrentGame(current);
-    let filters = packFilters();
-    props.dispatch(getPostsWithFilters(filters));
   }, [match.params]);
 
   const loadGames = async () => {
@@ -260,7 +258,8 @@ function PostListView(props) {
                   key={i}
                   username={post.companionName}
                   price={post.price}
-                  rating={0} //TODO
+                  ratings={post.ratings}
+                  reviewNumber={post.reviewNumber}
                   languages={post.language}
                   avatar={MockAvatar}
                   onClick={onClickPost}

@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ratingStars: {
     display: "flex",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   languageRow: {

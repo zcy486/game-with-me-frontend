@@ -3,7 +3,7 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
-const labels = {
+const stars = {
     //0.5: 'Useless',
     1: 'Terrible',
     //1.5: 'Poor',
@@ -43,7 +43,7 @@ function StarForRating() {
           setHover(newHover);
         }}
       />
-      {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
+      {value !== null && <Box ml={2}>{stars[hover !== -1 ? hover : value]}</Box>}
     </div>
     //To Do: save and send to backend; 
   );

@@ -5,6 +5,11 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import { logout } from "../../redux/actions";
+import OrderStatus from "../../components/MyOrderDetailView/OrderStatus";
 
 const useStyles = makeStyles({
   root: {
@@ -23,9 +28,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function OutlinedCard() {
+function DetailInfo(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+  
+  const createView = () => {
+    //props.onClose();
+    props.history.push("/orderDetails/review");
+  };
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -45,19 +55,17 @@ export default function OutlinedCard() {
           {bull}Companion:
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Companion_ID:
-        </Typography>
-        <Typography variant="h9" component="h2">
           {bull}Game:
         </Typography>
         <Typography variant="h9" component="h2">
           {bull}Game amount:
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Total amount:
+          {bull}Total price:
         </Typography>
         <Typography variant="h9" component="h2">
           {bull}Order Status:
+          <OrderStatus/>
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           The order will be confirmed by your companion in 15 minutes, otherwise
@@ -72,10 +80,28 @@ export default function OutlinedCard() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="big" color ="primary">
-          OK
+        <Button
+              variant={"contained"}
+              color={"secondary"}
+              size={"large"}
+              
+              //disabled={
+                  //status is finish
+                //  Order.orderStatus == 0 && //Order has been placed
+                //  orderStatus == 1 && //Waiting for your companion\'s confirmation
+                //  orderStatus == 2  //Order is completed by your companion
+              //}
+              onClick={createView} size="big" color ="primary">
+          Create review
         </Button>
       </CardActions>
     </Card>
   );
 }
+DetailInfo.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  anchor: PropTypes.element,
+  open: PropTypes.bool.isRequired,
+};
+
+export default connect()(withRouter(DetailInfo));

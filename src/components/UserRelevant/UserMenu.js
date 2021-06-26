@@ -45,10 +45,12 @@ function UserMenu(props) {
     props.history.push("/profile");
   };
 
-  /*
+ 
   const onClickMyOrders = () => {
+    props.onClose();
+    props.history.push("/myorders");
   };
-  */
+ 
 
   return (
     <Menu
@@ -63,7 +65,7 @@ function UserMenu(props) {
             <MenuItem className={classes.menuItem} onClick={onClickProfile}>
               Profile of: {user.user.username}
             </MenuItem>,
-            <MenuItem className={classes.menuItem}>My Orders</MenuItem>,
+            <MenuItem className={classes.menuItem} onClick={onClickMyOrders}>My Orders</MenuItem>,
             <MenuItem className={classes.menuItem} onClick={onClickLogout}>
               Logout
             </MenuItem>,

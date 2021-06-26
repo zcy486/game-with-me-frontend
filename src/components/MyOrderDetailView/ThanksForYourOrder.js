@@ -16,7 +16,7 @@ function ThanksForYourOrder() {
     <div className={classes.root}>
     
       <Typography variant="h3" gutterBottom>
-        Thanks for your Order!
+        Detail information of your order:
       </Typography>
       <Typography className={classes.pos} color="textSecondary">
         Please wait patiently for your gaming companion to confirm the order. The following is your order information.

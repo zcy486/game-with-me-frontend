@@ -47,39 +47,28 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateReviewView() {
   const classes = useStyles();
-
-
+   
   return (
     <div className={classes.root}>
      
         <div className={classes.content}>
           <h2 className={classes.title}>Create Review For:</h2>
             <ShortRecapBox/>
-          <h3 className={classes.subTitle}>Give an Overall Rating</h3>
+          {/* <h3 className={classes.subTitle}>Give an Overall Rating</h3>
             <StarForRating/>
           <h3 className={classes.subTitle}>Add Labels(Optional)</h3>
             
             <CheckboxLabels/>
           <h3 className={classes.subTitle}>Write a review(Optional)</h3>
-            <ReviewTextField/>
+            <ReviewTextField/> */}
          
-          <div className={classes.buttomS}>
-           <Submitmsg/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-           <CancelButton/>
-          </div> 
-           
-          
-           
-          
+           <div className={classes.buttomS}>
+            <Submitmsg/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+{/*             <CancelButton/>
+ */}           </div> 
       
         </div>
-        
 
-
-      
-        
-      
-  
     </div>
   );
 }

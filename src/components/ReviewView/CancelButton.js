@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { withRouter } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+
 
 const styles = {
   cancel: {
@@ -16,11 +19,23 @@ const styles = {
 
 };
 
-function UnstyledComponent(props) {
+function Cancel(props) {
   const { classes } = props;
-  return <Button className={classes.cancel}>Cancel</Button>;
+  const onCancel = () => {
+    //props.onClose();
+    props.history.push('/');
+  };
+  return(
+    <Button className={classes.cancel} onClick={onCancel}>
+      Cancel
+    </Button>)
 }
+Cancel.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  anchor: PropTypes.element,
+  open: PropTypes.bool.isRequired,
+};
 
 
 
-export default withStyles(styles)(UnstyledComponent);
+export default withRouter (withStyles(styles)(Cancel));

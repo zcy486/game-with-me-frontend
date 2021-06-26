@@ -58,7 +58,7 @@ const routes = [
     component: ChatView,
   },
   {
-    path: "/review",
+    path: "/orderDetails/review",
     component:CreateReviewView,
 },
 {

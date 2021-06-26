@@ -36,21 +36,28 @@ export default function Chips() {
     console.info('You clicked the Chip.');
   };
 
+  //const [label, setLabel] = React.useState("");
+  //const onLabel = (event) => {
+    //setLabel(event.target.value);
+    //setLabelError("");
+  //};
   return (
-    <div className={classes.root}>
-      
-   
+    <div className={classes.root}> 
       <Chip
         icon={<SentimentSatisfiedAltIcon />} 
         label="Humorous" 
         color="primary"
-        onClick={handleClick}   
+        onClick={handleClick}
+        //value={label} 
+        //onChange={onLabel}  
       />
       <Chip
         icon={<SentimentSatisfiedAltIcon />}
         label="Carry in game"
         color="primary"
-        onClick={handleClick} 
+        onClick={handleClick}
+        //onChange={onLabel}  
+
       />
       <Chip
         icon={<SentimentSatisfiedAltIcon />}
@@ -62,7 +69,7 @@ export default function Chips() {
         label="Friendly"
         color="primary"
         onClick={handleClick} 
-     />
+      />
       <Chip
         icon={<SentimentSatisfiedAltIcon />}
         label="Patient"
@@ -74,7 +81,7 @@ export default function Chips() {
         label="Rude"
         color="secondary"
         onClick={handleClick} 
-      />
+      />     
     </div>
   );
 }

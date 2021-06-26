@@ -28,6 +28,7 @@ export default function MultilineTextFields() {
           multiline
           rows={10}
           placeholder="Max. 500 words."
+          onChange={handleChange}
           variant="filled"
         />
       </div>

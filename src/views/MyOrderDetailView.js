@@ -42,17 +42,5 @@ function MyOrderDetailView() {
 
 export default MyOrderDetailView;
 
-/*Generate order number
 
-function orderCode() {
-    var orderCode='';
-    for (var i = 0; i < 6; i++) //six digit random numbers
-    {
-      orderCode += Math.floor(Math.random() * 10);
-    }
-    orderCode = new Date().getTime() + orderCode;  //timestampe
-    console.log(orderCode)
-    return orderCode;
-}
-*/
 

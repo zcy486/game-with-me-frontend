@@ -55,6 +55,25 @@ export default class OrderService {
             );
         });
     }
+    //zy
+    
+    static getOrderByGamerId(gamerId) {       
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                `${OrderService.baseURL()}/gamerId/${gamerId}`,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving order by gamer Id");
+                    }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 
     static updateStatus(id,status) {
         return new Promise((resolve, reject) => {

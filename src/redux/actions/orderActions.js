@@ -83,6 +83,25 @@ export const getOrder = (id) => {
     };
 };
 
+//zy
+export const getOrderByGamerId = (gamerId) => {
+    function onSuccess(order) {
+        return { type: "GETORDERBYGAMERID_SUCCESS", orderlist: order };
+    }
+    function onFailure(error) {
+        console.log("GETORDERBYGAMERID_FAILURE", error);
+    }
+    
+    return async (dispatch, getState) => {
+        try {
+            let order = await OrderService.getOrderByGamerId(gamerId);
+            dispatch(onSuccess(order));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+};
+
 
 export function deleteOrder(id) {
     function onSuccess(orders) {

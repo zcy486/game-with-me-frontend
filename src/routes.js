@@ -46,18 +46,18 @@ const routes = [
     path:'/createpost',
     component: CreatePostView,
   },
+  { 
+    path: "/orderDetails/review",
+    component:CreateReviewView,
+  },
   {
-        path: "/orderDetails/review",
-        component:CreateReviewView,
-    },
-    {
-        path: "/orderDetails",
-        component:MyOrderDetailView,
-    },
-    {
-        path: "/myorders",
-        component:OrderListView,
-    },
+    path: "/orderDetails",
+    component:MyOrderDetailView,
+  },
+  {
+    path: "/myOrders",
+    component:OrderListView,
+  },
 ];
 
 export default routes;

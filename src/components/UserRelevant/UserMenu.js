@@ -20,7 +20,7 @@ function UserMenu(props) {
     // return the currnetly logged in user from redux store
     return state.user;
   });
-
+  
   const onClickLogin = () => {
     props.onClose();
     props.history.push("/login");
@@ -48,7 +48,7 @@ function UserMenu(props) {
  
   const onClickMyOrders = () => {
     props.onClose();
-    props.history.push("/myorders");
+    props.history.push(`/myOrders/${user["_id"]}`);
   };
  
 
@@ -66,6 +66,7 @@ function UserMenu(props) {
               Profile of: {user.user.username}
             </MenuItem>,
             <MenuItem className={classes.menuItem} onClick={onClickMyOrders}>My Orders</MenuItem>,
+
             <MenuItem className={classes.menuItem} onClick={onClickLogout}>
               Logout
             </MenuItem>,

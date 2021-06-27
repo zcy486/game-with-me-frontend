@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,6 +7,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
 import OrderGrid from "../components/MyOrdersView/OrderGrid";
 import backgroundPic from "../images/bg_postlist.png";
+import { connect, useSelector } from "react-redux";
+import { getOrderByGamerId } from "../redux/actions";
+import MockAvatar from "../images/avatar.svg";
+
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,19 +59,54 @@ const useStyles = makeStyles((theme) => ({
   );
 }*/
 
-export default function OrderListView() {
+function OrderListView(props) {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
 
-  
+/*   const getOrderList = () =>{
+    props.dispatch(getOrderByGamerId());
+  }; */
+  const {orderlist} = useSelector((state) => state.order);
+    
+
+  useEffect(() => {
+    if(!user){
+      props.history.push("/login");
+    }
+    //getOrderList();
+    const gamerId = user.user._id.toString();
+    props.dispatch(getOrderByGamerId(gamerId));
+  }, [user]);
+
+/*   useEffect(() =>{
+    console.log(order.orderlist);
+  },[order] ); */
+
   return (
      <div className={classes.root}>     
         <div className={classes.content}>
          <h1 className={classes.yourOrders} >
             My Orders
           </h1>
+          {orderlist && orderlist.map((order,k) => {
+              return (
+                <OrderGrid key={k}
+                  avatar={MockAvatar}
+                  companionId={order.companionId}
+/*                   gameName={order.name}
+ */                  createdAt={order.createdAt}
+                  orderStatus={order.orderStatus}
+                  orderPrice={order.orderPrice} 
+                  order_id={order._id}
+                />
+             
+                
+              );
+            })}
          
-          <OrderGrid/> 
         </div>      
     </div> 
   );
 }
+
+export default connect(/* null, {getOrderByGamerId} */)(OrderListView);

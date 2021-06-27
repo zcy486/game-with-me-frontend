@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OrderGrid(props) {
   const classes = useStyles();
-  const toOrderDetail = (event) => {
+  const onClick = (event) => {
     event.preventDefault();
-    props.onClick(props.order._id);
+    props.onClick(props.order_id);
   }
   return (
    
       <ButtonBase 
-        onClick={toOrderDetail}
+        onClick={onClick}
       >
       <Paper className={classes.paper}>
         <Grid container xs={500} spacing={2}>
@@ -55,11 +55,11 @@ export default function OrderGrid(props) {
                   <Typography gutterBottom variant="subtitle1">
                     {props.companionId}
                   </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    {props.name}
+                  <Typography variant="subtitle2" gutterBottom>
+                    game's name
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    Date
+                    {props.createdAt}
                   </Typography>
                 </Grid>
                 <Grid item >

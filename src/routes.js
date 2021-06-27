@@ -53,6 +53,14 @@ const routes = [
     path:'/createpost',
     component: CreatePostView,
   },
+  { 
+    path: "/orderDetails/review",
+    component:CreateReviewView,
+  },
+  {
+    path: "/orderDetails",
+    component:MyOrderDetailView,
+  },
   {
     path: "/chat",
     component: ChatView,

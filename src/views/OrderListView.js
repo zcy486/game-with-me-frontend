@@ -67,7 +67,7 @@ function OrderListView(props) {
     props.dispatch(getOrderByGamerId());
   }; */
   const {orderlist} = useSelector((state) => state.order);
-    
+  let { match } = props;
 
   useEffect(() => {
     if(!user){
@@ -81,7 +81,10 @@ function OrderListView(props) {
 /*   useEffect(() =>{
     console.log(order.orderlist);
   },[order] ); */
-
+  const onClickOrder = (orderId) => {
+    const orderRoute = "/myOrders" + "/details/" + orderId;
+    props.history.push(orderRoute);
+  };
   return (
      <div className={classes.root}>     
         <div className={classes.content}>
@@ -97,7 +100,8 @@ function OrderListView(props) {
  */                  createdAt={order.createdAt}
                   orderStatus={order.orderStatus}
                   orderPrice={order.orderPrice} 
-                  order_id={order._id}
+                  onClick={onClickOrder}
+
                 />
              
                 

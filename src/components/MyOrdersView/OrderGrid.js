@@ -36,7 +36,7 @@ export default function OrderGrid(props) {
   const classes = useStyles();
   const onClick = (event) => {
     event.preventDefault();
-    props.onClick(props.order_id);
+    props.onClick(props.order._id);
   }
   return (
    

@@ -39,6 +39,7 @@ export function getPost(postId) {
 //TODO
 export function getPostsWithFilters(filters) {
     function onSuccess(response) {
+        console.log(response);
         return { type: "GETPOSTSWITHFILTERS_SUCCESS", response: response};
     }
     function onFailure(error) {

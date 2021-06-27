@@ -25,8 +25,9 @@ function PopularGamesSelector(props) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {props.games.map((game) => (
+        {props.games.map((game, i) => (
           <ListItem
+            key={i}
             button
             selected={props.selectedId === game._id}
             onClick={(event) => handleListItemClick(event, game._id)}

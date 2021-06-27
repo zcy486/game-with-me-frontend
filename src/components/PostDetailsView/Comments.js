@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Helvetica",
     fontWeight: "bold",
   },
-
 }));
 
 function Comments(props) {
@@ -41,9 +40,10 @@ function Comments(props) {
         <h1>Comments: {props.numComments}</h1>
       </div>
       <div className={classes.paperRow}>
-        {props.labels.map(function (label) {
+        {props.labels.map(function (label, i) {
           return (
             <Chip
+              key={i}
               avatar={
                 <Avatar className={classes.chipAvatar}>{label.num}</Avatar>
               }

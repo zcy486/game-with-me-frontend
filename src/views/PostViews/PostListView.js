@@ -4,6 +4,7 @@ import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";
+import { getPostsWithFilters } from "../../redux/actions";
 import GameService from "../../services/GameService";
 
 import ScrollContainer from "../../components/ScrollContainer";
@@ -12,8 +13,6 @@ import PostBox from "../../components/PostListView/PostBox";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
 import noPostImage from "../../images/oops.png";
-
-import { getPostsWithFilters } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -142,10 +141,12 @@ function PostListView(props) {
     }
   }, [games]);
 
-  useEffect(async () => {
-    let gameId = match.params.gameId;
-    let current = await GameService.getGameInfoById(gameId);
-    setCurrentGame(current);
+  useEffect(() => {
+    (async () => {
+      let gameId = match.params.gameId;
+      let current = await GameService.getGameInfoById(gameId);
+      setCurrentGame(current);
+    })();
   }, [match.params]);
 
   const loadGames = async () => {
@@ -190,8 +191,12 @@ function PostListView(props) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {allStatus.map((status) => {
-                  return <MenuItem value={status}>{status}</MenuItem>;
+                {allStatus.map((status, i) => {
+                  return (
+                    <MenuItem key={i} value={status}>
+                      {status}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
@@ -205,8 +210,12 @@ function PostListView(props) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {allLanguages.map((language) => {
-                  return <MenuItem value={language}>{language}</MenuItem>;
+                {allLanguages.map((language, i) => {
+                  return (
+                    <MenuItem key={i} value={language}>
+                      {language}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
@@ -217,8 +226,12 @@ function PostListView(props) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {allTypes.map((type) => {
-                  return <MenuItem value={type}>{type}</MenuItem>;
+                {allTypes.map((type, i) => {
+                  return (
+                    <MenuItem key={i} value={type}>
+                      {type}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
@@ -229,8 +242,12 @@ function PostListView(props) {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {allPrices.map((price) => {
-                  return <MenuItem value={price}>{price}</MenuItem>;
+                {allPrices.map((price, i) => {
+                  return (
+                    <MenuItem key={i} value={price}>
+                      {price}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
@@ -245,8 +262,12 @@ function PostListView(props) {
                   <em>None</em>
                 </MenuItem>
                 {currentGame &&
-                  currentGame.allServers.map((server) => {
-                    return <MenuItem value={server}>{server}</MenuItem>;
+                  currentGame.allServers.map((server, i) => {
+                    return (
+                      <MenuItem key={i} value={server}>
+                        {server}
+                      </MenuItem>
+                    );
                   })}
               </Select>
             </FormControl>
@@ -261,8 +282,12 @@ function PostListView(props) {
                   <em>None</em>
                 </MenuItem>
                 {currentGame &&
-                  currentGame.allPlatforms.map((platform) => {
-                    return <MenuItem value={platform}>{platform}</MenuItem>;
+                  currentGame.allPlatforms.map((platform, i) => {
+                    return (
+                      <MenuItem key={i} value={platform}>
+                        {platform}
+                      </MenuItem>
+                    );
                   })}
               </Select>
             </FormControl>
@@ -272,8 +297,12 @@ function PostListView(props) {
             <FormControl className={classes.formControl}>
               <InputLabel>Sort by</InputLabel>
               <Select value={sort} onChange={(e) => setSort(e.target.value)}>
-                {sortBy.map((sortType) => {
-                  return <MenuItem value={sortType}>{sortType}</MenuItem>;
+                {sortBy.map((sortType, i) => {
+                  return (
+                    <MenuItem key={i} value={sortType}>
+                      {sortType}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
@@ -302,11 +331,14 @@ function PostListView(props) {
               onChange={onChangePage}
             />
           ) : (
-              <div className={classes.noPost}>
-                <img src={noPostImage} className={classes.noPostImage} alt={noPostImage}/>
-                <p className={classes.noPostTitle}>No posts here yet</p>
-              </div>
-
+            <div className={classes.noPost}>
+              <img
+                src={noPostImage}
+                className={classes.noPostImage}
+                alt={noPostImage}
+              />
+              <p className={classes.noPostTitle}>No posts here yet</p>
+            </div>
           )}
         </div>
       </ScrollContainer>

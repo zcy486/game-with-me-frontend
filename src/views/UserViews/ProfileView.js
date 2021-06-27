@@ -37,13 +37,15 @@ function ProfileView(props) {
     }
   }, [user, props.history]);
 
-  useEffect(async () => {
-    if (user.user) {
-      let plusFields = await UserService.getCompanionProfile(user.user._id);
-      if (Object.keys(plusFields).length > 0) {
-        setCompanion(plusFields);
+  useEffect(() => {
+    (async () => {
+      if (user.user) {
+        let plusFields = await UserService.getCompanionProfile(user.user._id);
+        if (Object.keys(plusFields).length > 0) {
+          setCompanion(plusFields);
+        }
       }
-    }
+    })();
   }, [props.history]);
 
   const onSave = (user) => {

@@ -56,8 +56,8 @@ function ThreeSteps() {
         All you need is three steps!
       </Typography>
       <Stepper alternativeLabel connector={<StepLine />}>
-        {steps.map((label) => (
-          <Step completed={true}>
+        {steps.map((label, i) => (
+          <Step key={i} completed={true}>
             <StepLabel StepIconComponent={StepIcon}>
               <div className={classes.textLabels}>{label}</div>
             </StepLabel>

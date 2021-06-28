@@ -76,9 +76,6 @@ const useStyles = makeStyles((theme) => ({
         }
     },
 
-
-
-
     buttons: {
         display: "flex",
         justifyContent: "flex-end",
@@ -127,7 +124,9 @@ function ProfilePage(props) {
 
     const [editMode, setEditMode] = React.useState(false);
 
+    const [uploadImg, setUploadImg] = React.useState(false);
     const [imgSrc, setImgSrc] = React.useState(MockAvatar);
+    const [img, setImg] = React.useState("");
 
     const extractUser = () => {
         if (!props.user) {
@@ -136,6 +135,10 @@ function ProfilePage(props) {
 
         setUserAge(props.user.age);
         setUserGender(props.user.gender);
+        if (props.user.avatarUrl) {
+           setImgSrc(props.user.avatarUrl);
+        }
+
     };
 
     const packUser = () => {
@@ -145,6 +148,7 @@ function ProfilePage(props) {
 
         back.age = userAge;
         back.gender = userGender;
+        back.avatarUrl = imgSrc;
 
         return back;
     };
@@ -173,6 +177,14 @@ function ProfilePage(props) {
     const onSave = () => {
         setEditMode(false);
         props.onSave(packUser());
+        //upload images
+        if(uploadImg){
+        const formData = new FormData();
+        formData.append("image", img);
+        props.onUploadImg(formData);
+        setUploadImg(false);
+        }
+
     };
 
     const clickCreate = () => {
@@ -185,12 +197,17 @@ function ProfilePage(props) {
             return;
         }
         const url = URL.createObjectURL(file);
-
+        setImg(file);
         setImgSrc(url);
+
+        console.log(url);
+        setUploadImg(true);
     }
 
     const onDeleteImg = () => {
+        setImg("");
         setImgSrc(MockAvatar);
+        setUploadImg(false);
     }
 
     return (

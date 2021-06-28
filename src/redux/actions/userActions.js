@@ -63,3 +63,23 @@ export function updateProfile(updatedUser) {
         }
     };
 }
+
+    export function uploadImage(olduser, file) {
+        function onSuccess(user) {
+            return { type: "UPLOAD_SUCCESS", user: user };
+        }
+    
+        function onFailure(error) {
+            return { type: "UPLOADFAILURE", error: error };
+        }
+    
+        return async (dispatch) => {
+            try {
+                let resp = await UserService.uploadImage(olduser, file);
+                dispatch(onSuccess(resp.user));
+            } catch (e) {
+                dispatch(onFailure(e));
+            }
+        };
+
+}

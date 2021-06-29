@@ -4,7 +4,7 @@ import { connect, useSelector } from "react-redux";
 
 import ScrollContainer from "../../components/ScrollContainer";
 import ProfilePage from "../../components/UserRelevant/ProfilePage";
-import { updateProfile, uploadImage } from "../../redux/actions";
+import { updateProfile, uploadImage, deleteImage} from "../../redux/actions";
 import Loading from "../../components/Loading";
 import backgroundPic from "../../images/bg_postlist.png";
 import UserService from "../../services/UserService";
@@ -53,6 +53,11 @@ function ProfileView(props) {
       props.dispatch(uploadImage(user.user, file));
   }
 
+  const onDeleteImg = () => {
+    props.dispatch(deleteImage(user.user));
+}
+
+
   const clickCreate = () => {
     props.history.push("/createpost");
   };
@@ -65,7 +70,8 @@ function ProfileView(props) {
             user={user.user}
             companion={companion}
             onSave={onSave}
-            onUploadImg= {onUploadImg}
+            onUploadImg={onUploadImg}
+            onDeleteImg={onDeleteImg}
             clickCreate={clickCreate}
           />
         </div>

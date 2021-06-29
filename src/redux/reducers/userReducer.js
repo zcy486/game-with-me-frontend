@@ -37,6 +37,8 @@ export default function user(state = getUser(), action) {
             return { user: action.user.user }; 
         case "UPLOAD_SUCCESS":
             return {user: action.user.user};
+        case "DELETE_SUCCESS":
+            return {user: action.user.user};
         case "LOGIN_RESET":
             return {};
         case "LOGOUT":

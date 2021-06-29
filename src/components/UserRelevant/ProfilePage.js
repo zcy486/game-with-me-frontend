@@ -123,8 +123,8 @@ function ProfilePage(props) {
     const [userGender, setUserGender] = React.useState("");
 
     const [editMode, setEditMode] = React.useState(false);
-
     const [uploadImg, setUploadImg] = React.useState(false);
+    const [deleteImg, setDeleteImg] = React.useState(false);
     const [imgSrc, setImgSrc] = React.useState(MockAvatar);
     const [img, setImg] = React.useState("");
 
@@ -136,11 +136,10 @@ function ProfilePage(props) {
         setUserGender(props.user.gender);
         if (props.user.avatarUrl) {
             setImgSrc(props.user.avatarUrl);
-            console.log("extract");
-            console.log(imgSrc);
-        } else setImgSrc(MockAvatar);
+        } else {
+            setImgSrc(MockAvatar);
 
-       
+        }
 
 
     };
@@ -152,6 +151,10 @@ function ProfilePage(props) {
 
         back.age = userAge;
         back.gender = userGender;
+        if (deleteImg) {
+            back.avatarUrl = null;
+            setDeleteImg(false);
+        }
         return back;
     };
 
@@ -187,8 +190,6 @@ function ProfilePage(props) {
             setUploadImg(false);
         }
 
-     //   
-
     };
 
     const clickCreate = () => {
@@ -209,7 +210,14 @@ function ProfilePage(props) {
     const onDeleteImg = () => {
         setImg("");
         if (props.user.avatarUrl) {
-            setImgSrc(props.user.avatarUrl);
+            if (imgSrc == props.user.avatarUrl || imgSrc == MockAvatar) {
+                setImgSrc(MockAvatar);
+                setDeleteImg(true);
+                props.onDeleteImg();
+
+            } else {
+                setImgSrc(props.user.avatarUrl);
+            }
         } else setImgSrc(MockAvatar);
 
         setUploadImg(false);

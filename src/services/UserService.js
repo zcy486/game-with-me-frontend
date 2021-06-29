@@ -86,6 +86,22 @@ export default class UserService {
         });
     }
 
+    static deleteImage(user) {
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                `${UserService.baseURL()}/image/${user._id}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
+
 
     static logout() {
         window.localStorage.removeItem("jwtToken");

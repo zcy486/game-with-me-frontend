@@ -53,7 +53,7 @@ function PostDetailsView(props) {
             companionType={post && post.postType}
             server={post && post.servers}
             platform={post && post.platforms}
-            avatar={MockAvatar}
+            avatar={post && post.avatarUrl}
             clickOrder={clickOrder}
           />
           <Comments

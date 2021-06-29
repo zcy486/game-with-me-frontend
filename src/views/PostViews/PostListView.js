@@ -288,7 +288,7 @@ function PostListView(props) {
                   ratings={post.ratings}
                   reviewNumber={post.reviewNumber}
                   languages={post.language}
-                  avatar={MockAvatar}
+                  avatar={post.avatarUrl ? post.avatarUrl : MockAvatar}
                   onClick={onClickPost}
                   post={post}
                 />

@@ -53,6 +53,7 @@ function CompanionPostView(props) {
             ratings={postsByCompanion && postsByCompanion.ratings}
             reviewNumber={postsByCompanion && postsByCompanion.reviewNumber}
             orderNumber={postsByCompanion && postsByCompanion.orderNumber}
+            avatarUrl={postsByCompanion && postsByCompanion.avatarUrl}
           />
           <h1>Published Games</h1>
           {ownedPosts.length === 0 ? (

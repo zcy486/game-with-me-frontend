@@ -132,12 +132,16 @@ function ProfilePage(props) {
         if (!props.user) {
             return;
         }
-
         setUserAge(props.user.age);
         setUserGender(props.user.gender);
         if (props.user.avatarUrl) {
-           setImgSrc(props.user.avatarUrl);
-        }
+            setImgSrc(props.user.avatarUrl);
+            console.log("extract");
+            console.log(imgSrc);
+        } else setImgSrc(MockAvatar);
+
+       
+
 
     };
 
@@ -148,8 +152,6 @@ function ProfilePage(props) {
 
         back.age = userAge;
         back.gender = userGender;
-        back.avatarUrl = imgSrc;
-
         return back;
     };
 
@@ -178,12 +180,14 @@ function ProfilePage(props) {
         setEditMode(false);
         props.onSave(packUser());
         //upload images
-        if(uploadImg){
-        const formData = new FormData();
-        formData.append("image", img);
-        props.onUploadImg(formData);
-        setUploadImg(false);
+        if (uploadImg) {
+            const formData = new FormData();
+            formData.append("image", img);
+            props.onUploadImg(formData);
+            setUploadImg(false);
         }
+
+     //   
 
     };
 
@@ -199,14 +203,15 @@ function ProfilePage(props) {
         const url = URL.createObjectURL(file);
         setImg(file);
         setImgSrc(url);
-
-        console.log(url);
         setUploadImg(true);
     }
 
     const onDeleteImg = () => {
         setImg("");
-        setImgSrc(MockAvatar);
+        if (props.user.avatarUrl) {
+            setImgSrc(props.user.avatarUrl);
+        } else setImgSrc(MockAvatar);
+
         setUploadImg(false);
     }
 

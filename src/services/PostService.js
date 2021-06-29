@@ -38,7 +38,6 @@ export default class PostService {
         })
     }
 
-    //TODO
     static getPostWithFilters(filters) {
         return new Promise((resolve, reject) => {
             HttpService.post(

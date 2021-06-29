@@ -12,6 +12,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import ECoin from "../ECoin";
+import mockAvatar from "../../images/avatar.svg"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -89,7 +90,7 @@ function PostDetails(props) {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="avatar" src={props.avatar} />
+                <img className={classes.img} alt="avatar" src={props.avatar ? props.avatar : mockAvatar} />
               </ButtonBase>
             </Grid>
 

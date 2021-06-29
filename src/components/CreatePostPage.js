@@ -107,7 +107,7 @@ function CreatePostPage(props) {
 
   const [price, setPrice] = React.useState(1);
   const [serviceType, setserviceType] = React.useState("");
-  const [introduction, setIntroduction] = React.useState("Hey, i am using the GameWithMe!");
+  const [introduction, setIntroduction] = React.useState("Hey, i am using GameWithMe!");
   const [language, setLanguage] = React.useState([]);
   const [availableTime, setAvailableTime] = React.useState([]);
 
@@ -221,7 +221,7 @@ function CreatePostPage(props) {
                     <img
                       className={classes.avatar}
                       alt="avatar"
-                      src={MockAvatar}
+                      src={props.user.avatarUrl ? props.user.avatarUrl : MockAvatar}
                     />
                   </ButtonBase>
                 </Grid>
@@ -445,7 +445,7 @@ function CreatePostPage(props) {
                         rows={3}
                         error={introduction == null}
                         variant="outlined"
-                        defaultValue={"Hey, i am using the GameWithMe!"}
+                        defaultValue={"Hey, i am using GameWithMe!"}
                         onChange={handleIntroductionChange}
                       />
                     </FormControl>

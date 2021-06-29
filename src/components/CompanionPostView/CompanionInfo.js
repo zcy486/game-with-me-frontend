@@ -56,7 +56,7 @@ function CompanionInfo(props) {
       <Grid container direction={"column"}>
         <Grid className={classes.avatarAndInfo}>
           <Grid item>
-            <img className={classes.img} alt="avatar" src={MockAvatar} />
+            <img className={classes.img} alt="avatar" src={props.avatarUrl ? props.avatarUrl : MockAvatar} />
           </Grid>
           <Grid className={classes.info}>
             <Grid item>{props.username}</Grid>

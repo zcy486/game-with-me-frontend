@@ -4,9 +4,10 @@ import { connect, useSelector } from "react-redux";
 
 import ScrollContainer from "../../components/ScrollContainer";
 import ProfilePage from "../../components/UserRelevant/ProfilePage";
-import { updateProfile, uploadImage, deleteImage} from "../../redux/actions";
+import { updateProfile, uploadImage, deleteImage, updateBalance } from "../../redux/actions";
 import Loading from "../../components/Loading";
 import backgroundPic from "../../images/bg_postlist.png";
+import RechargePage from "../../components/CreateOrderView/RechargePage";
 import UserService from "../../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,10 +63,33 @@ function ProfileView(props) {
     props.history.push("/createpost");
   };
 
+
+
+// MEthods for Recharge Pop-Up
+  const onRecharge = () => {
+    handleClickOpen();
+}
+const [open, setOpen] = React.useState(false);
+
+const handleClickOpen = () => {
+    setOpen(true);
+};
+
+const handleClose = () => {
+    setOpen(false);
+};
+
+
+const handleRecharge = (amount) => {
+    props.dispatch(updateBalance(user._id, amount));
+};
+
+
   return user.user ? (
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
+
           <ProfilePage
             user={user.user}
             companion={companion}
@@ -73,7 +97,19 @@ function ProfileView(props) {
             onUploadImg={onUploadImg}
             onDeleteImg={onDeleteImg}
             clickCreate={clickCreate}
+            onRecharge={onRecharge}
+
           />
+
+{open ? (<RechargePage
+                        open={open}
+                        handleClose={handleClose}
+                        currentBalance={user.user.balance}
+                        user={user.user}
+                        handleRecharge= {handleRecharge}
+                    ></RechargePage>) : null}
+
+
         </div>
       </div>
     </ScrollContainer>

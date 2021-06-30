@@ -32,7 +32,7 @@ function CompanionBox(props) {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="avatar" src={props.avatarUrl? props.user.avatarUrl : MockAvatar} />
+            <img className={classes.img} alt="avatar" src={props.avatar? props.avatar : MockAvatar} />
           </ButtonBase>
         </Grid>
 
@@ -43,8 +43,7 @@ function CompanionBox(props) {
             {" "}
             Introduction:
             <Typography variant="subtitle1" gutterBottom>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-              blanditiis tenetur
+              {props.introduction}
             </Typography>
           </Grid>
         </Grid>

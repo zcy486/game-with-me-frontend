@@ -56,6 +56,31 @@ export default class UserService {
         });
     }
 
+
+
+    static updateBalance(id, balance) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${UserService.baseURL()}/balance/${id}`,
+                {
+                    balance: balance,
+
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+
+    }
+
+
+
+
+
     static getCompanionProfile(userId) {
         return new Promise((resolve, reject) => {
             HttpService.get(
@@ -99,9 +124,6 @@ export default class UserService {
             );
         });
     }
-
-
-
 
     static logout() {
         window.localStorage.removeItem("jwtToken");

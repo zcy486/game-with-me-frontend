@@ -12,6 +12,7 @@ export default class HttpService {
                 isPremium: userJson.isPremium,
                 balance: userJson.balance,
                 avatarUrl: userJson.avatarUrl,
+
             },
         };
     }

@@ -33,12 +33,14 @@ export default function user(state = getUser(), action) {
             return { error: "Password or username incorrect." };
         case "REGISTER_FAILURE":
             return { error: "Username has already been taken." };
+        case "UPDATEBALANCE_SUCCESS":
+            return { user: action.user.user };
         case "UPDATEUSER_SUCCESS":
-            return { user: action.user.user }; 
+            return { user: action.user.user };
         case "UPLOAD_SUCCESS":
-            return {user: action.user.user};
+            return { user: action.user.user };
         case "DELETE_SUCCESS":
-            return {user: action.user.user};
+            return { user: action.user.user };
         case "LOGIN_RESET":
             return {};
         case "LOGOUT":

@@ -223,6 +223,11 @@ function ProfilePage(props) {
         setUploadImg(false);
     }
 
+    const onRecharge = () => {
+        props.onRecharge();
+    }
+
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -244,12 +249,8 @@ function ProfilePage(props) {
                                         <IconButton className={classes.deleteIcon} color="primary" aria-label="upload picture" component="span" onClick={onDeleteImg}>
                                             <DeleteIcon />
                                         </IconButton>
-
-                                    </div> : null
-                                }
+                                    </div> : null}
                             </ButtonBase>
-
-
                         </Grid>
                         <Grid item xs container direction="column" spacing={3}>
                             <Grid item>Username: {props.user.username}</Grid>
@@ -330,10 +331,7 @@ function ProfilePage(props) {
                     <Divider />
                     <h2 className={classes.headerInner}>My Wallet</h2>
                     <Grid className={classes.balanceArea}>
-                        Balance: <span>&nbsp;&nbsp;</span>
-                        {props.user.balance}
-                        <span>&nbsp;&nbsp;</span>
-                        <ECoin />
+                        Balance: {props.user.balance}<ECoin />
                     </Grid>
                     <Grid className={classes.buttons}>
                         <Button
@@ -343,10 +341,12 @@ function ProfilePage(props) {
                         >
                             Withdraw
                         </Button>
-                        <Button variant={"contained"} color={"secondary"} size={"small"}>
+                        <Button variant={"contained"} color={"secondary"} size={"small"} onClick={onRecharge}>
                             Charge
                         </Button>
                     </Grid>
+
+
                     <Divider />
                     <h2 className={classes.headerInner}>Companion Profile</h2>
                     {props.companion ? (

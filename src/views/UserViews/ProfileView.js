@@ -4,11 +4,11 @@ import { connect, useSelector } from "react-redux";
 
 import ScrollContainer from "../../components/ScrollContainer";
 import ProfilePage from "../../components/UserRelevant/ProfilePage";
-import { updateProfile } from "../../redux/actions";
+import { updateProfile, uploadImage, deleteImage, updateBalance } from "../../redux/actions";
 import Loading from "../../components/Loading";
 import backgroundPic from "../../images/bg_postlist.png";
 import RechargePage from "../../components/CreateOrderView/RechargePage";
-import { updateBalance } from "../../redux/actions";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,19 +29,39 @@ function ProfileView(props) {
 
   const user = useSelector((state) => state.user);
 
+  const [companion, setCompanion] = React.useState(null);
+
   useEffect(() => {
     if (!user.user) {
       props.history.push("/login");
     }
   }, [user, props.history]);
 
+  useEffect(async () => {
+    if (user.user) {
+      let plusFields = await UserService.getCompanionProfile(user.user._id);
+      if (Object.keys(plusFields).length > 0) {
+        setCompanion(plusFields);
+      }
+    }
+  }, [props.history]);
+
   const onSave = (user) => {
     props.dispatch(updateProfile(user));
   };
 
+  const onUploadImg = (file) => {
+      props.dispatch(uploadImage(user.user, file));
+  }
+
+  const onDeleteImg = () => {
+    props.dispatch(deleteImage(user.user));
+}
+
+
   const clickCreate = () => {
     props.history.push("/createpost");
-  }
+  };
 
 
 
@@ -69,15 +89,27 @@ const handleRecharge = (amount) => {
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
-          <ProfilePage user={user.user} onSave={onSave} clickCreate={clickCreate} onRecharge={onRecharge} />
-          {open ? (<RechargePage
+
+          <ProfilePage
+            user={user.user}
+            companion={companion}
+            onSave={onSave}
+            onUploadImg={onUploadImg}
+            onDeleteImg={onDeleteImg}
+            clickCreate={clickCreate}
+            onRecharge={onRecharge}
+
+          />
+
+{open ? (<RechargePage
                         open={open}
                         handleClose={handleClose}
                         currentBalance={user.user.balance}
                         user={user.user}
                         handleRecharge= {handleRecharge}
                     ></RechargePage>) : null}
-                    
+
+
         </div>
       </div>
     </ScrollContainer>

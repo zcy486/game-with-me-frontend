@@ -11,6 +11,8 @@ export default class HttpService {
                 gender: userJson.gender,
                 isPremium: userJson.isPremium,
                 balance: userJson.balance,
+                avatarUrl: userJson.avatarUrl,
+
             },
         };
     }
@@ -86,16 +88,23 @@ export default class HttpService {
     static async post(url, data, onSuccess, onError) {
         let token = window.localStorage["jwtToken"];
         let header = new Headers();
+        var body = {};
+        if (data instanceof FormData) {
+            body = data;
+         
+        } else {
+            body = JSON.stringify(data);
+            header.append("Content-Type",'application/json');
+        }
         if (token) {
             header.append("Authorization", `JWT ${token}`);
         }
-        header.append("Content-Type", "application/json");
 
         try {
             let resp = await fetch(url, {
                 method: "POST",
                 headers: header,
-                body: JSON.stringify(data),
+                body: body,
             });
 
             if (this.checkIfUnauthorized(resp)) {

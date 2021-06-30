@@ -22,10 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 function FilterBox(props) {
   const classes = useStyles();
-  const [sortType, setSortType] = React.useState("");
-
   const handleChange = (event) => {
-    setSortType(event.target.value);
+    props.handleChange(event.target.value);
   };
 
   return (
@@ -34,8 +32,11 @@ function FilterBox(props) {
         {props.helperText}
       </FormHelperText>
       <FormControl className={classes.formControl}>
-        <Select value={sortType} onChange={handleChange}>
-          {props.choices.map((choice) => (
+        <Select value={props.value} onChange={handleChange}>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {props.choices && props.choices.map((choice) => (
             <MenuItem value={choice}>{choice}</MenuItem>
           ))}
         </Select>

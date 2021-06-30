@@ -64,8 +64,57 @@ export default class UserService {
                 `${UserService.baseURL()}/balance/${id}`,
                 {
                     balance: balance,
-                 
+
                 },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+
+    }
+
+
+
+
+
+    static getCompanionProfile(userId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${UserService.baseURL()}/companion/${userId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
+    static uploadImage(user, file) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${UserService.baseURL()}/image/${user._id}`,
+                file,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static deleteImage(user) {
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                `${UserService.baseURL()}/image/${user._id}`,
                 function (data) {
                     resolve(data);
                 },

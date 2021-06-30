@@ -84,3 +84,44 @@ export function updateBalance(id, balance) {
         }
     };
 }
+
+export function uploadImage(olduser, file) {
+    function onSuccess(user) {
+        return { type: "UPLOAD_SUCCESS", user: user };
+    }
+
+    function onFailure(error) {
+        return { type: "UPLOADFAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.uploadImage(olduser, file);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+
+}
+
+export function deleteImage(auser) {
+    function onSuccess(user) {
+        return { type: "DELETE_SUCCESS", user: user };
+    }
+
+    function onFailure(error) {
+        return { type: "DELETEFAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.deleteImage(auser);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+
+}
+

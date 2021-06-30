@@ -12,6 +12,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import ECoin from "../ECoin";
+import mockAvatar from "../../images/avatar.svg"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -89,7 +90,7 @@ function PostDetails(props) {
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt="avatar" src={props.avatar} />
+                <img className={classes.img} alt="avatar" src={props.avatar ? props.avatar : mockAvatar} />
               </ButtonBase>
             </Grid>
 
@@ -134,8 +135,7 @@ function PostDetails(props) {
             <Typography variant={"h6"}>Rating score:</Typography>
             <div className={classes.rating}>
               <Rating
-                name="read-only"
-                value={props.ratings}
+                value={props.ratings? props.ratings : 0}
                 precision={0.1}
                 readOnly
               />
@@ -168,16 +168,12 @@ function PostDetails(props) {
             <ECoin /> <span>&nbsp;</span>/ Game{" "}
           </Grid>
           <Grid item>
-            Server:
-            {Array.isArray(props.server) && props.server.map((s) => {
-              <p>{s}, </p>
-            })}
+            Server: <span>&nbsp;&nbsp;</span>
+            {Array.isArray(props.server) && props.server.join(", ")}
           </Grid>
           <Grid item>
-            Platform:
-            {Array.isArray(props.platform) && props.platform.map((p) => {
-              <p>{p}, </p>
-            })}
+            Platform: <span>&nbsp;&nbsp;</span>
+            {Array.isArray(props.platform) && props.platform.join(", ")}
           </Grid>
         </Grid>
       </Paper>

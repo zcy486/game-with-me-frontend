@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";
-import { getPostsByGame } from "../../redux/actions";
+import GameService from "../../services/GameService";
 
-import { makeStyles } from "@material-ui/core/styles";
-import GamesSelector from "../../components/PostListView/GamesSelector";
-import FilterBox from "../../components/PostListView/FilterBox";
-import PostBox from "../../components/PostListView/PostBox";
 import ScrollContainer from "../../components/ScrollContainer";
+import GamesSelector from "../../components/PostListView/GamesSelector";
+import PostBox from "../../components/PostListView/PostBox";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
+import noPostImage from "../../images/oops.png";
+
+import { getPostsWithFilters } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,17 +39,47 @@ const useStyles = makeStyles((theme) => ({
   },
   filtersRow: {
     display: "flex",
-    flexDirection: "row",
+  },
+  formControl: {
+    width: 90,
+    margin: theme.spacing(1),
   },
   placeHolder: {
     flexGrow: 1,
+  },
+  noPost: {
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
+  noPostImage: {
+    marginTop: theme.spacing(5),
+    maxWidth: "250px",
+    maxHeight: "250px",
+  },
+  noPostTitle: {
+    fontSize: "xx-large",
+    fontFamily: "Helvetica",
+    fontWeight: "bolder",
+    color: "#8271DD",
+    marginBottom: "0",
   },
 }));
 
 function PostListView(props) {
   const classes = useStyles();
 
-  const allStatus = ["None", "Online", "Offline", "Busy", "All-status"];
+  let { match } = props;
+
+  const games = useSelector((state) => state.games.games);
+
+  const [currentGame, setCurrentGame] = React.useState(null);
+
+  const posts = useSelector((state) => state.posts.response);
+
+  //all you need with filters is here!
+  const allStatus = ["Online", "Offline", "Busy", "All-status"];
   const allLanguages = [
     "Deutsch",
     "English",
@@ -60,15 +94,47 @@ function PostListView(props) {
     "Tiếng Việt",
     "中文",
   ];
-  const allTypes = ["None", "Carry", "Chill", "All types"];
-  const allPrices = ["None", "0-5", "6-10", "11-20", "20+"];
-  const sortBy = ["order", "ratings"];
+  const allTypes = ["Carry", "Chill"];
+  const allPrices = ["0-5", "6-10", "11-20", "20+"];
+  const sortBy = ["orders", "ratings"];
 
-  let { match } = props;
+  const [status, setStatus] = React.useState("");
+  const [language, setLanguage] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [server, setServer] = React.useState("");
+  const [platform, setPlatform] = React.useState("");
+  const [sort, setSort] = React.useState("orders");
+  const [page, setPage] = React.useState(1);
 
-  const games = useSelector((state) => state.games.games);
+  const packFilters = () => {
+    return {
+      gameId: match.params.gameId,
+      language: language,
+      postType: type,
+      price: price,
+      servers: server,
+      platforms: platform,
+      sortBy: sort,
+      page: page,
+    };
+  };
 
-  const postsByGame = useSelector((state) => state.posts.response);
+  useEffect(() => {
+    props.dispatch(getPostsWithFilters(packFilters()));
+  }, [
+    match.params,
+    status,
+    language,
+    type,
+    price,
+    server,
+    platform,
+    sort,
+    page,
+  ]);
+
+  //all you need with filters is on above!
 
   useEffect(() => {
     if (!games) {
@@ -76,13 +142,14 @@ function PostListView(props) {
     }
   }, [games]);
 
-  useEffect(() => {
+  useEffect(async () => {
     let gameId = match.params.gameId;
-    props.getPostsByGame(gameId);
+    let current = await GameService.getGameInfoById(gameId);
+    setCurrentGame(current);
   }, [match.params]);
 
   const loadGames = async () => {
-    props.getGames();
+    props.dispatch(getGames());
   };
 
   const onSelectGame = (gameId) => {
@@ -94,7 +161,10 @@ function PostListView(props) {
     props.history.push(postRoute);
   };
 
-  //TODO add Loading with posts (useSelector) together
+  const onChangePage = (event, page) => {
+    setPage(page);
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.gameSelector}>
@@ -107,51 +177,141 @@ function PostListView(props) {
       <ScrollContainer>
         <div className={classes.content}>
           <h1 className={classes.gameTitle}>
-            {postsByGame && postsByGame.name}
+            {currentGame && currentGame.name}
           </h1>
           <div className={classes.filtersRow}>
-            <FilterBox choices={allStatus} helperText="Status" />
-            <FilterBox choices={allLanguages} helperText="Language" />
-            <FilterBox choices={allTypes} helperText="Type" />
-            <FilterBox choices={allPrices} helperText="Price" />
-            <FilterBox
-              choices={
-                postsByGame && Array.isArray(postsByGame.servers)
-                  ? postsByGame.servers
-                  : []
-              }
-              helperText="Server"
-            />
-            <FilterBox
-              choices={
-                postsByGame && Array.isArray(postsByGame.platforms)
-                  ? postsByGame.platforms
-                  : []
-              }
-              helperText="Platform"
-            />
+            <FormControl className={classes.formControl}>
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {allStatus.map((status) => {
+                  return <MenuItem value={status}>{status}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Language</InputLabel>
+              <Select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {allLanguages.map((language) => {
+                  return <MenuItem value={language}>{language}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Type</InputLabel>
+              <Select value={type} onChange={(e) => setType(e.target.value)}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {allTypes.map((type) => {
+                  return <MenuItem value={type}>{type}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Price</InputLabel>
+              <Select value={price} onChange={(e) => setPrice(e.target.value)}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {allPrices.map((price) => {
+                  return <MenuItem value={price}>{price}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Server</InputLabel>
+              <Select
+                value={server}
+                onChange={(e) => setServer(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {currentGame &&
+                  currentGame.allServers.map((server) => {
+                    return <MenuItem value={server}>{server}</MenuItem>;
+                  })}
+              </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Platform</InputLabel>
+              <Select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {currentGame &&
+                  currentGame.allPlatforms.map((platform) => {
+                    return <MenuItem value={platform}>{platform}</MenuItem>;
+                  })}
+              </Select>
+            </FormControl>
+
             <div className={classes.placeHolder} />
-            <FilterBox choices={sortBy} helperText="Sort by:" />
+
+            <FormControl className={classes.formControl}>
+              <InputLabel>Sort by</InputLabel>
+              <Select value={sort} onChange={(e) => setSort(e.target.value)}>
+                {sortBy.map((sortType) => {
+                  return <MenuItem value={sortType}>{sortType}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
           </div>
-          {postsByGame &&
-            postsByGame.posts.map((post, i) => {
+          {posts &&
+            posts.posts.map((post, i) => {
               return (
                 <PostBox
                   key={i}
                   username={post.companionName}
                   price={post.price}
-                  rating={0} //TODO
+                  ratings={post.ratings}
+                  reviewNumber={post.reviewNumber}
                   languages={post.language}
-                  avatar={MockAvatar}
+                  avatar={post.avatarUrl ? post.avatarUrl : MockAvatar}
                   onClick={onClickPost}
                   post={post}
                 />
               );
             })}
+          {posts && posts.count !== 0 ? (
+            <Pagination
+              count={Math.ceil(posts ? posts.count / 20 : 0)}
+              shape="rounded"
+              color="secondary"
+              onChange={onChangePage}
+            />
+          ) : (
+              <div className={classes.noPost}>
+                <img src={noPostImage} className={classes.noPostImage} alt={noPostImage}/>
+                <p className={classes.noPostTitle}>No posts here yet</p>
+              </div>
+
+          )}
         </div>
       </ScrollContainer>
     </div>
   );
 }
 
-export default connect(null, { getGames, getPostsByGame })(PostListView);
+export default connect()(PostListView);

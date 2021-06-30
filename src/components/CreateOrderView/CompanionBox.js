@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Divider, ButtonBase, Typography } from "@material-ui/core";
-import logo from "../../images/logo.png";
+import MockAvatar from "../../images/avatar.svg";
 import Ecoin from "../ECoin";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,7 @@ function CompanionBox(props) {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="avatar" src={logo} />
+            <img className={classes.img} alt="avatar" src={props.avatarUrl? props.user.avatarUrl : MockAvatar} />
           </ButtonBase>
         </Grid>
 

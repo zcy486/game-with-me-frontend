@@ -50,7 +50,10 @@ function CompanionPostView(props) {
             username={postsByCompanion && postsByCompanion.username}
             age={postsByCompanion && postsByCompanion.age}
             gender={postsByCompanion && postsByCompanion.gender}
-            //TODO: change user to companion!
+            ratings={postsByCompanion && postsByCompanion.ratings}
+            reviewNumber={postsByCompanion && postsByCompanion.reviewNumber}
+            orderNumber={postsByCompanion && postsByCompanion.orderNumber}
+            avatarUrl={postsByCompanion && postsByCompanion.avatarUrl}
           />
           <h1>Published Games</h1>
           {ownedPosts.length === 0 ? (

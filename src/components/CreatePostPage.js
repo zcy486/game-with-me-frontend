@@ -1,19 +1,19 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import {
-  Paper,
-  Grid,
-  ButtonBase,
-  Button,
-  FormControl,
-  Select,
-  InputLabel,
-  TextField,
-  Chip,
-  MenuItem,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Button,
+  ButtonBase,
+  Chip,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
   Typography,
 } from "@material-ui/core";
 
@@ -102,12 +102,12 @@ function CreatePostPage(props) {
   const classes = useStyles();
 
   const [currentGame, setCurrentGame] = React.useState({});
-  const [gameServers, setgameServers] = React.useState([]);
+  const [gameServers, setGameServers] = React.useState([]);
   const [gamePlatforms, setGamePlatforms] = React.useState([]);
 
   const [price, setPrice] = React.useState(1);
   const [serviceType, setserviceType] = React.useState("");
-  const [introduction, setIntroduction] = React.useState("Hey, i am using the GameWithMe!");
+  const [introduction, setIntroduction] = React.useState("Hey, i am using GameWithMe!");
   const [language, setLanguage] = React.useState([]);
   const [availableTime, setAvailableTime] = React.useState([]);
 
@@ -148,11 +148,13 @@ function CreatePostPage(props) {
   }
 
   const handleGameChange = (event) => {
+    setGamePlatforms([]);
+    setGameServers([]);
     setCurrentGame(event.target.value);
   };
 
   const handleServersChange = (event) => {
-    setgameServers(event.target.value);
+    setGameServers(event.target.value);
   };
 
   const handlePlatformsChange = (event) => {
@@ -180,7 +182,7 @@ function CreatePostPage(props) {
   };
 
   const packPost = () => {
-    const post = {
+    return {
       price: price,
       postType: serviceType,
       introduction: introduction,
@@ -192,7 +194,6 @@ function CreatePostPage(props) {
       gameId: currentGame._id,
       companionId: props.user._id,
     };
-    return post;
   };
 
   const onCreate = (event) => {
@@ -220,7 +221,7 @@ function CreatePostPage(props) {
                     <img
                       className={classes.avatar}
                       alt="avatar"
-                      src={MockAvatar}
+                      src={props.user.avatarUrl ? props.user.avatarUrl : MockAvatar}
                     />
                   </ButtonBase>
                 </Grid>
@@ -444,7 +445,7 @@ function CreatePostPage(props) {
                         rows={3}
                         error={introduction == null}
                         variant="outlined"
-                        defaultValue={"Hey, i am using the GameWithMe!"}
+                        defaultValue={"Hey, i am using GameWithMe!"}
                         onChange={handleIntroductionChange}
                       />
                     </FormControl>

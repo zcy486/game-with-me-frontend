@@ -36,16 +36,16 @@ export function getPost(postId) {
     };
 }
 
-export function getPostsByGame(gameId) {
+export function getPostsWithFilters(filters) {
     function onSuccess(response) {
-        return { type: "GETPOSTSBYGAME_SUCCESS", response: response};
+        return { type: "GETPOSTSWITHFILTERS_SUCCESS", response: response};
     }
     function onFailure(error) {
-        console.log("get posts by game failure", error);
+        console.log("get posts with filters failure", error);
     }
     return async (dispatch) => {
         try {
-            let response = await PostService.getPostByGame(gameId);
+            let response = await PostService.getPostWithFilters(filters);
             dispatch(onSuccess(response));
         } catch (e) {
             onFailure(e);

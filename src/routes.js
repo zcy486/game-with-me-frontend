@@ -27,6 +27,7 @@ const routes = [
   {
     path: "/games/:gameId/detail/:postId/order",
     component: CreateOrderView,
+    exact: true,
   },
   {
     path: "/companion/:companionId",

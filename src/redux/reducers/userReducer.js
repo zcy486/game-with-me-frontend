@@ -6,7 +6,7 @@ const getUser = () => {
         let userJson = JSON.parse(window.atob(base64));
         // if token is expired delete it and return {}
         // --> User is not logged in anymore.
-        if (userJson.exp > Date.now()) {
+        if (userJson.exp * 1000 < Date.now()) {
             window.localStorage.removeItem("jwtToken");
             return {};
         }
@@ -18,6 +18,7 @@ const getUser = () => {
                 gender: userJson.gender,
                 isPremium: userJson.isPremium,
                 balance: userJson.balance,
+                avatarUrl: userJson.avatarUrl,
             },
         };
     }
@@ -31,8 +32,14 @@ export default function user(state = getUser(), action) {
         case "LOGIN_FAILURE":
             return { error: "Password or username incorrect." };
         case "REGISTER_FAILURE":
-            return {error: "Username has already been taken."};
+            return { error: "Username has already been taken." };
         case "UPDATEBALANCE_SUCCESS":
+            return { user: action.user.user };
+        case "UPDATEUSER_SUCCESS":
+            return { user: action.user.user };
+        case "UPLOAD_SUCCESS":
+            return { user: action.user.user };
+        case "DELETE_SUCCESS":
             return { user: action.user.user };
         case "LOGIN_RESET":
             return {};

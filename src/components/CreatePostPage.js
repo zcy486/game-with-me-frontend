@@ -221,7 +221,7 @@ function CreatePostPage(props) {
                     <img
                       className={classes.avatar}
                       alt="avatar"
-                      src={MockAvatar}
+                      src={ props.user.avatarUrl? props.user.avatarUrl : MockAvatar}
                     />
                   </ButtonBase>
                 </Grid>

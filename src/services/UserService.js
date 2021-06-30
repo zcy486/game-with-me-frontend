@@ -70,6 +70,39 @@ export default class UserService {
         });
     }
 
+
+    static uploadImage(user, file) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${UserService.baseURL()}/image/${user._id}`,
+                file,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static deleteImage(user) {
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                `${UserService.baseURL()}/image/${user._id}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
+
+
     static logout() {
         window.localStorage.removeItem("jwtToken");
     }

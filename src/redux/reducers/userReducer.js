@@ -18,6 +18,7 @@ const getUser = () => {
                 gender: userJson.gender,
                 isPremium: userJson.isPremium,
                 balance: userJson.balance,
+                avatarUrl: userJson.avatarUrl,
             },
         };
     }
@@ -33,7 +34,11 @@ export default function user(state = getUser(), action) {
         case "REGISTER_FAILURE":
             return { error: "Username has already been taken." };
         case "UPDATEUSER_SUCCESS":
-            return { user: action.user.user };
+            return { user: action.user.user }; 
+        case "UPLOAD_SUCCESS":
+            return {user: action.user.user};
+        case "DELETE_SUCCESS":
+            return {user: action.user.user};
         case "LOGIN_RESET":
             return {};
         case "LOGOUT":

@@ -105,6 +105,7 @@ function CreateOrderView(props) {
                         price={post && post.price}
                         server={post && post.servers}
                         platform={post && post.platforms}
+                        avatar ={post && post.avatarUrl}
                     />
                 </div>
             </div>

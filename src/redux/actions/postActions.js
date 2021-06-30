@@ -36,7 +36,6 @@ export function getPost(postId) {
     };
 }
 
-//TODO
 export function getPostsWithFilters(filters) {
     function onSuccess(response) {
         return { type: "GETPOSTSWITHFILTERS_SUCCESS", response: response};

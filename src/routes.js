@@ -7,6 +7,7 @@ import LoginView from "./views/UserViews/LoginView";
 import CreateOrderView from "./views/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
+import ChatView from "./views/ChatViews/ChatView";
 
 const routes = [
   {
@@ -48,6 +49,10 @@ const routes = [
   {
     path:'/createpost',
     component: CreatePostView,
+  },
+  {
+    path: "/chat",
+    component: ChatView,
   },
 ];
 

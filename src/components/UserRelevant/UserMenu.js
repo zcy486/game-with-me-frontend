@@ -60,19 +60,19 @@ function UserMenu(props) {
     >
       {user.user
         ? [
-            <MenuItem className={classes.menuItem} onClick={onClickProfile}>
+            <MenuItem key={"profile"} className={classes.menuItem} onClick={onClickProfile}>
               Profile of: {user.user.username}
             </MenuItem>,
-            <MenuItem className={classes.menuItem}>My Orders</MenuItem>,
-            <MenuItem className={classes.menuItem} onClick={onClickLogout}>
+            <MenuItem key={"myorders"} className={classes.menuItem}>My Orders</MenuItem>,
+            <MenuItem key={"logout"} className={classes.menuItem} onClick={onClickLogout}>
               Logout
             </MenuItem>,
           ]
         : [
-            <MenuItem className={classes.menuItem} onClick={onClickLogin}>
+            <MenuItem key={"login"} className={classes.menuItem} onClick={onClickLogin}>
               Log In
             </MenuItem>,
-            <MenuItem className={classes.menuItem} onClick={onClickSignUp}>
+            <MenuItem key={"signup"} className={classes.menuItem} onClick={onClickSignUp}>
               Sign Up
             </MenuItem>,
           ]}
@@ -83,7 +83,7 @@ function UserMenu(props) {
 //Type checking
 UserMenu.propTypes = {
   onClose: PropTypes.func.isRequired,
-  anchor: PropTypes.element,
+  anchor: PropTypes.object,
   open: PropTypes.bool.isRequired,
 };
 

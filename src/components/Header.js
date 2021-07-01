@@ -170,6 +170,9 @@ function Header(props) {
     if (!user.user) {
       props.history.push("/login");
     }
+    else {
+      props.history.push("/chat");
+    }
   };
 
   return (

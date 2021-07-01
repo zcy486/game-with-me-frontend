@@ -55,7 +55,7 @@ function CompanionBox(props) {
 
           <Grid item container flex="row">
             Price: {props.price} <span>&nbsp;</span>
-            <Ecoin></Ecoin> <span>&nbsp;</span>/ Game{" "}
+            <Ecoin/> <span>&nbsp;</span>/ Game{" "}
           </Grid>
           <Grid item>Server: {props.server}</Grid>
           <Grid item>Platform: {props.platform}</Grid>

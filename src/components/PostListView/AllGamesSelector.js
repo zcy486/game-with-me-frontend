@@ -46,27 +46,27 @@ function AllGamesSelector(props) {
   let result = Object.values(data);
 
   const handleListItemClick = (event, id) => {
-    props.onSelectGame(id)
+    props.onSelectGame(id);
   };
 
   return (
     <List className={classes.root} subheader={<li />}>
       <li key={`section-A`} className={classes.listSection}>
         <ul className={classes.ul}>
-          {result.map((section) => (
-            <div>
+          {result.map((section, i) => (
+            <div key={i}>
               <ListSubheader>{section.group}</ListSubheader>
-              {Array.isArray(section.children) && (
-                section.children.map((game) => (
+              {Array.isArray(section.children) &&
+                section.children.map((game, j) => (
                   <ListItem
+                    key={j}
                     button
                     selected={props.selectedId === game._id}
                     onClick={(event) => handleListItemClick(event, game._id)}
                   >
                     <ListItemText primary={game.name} />
                   </ListItem>
-                ))
-              )}
+                ))}
             </div>
           ))}
         </ul>

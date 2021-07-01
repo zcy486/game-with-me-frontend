@@ -104,6 +104,7 @@ function PostDetailsView(props) {
             server={post && post.servers}
             platform={post && post.platforms}
             avatar={post && post.avatarUrl}
+            availableTime={post && post.availableTime}
             clickOrder={clickOrder}
             canOrder={canOrder}
             user={user}

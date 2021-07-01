@@ -16,54 +16,54 @@ import ECoin from "../ECoin";
 import mockAvatar from "../../images/avatar.svg"
 
 const useStyles = makeStyles((theme) => ({
-    title: {
-        display: "flex",
-    },
-    priceInfo: {
-        display: "flex",
-        marginRight: theme.spacing(6),
-    },
-    eCoinArea: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    paper: {
-        fontFamily: "Helvetica",
-        padding: theme.spacing(5),
-        marginBottom: theme.spacing(7),
-        fontSize: 20,
-    },
-    image: {
-        width: 128,
-        height: 128,
-    },
-    img: {
-        margin: "auto",
-        display: "block",
-        maxWidth: "100%",
-        maxHeight: "100%",
-    },
-    buttons: {
-        display: "flex",
-        justifyContent: "flex-end",
-        margin: theme.spacing(3),
-    },
-    chatButton: {
-        marginRight: theme.spacing(5),
-    },
-    ratingRow: {
-        display: "flex",
-    },
-    box: {
-        flexGrow: 1,
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3),
-    },
-    rating: {
-        display: "flex",
-        alignItems: "center",
-    },
+  title: {
+    display: "flex",
+  },
+  priceInfo: {
+    display: "flex",
+    marginRight: theme.spacing(6),
+  },
+  eCoinArea: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  paper: {
+    fontFamily: "Helvetica",
+    padding: theme.spacing(5),
+    marginBottom: theme.spacing(1),
+    fontSize: 20,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+    margin: theme.spacing(3),
+  },
+  chatButton: {
+    marginRight: theme.spacing(5),
+  },
+  ratingRow: {
+    display: "flex",
+  },
+  box: {
+    flexGrow: 1,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  rating: {
+    display: "flex",
+    alignItems: "center",
+  },
 }));
 
 function PostDetails(props) {

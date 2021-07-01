@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import PostDetails from "../../components/PostDetailsView/PostDetails";
@@ -6,7 +6,13 @@ import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
-import {getPost} from "../../redux/actions";
+import { getPost } from "../../redux/actions";
+
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import IconButton from "@material-ui/core/IconButton";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +26,25 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(30),
     paddingBottom: theme.spacing(10),
   },
+  screenshots: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    flexWrap: "nowrap",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: "translateZ(0)",
+  },
+  title: {
+    color: theme.palette.primary.light,
+  },
+  titleBar: {
+    background:
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
 }));
 
 function PostDetailsView(props) {
@@ -27,7 +52,16 @@ function PostDetailsView(props) {
 
   let { match } = props;
 
-  const post = useSelector((state) => state.posts.post)
+  const post = useSelector((state) => state.posts.post);
+
+  //TODO: replace mock screenshots
+  const screenshots = [
+    { original: MockAvatar, originalAlt: "1" },
+    { original: MockAvatar, originalAlt: "2" },
+    { original: MockAvatar, originalAlt: "3" },
+    { original: MockAvatar, originalAlt: "4" },
+    { original: MockAvatar, originalAlt: "5" },
+  ];
 
   const user = useSelector((state) => state.user.user)
 
@@ -74,6 +108,13 @@ function PostDetailsView(props) {
             canOrder={canOrder}
             user={user}
           />
+          <GridList className={classes.gridList} cols={2.5}>
+            {screenshots.map((screenshot) => (
+              <GridListTile key={screenshot.original}>
+                <img src={screenshot.original} alt={screenshot.originalAlt} />
+              </GridListTile>
+            ))}
+          </GridList>
           <Comments
             numComments={post && post.reviewNumber}
             //TODO change mock data to reviews!

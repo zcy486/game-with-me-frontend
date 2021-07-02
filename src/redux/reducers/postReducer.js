@@ -8,8 +8,6 @@ export default function posts(state = {}, action) {
             return { response: action.response };
         case "COMPANIONPOST":
             return { companion: action.companion };
-        case "UPLOADS_SUCCESS":
-            return {screenshots: action.screenshots};
         default:
             return state;
     }

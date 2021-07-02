@@ -234,11 +234,9 @@ function CreatePostPage(props) {
             for (const file of screenshotFiles) {
                 formData.append("image", file);
             }
-
             props.onCreate(packPost(), formData );
-            //props.onUploadImgs(formData);
         }
-      //  props.onCreate(packPost(), formData );
+        else props.onCreate(packPost(), null);
     };
     return (
         <div className={classes.root}>

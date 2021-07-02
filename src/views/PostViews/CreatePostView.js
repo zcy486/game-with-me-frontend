@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import { getGames } from "../../redux/actions";
+import { getGames, uploadImages } from "../../redux/actions";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ScrollContainer from "../../components/ScrollContainer";
@@ -38,14 +38,19 @@ function CreatePostView(props) {
     props.history.push("/profile");
   };
 
-  const onCreate = (post) => {
-    props.dispatch(createPost(post));
+  const onCreate = (post, files) => {
+    props.dispatch(createPost(post, files));
     props.history.push("/profile");
+    
   };
 
   const loadGames = async () => {
     props.dispatch(getGames());
   };
+
+  const onUploadImgs = (files) => {
+    props.dispatch(uploadImages(files));
+  }
 
   useEffect(() => {
     if (!games) {
@@ -59,7 +64,7 @@ function CreatePostView(props) {
       <div className={classes.root}>
         <div className={classes.pageArea}>
           <h1>Create Your Post</h1>
-          <CreatePostPage user={user.user} onCancel={onCancel} onCreate={onCreate} games={games.all} />
+          <CreatePostPage  user={user.user} onCancel={onCancel} onCreate={onCreate} games={games.all}  onUploadImgs={onUploadImgs}/>
         </div>
       </div>
     </ScrollContainer>

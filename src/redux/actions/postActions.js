@@ -1,6 +1,6 @@
 import PostService from "../../services/PostService";
 
-export function createPost(post) {
+export function createPost(post,files) {
     function onSuccess() {
         return { type: "CREATEPOST_SUCCESS" };
     }
@@ -10,7 +10,10 @@ export function createPost(post) {
 
     return async (dispatch) => {
       try {
-          await PostService.createPost(post);
+          let res = await PostService.uploadImages(files);
+          let po = post;
+          po.screenshots = res.screenshots;
+          await PostService.createPost(po);
           dispatch(onSuccess());
       } catch (e) {
           onFailure(e);
@@ -69,4 +72,22 @@ export function getPostsByCompanion(companionId) {
             onFailure(e);
         }
     }
+}
+
+export function uploadImages(files) {
+    function onSuccess(resp) {
+        return { type: "UPLOADS_SUCCESS", screenshots: resp};
+    }
+    function onFailure(error) {
+        console.log("UPLOAD_FAILURE", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await PostService.uploadImages(files);
+            dispatch(onSuccess(resp));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
 }

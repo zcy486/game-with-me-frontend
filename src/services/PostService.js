@@ -67,4 +67,21 @@ export default class PostService {
             );
         });
     }
+
+    static uploadImages(files) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${PostService.baseURL()}/image`,
+                files,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
 }

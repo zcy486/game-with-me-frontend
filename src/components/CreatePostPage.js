@@ -632,7 +632,8 @@ function CreatePostPage(props) {
                                 gameServers.length === 0 ||
                                 gamePlatforms.length === 0 ||
                                 language.length === 0 ||
-                                availableTime.length === 0
+                                availableTime.length === 0 ||
+                                serviceType.length ===0
                             }
                             onClick={onCreate}
                         >

@@ -98,10 +98,14 @@ function ChatView() {
     socket.on("users", (users) => {
       let _allUsers = [...allUsers];
       users.forEach((user) => {
+        user.messages.forEach((message) => {
+          message.fromSelf = message.from === socket.userID;
+        });
         for (let i = 0; i < _allUsers.length; i++) {
           const existingUser = _allUsers[i];
           if (existingUser.userID === user.userID) {
             existingUser.connected = user.connected;
+            existingUser.messages = user.messages;
             return;
           }
         }
@@ -179,7 +183,6 @@ function ChatView() {
   }, [socket, allUsers, selectedUser]);
 
   const initReactiveProperties = (user) => {
-    user.messages = [];
     user.hasNewMessages = false;
   };
 
@@ -233,7 +236,12 @@ function ChatView() {
         })}
       </List>
       <div className={classes.panel}>
-        <p>You are chat with: {selectedUser && selectedUser.username}</p>
+        <p>
+          You are chat with:{" "}
+          {selectedUser && selectedUser.self
+            ? "(yourself)"
+            : selectedUser && selectedUser.username}
+        </p>
         {selectedUser &&
           selectedUser.messages.map((message, i) => {
             return (

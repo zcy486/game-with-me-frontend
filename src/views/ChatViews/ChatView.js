@@ -1,29 +1,22 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import AnnouncementIcon from "@material-ui/icons/Announcement";
+import { Divider } from "@material-ui/core";
 
 import socket from "../../socket";
+import ChatList from "../../components/Chat/ChatList";
+import ChatHeader from "../../components/Chat/ChatHeader";
+import MessagePanel from "../../components/Chat/MessagePanel";
+import UserInput from "../../components/Chat/UserInput";
 
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
   },
-  panel: {
+  rightPanel: {
+    width: "100%",
     display: "flex",
     flexDirection: "column",
-  },
-  userInput: {
-    display: "flex",
   },
 }));
 
@@ -214,54 +207,26 @@ function ChatView() {
 
   return (
     <div className={classes.root}>
-      <List>
-        {allUsers.map((user, i) => {
-          return (
-            <ListItem
-              key={i}
-              button
-              onClick={() => onSelectUser(user)}
-              selected={selectedUser && selectedUser.userID === user.userID}
-            >
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={user.username}
-                secondary={user.connected ? "online" : "offline"}
-              />
-              {user.hasNewMessages ? <AnnouncementIcon /> : <div />}
-            </ListItem>
-          );
-        })}
-      </List>
-      <div className={classes.panel}>
-        <p>
-          You are chat with:{" "}
-          {selectedUser && selectedUser.self
-            ? "(yourself)"
-            : selectedUser && selectedUser.username}
-        </p>
-        {selectedUser &&
-          selectedUser.messages.map((message, i) => {
-            return (
-              <p key={i}>
-                {message.fromSelf ? "me" : selectedUser.username}:{" "}
-                {message.content}
-              </p>
-            );
-          })}
-        <div className={classes.userInput}>
-          <TextField
-            value={input}
+      <ChatList
+        allUsers={allUsers}
+        selectedUser={selectedUser}
+        onSelectUser={onSelectUser}
+      />
+      {selectedUser ? (
+        <div className={classes.rightPanel}>
+          <ChatHeader selectedUser={selectedUser} />
+          <Divider />
+          <MessagePanel selectedUser={selectedUser} />
+          <Divider />
+          <UserInput
+            input={input}
             onChange={onChange}
-            label="Write here..."
-            variant="outlined"
-            color={"secondary"}
+            sendMessage={sendMessage}
           />
-          <Button onClick={() => sendMessage(input)}>Send</Button>
         </div>
-      </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

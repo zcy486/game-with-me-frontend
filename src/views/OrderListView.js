@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ScrollContainer from "../components/ScrollContainer";
 import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
 import OrderGrid from "../components/MyOrdersView/OrderGrid";
 import backgroundPic from "../images/bg_postlist.png";
 import { connect, useSelector } from "react-redux";

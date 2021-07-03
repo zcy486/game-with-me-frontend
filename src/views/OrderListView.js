@@ -101,6 +101,7 @@ function OrderListView(props) {
                   orderPrice={order.orderPrice} 
                   onClick={onClickOrder}
 
+                  order_id={order._id}
                 />
              
                 

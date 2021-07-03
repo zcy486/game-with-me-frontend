@@ -58,7 +58,7 @@ const routes = [
     component:CreateReviewView,
   },
   {
-    path: "/orderDetails",
+    path: "/orderDetails/:orderId",
     component:MyOrderDetailView,
   },
   {

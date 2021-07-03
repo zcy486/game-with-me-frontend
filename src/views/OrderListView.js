@@ -95,7 +95,7 @@ function OrderListView(props) {
               return (
                 <OrderGrid key={k}
                   avatar={MockAvatar}
-                  companionId={order.companionId}
+                  companionId={order.companionName}
 /*                   gameName={order.name}
  */                  createdAt={order.createdAt}
                   orderStatus={order.orderStatus}

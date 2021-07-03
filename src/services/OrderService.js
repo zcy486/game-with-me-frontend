@@ -75,14 +75,10 @@ export default class OrderService {
 
     static deleteOrder(id) {
         return new Promise((resolve, reject) => {
-            HttpService.delete(
+            HttpService.remove(
                 `${OrderService.baseURL()}/${id}`,
                 function (data) {
-                    if (data.message !== undefined) {
-                        resolve(data.message);
-                    } else {
-                        reject("Error while deleting");
-                    }
+                   resolve(data);
                 },
                 function (textStatus) {
                     reject(textStatus);

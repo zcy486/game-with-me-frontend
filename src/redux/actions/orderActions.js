@@ -1,4 +1,5 @@
 import OrderService from "../../services/OrderService";
+import UserService from "../../services/UserService";
 
 
 export function getOrders() {
@@ -27,10 +28,9 @@ export function getOrders() {
 
 
 
-export function createOrder(price, postId, gamerId)
-    {
-    function onSuccess() {
-        return { type: "CREATEORDER_SUCCESS" };
+export function createOrder(price, gamerId, postId, currentBalance) {
+    function onSuccess(order) {
+        return { type: "CREATEORDER_SUCCESS", order: order };
     }
     function onFailure(error) {
         console.log("create order failure", error);
@@ -38,7 +38,12 @@ export function createOrder(price, postId, gamerId)
 
     return async (dispatch) => {
         try {
-            let order = await OrderService.createOrder(price, postId, gamerId);
+            let order = await OrderService.createOrder(price, gamerId, postId);
+            await UserService.updateBalance(gamerId, (currentBalance - price));
+            localStorage.setItem("order", JSON.stringify(order));
+
+            setTimeout(shouldDelete(order._id), 20000);
+            //Store the TO-BE-UPDATED order in the localStorage 
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);
@@ -46,7 +51,7 @@ export function createOrder(price, postId, gamerId)
     };
 }
 
-export function updateOrderStatus(status) {
+export function updateOrderStatus(id, status) {
     function onSuccess(order) {
         return { type: "UPDATESTATUS_SUCCESS", order: order };
     }
@@ -57,7 +62,7 @@ export function updateOrderStatus(status) {
 
     return async (dispatch) => {
         try {
-            let order = await OrderService.updateStatus(status);
+            let order = await OrderService.updateStatus(id, status);
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);
@@ -83,7 +88,7 @@ export const getOrder = (id) => {
     };
 };
 
-
+// changed for order
 export function deleteOrder(id) {
     function onSuccess(orders) {
         return { type: "DELETEORDER_SUCCESS", orders: orders };
@@ -99,5 +104,40 @@ export function deleteOrder(id) {
         } catch (e) {
             onFailure(e);
         }
-    };
+
+
+    }
+};
+
+
+function shouldDelete(id) {
+    return async () => {
+        try {
+            if (window.localStorage["order"]) {
+                let order = await OrderService.getOrder(id);
+                if (order.orderStatus === "Created") {
+                    alert("Your order has been automatically cancelled because companion didn't confirmed.")
+                    await OrderService.deleteOrder(id);
+                    localStorage.removeItem("order");
+                }
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
+
+export function cancelOrder(id) {
+    return async () => {
+        try {
+            await OrderService.deleteOrder(id);
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+
+

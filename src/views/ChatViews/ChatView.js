@@ -186,7 +186,7 @@ function ChatView() {
 
   const sendMessage = (content) => {
     if (selectedUser && content.length > 0) {
-      let _selectedUser = { ...selectedUser };
+      let _selectedUser = JSON.parse(JSON.stringify(selectedUser));
       socket.emit("private message", {
         content,
         to: _selectedUser.userID,

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ScrollContainer from "../../components/ScrollContainer";
+import Message from "./Message";
 
 const useStyles = makeStyles((theme) => ({
   messagePanel: {
@@ -11,11 +12,9 @@ const useStyles = makeStyles((theme) => ({
   messageSelf: {
     display: "flex",
     justifyContent: "flex-end",
-    whiteSpace: "pre-wrap",
   },
   messageOther: {
     display: "flex",
-    whiteSpace: "pre-wrap",
   },
 }));
 
@@ -44,10 +43,10 @@ function MessagePanel(props) {
                   message.fromSelf ? classes.messageSelf : classes.messageOther
                 }
               >
-                <p>
-                  {message.fromSelf ? "me" : props.selectedUser.username}:{"\n"}
-                  {message.content}
-                </p>
+                <Message
+                  from={message.fromSelf ? "me" : props.selectedUser.username}
+                  content={message.content}
+                />
               </div>
             );
           })}

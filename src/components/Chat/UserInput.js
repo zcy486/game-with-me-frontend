@@ -15,10 +15,6 @@ const useStyles = makeStyles((theme) => ({
 function UserInput(props) {
   const classes = useStyles();
 
-  const sendMessage = (input) => {
-    props.sendMessage(input);
-  };
-
   return (
     <div className={classes.userInput}>
       <TextField
@@ -31,8 +27,8 @@ function UserInput(props) {
         multiline
         rowsMax={4}
       />
-      <IconButton>
-        <SendIcon onClick={() => sendMessage(props.input)} />
+      <IconButton onClick={() => props.sendMessage(props.input)}>
+        <SendIcon />
       </IconButton>
     </div>
   );

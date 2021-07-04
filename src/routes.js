@@ -54,7 +54,7 @@ const routes = [
     component: CreatePostView,
   },
   {
-    path: "/chat",
+    path: "/chat/:targetID?/:targetName?",
     component: ChatView,
   },
   {

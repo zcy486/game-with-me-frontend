@@ -20,8 +20,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function ChatView() {
+function ChatView(props) {
   const classes = useStyles();
+
+  let { match } = props;
 
   const me = useSelector((state) => state.user.user);
 
@@ -31,27 +33,23 @@ function ChatView() {
 
   useEffect(() => {
     if (me) {
-      console.log("Enter chat room and try first connection.");
+      console.log("Entering the chat room...");
       socket.auth = { userID: me._id, username: me.username };
+      if (match.params.targetID && match.params.targetName) {
+        socket.auth.targetID = match.params.targetID;
+        socket.auth.targetName = match.params.targetName;
+      }
       socket.connect();
     }
     // clean up when this view unmounts
-    return () => socket.disconnect();
+    return () => {
+      console.log("Leaving the chat room...");
+      socket.disconnect();
+    }
   }, [me]);
 
   useEffect(() => {
-    const sessionID = localStorage.getItem("sessionID");
-
-    if (sessionID) {
-      socket.auth = { sessionID };
-      socket.connect();
-    }
-
-    socket.on("session", ({ sessionID, userID }) => {
-      // attach the session ID to the next reconnection attempts
-      socket.auth = { sessionID };
-      // store it in the localStorage
-      localStorage.setItem("sessionID", sessionID);
+    socket.on("session", ({ userID }) => {
       // save the ID of the user
       socket.userID = userID;
     });
@@ -68,26 +66,6 @@ function ChatView() {
   }, []);
 
   useEffect(() => {
-    socket.on("connect", () => {
-      let _allUsers = [...allUsers];
-      _allUsers.forEach((user) => {
-        if (user.self) {
-          user.connected = true;
-        }
-      });
-      setAllUsers(_allUsers);
-    });
-
-    socket.on("disconnect", () => {
-      let _allUsers = [...allUsers];
-      _allUsers.forEach((user) => {
-        if (user.self) {
-          user.connected = false;
-        }
-      });
-      setAllUsers(_allUsers);
-    });
-
     socket.on("users", (users) => {
       let _allUsers = [...allUsers];
       users.forEach((user) => {
@@ -102,14 +80,14 @@ function ChatView() {
             return;
           }
         }
-        user.self = user.userID === socket.userID;
         initReactiveProperties(user);
+        if (user.userID === match.params.targetID) {
+          setSelectedUser(user);
+        }
         _allUsers.push(user);
       });
       // put the current user first, and sort by username
       _allUsers.sort((a, b) => {
-        if (a.self) return -1;
-        if (b.self) return 1;
         if (a.username < b.username) return -1;
         return a.username > b.username ? 1 : 0;
       });
@@ -166,8 +144,6 @@ function ChatView() {
     });
     // clean up
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
       socket.off("users");
       socket.off("user connected");
       socket.off("user disconnected");
@@ -186,16 +162,16 @@ function ChatView() {
 
   const sendMessage = (content) => {
     if (selectedUser && content.length > 0) {
-      let _selectedUser = JSON.parse(JSON.stringify(selectedUser));
       socket.emit("private message", {
         content,
-        to: _selectedUser.userID,
+        to: selectedUser.userID,
       });
-      _selectedUser.messages.push({
+      selectedUser.messages.push({
         content,
         fromSelf: true,
       });
-      setSelectedUser(_selectedUser);
+      //TODO
+      //setSelectedUser(_selectedUser);
     }
     setInput("");
   };

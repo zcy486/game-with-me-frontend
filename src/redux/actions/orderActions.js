@@ -28,7 +28,7 @@ export function getOrders() {
 
 
 
-export function createOrder(price, gamerId, postId, currentBalance) {
+export function createOrder(price, gamerId, postId, companionId, currentBalance) {
     function onSuccess(order) {
         return { type: "CREATEORDER_SUCCESS", order: order };
     }
@@ -38,17 +38,17 @@ export function createOrder(price, gamerId, postId, currentBalance) {
 
     return async (dispatch) => {
         try {
-            let order = await OrderService.createOrder(price, gamerId, postId);
+            let order = await OrderService.createOrder(price, gamerId, postId, companionId);
             await UserService.updateBalance(gamerId, (currentBalance - price));
 
             //Store the TO-BE-UPDATED order in the localStorage 
             localStorage.setItem("order", JSON.stringify(order));
 
             //get the latest order fron backend every 3 seconds 
-            let interval = setInterval(updatedOrder(order._id),3000);
+        //    let interval = setInterval(updatedOrder(order._id),3000);
 
             //if more than 20s order status still not changed, then delete the order, and clear the interval 
-            setTimeout(shouldDelete(order._id, interval), 20000);
+           // setTimeout(shouldDelete(order._id, interval, gamerId, currentBalance), 20000);
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);
@@ -114,8 +114,8 @@ export function deleteOrder(id) {
     }
 };
 
-
-function shouldDelete(id, interval) {
+//helper function
+function shouldDelete(id, interval, gamerId, currentBalance) {
     return async () => {
         try {
             if (window.localStorage["order"]) {
@@ -124,6 +124,10 @@ function shouldDelete(id, interval) {
                 if (order.orderStatus === "Created") {
                     alert("Your order has been automatically cancelled because companion didn't confirmed.")
                     await OrderService.deleteOrder(id);
+
+                    //return the ecoin to gamer.
+                    await UserService.updateBalance(gamerId, currentBalance);
+
                 }
                 if (order.orderStatus === "Confirmed") {
                     alert("Your order has been confirmed by the companion")
@@ -151,6 +155,27 @@ function updatedOrder(id) {
         }
     }
 }
+
+
+
+export const getCompanionOrders = (id) => {
+    function onSuccess(companionorders) {
+        return { type: "COMPANIONORDERS", companionorders: companionorders };
+    }
+    function onFailure(error) {
+        console.log("GETORDER_FAILURE", error);
+    }
+
+    return async (dispatch, getState) => {
+        try {
+            let orders = await OrderService.getCompanionOrders(id);
+            dispatch(onSuccess(orders));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+};
+
 
 
 

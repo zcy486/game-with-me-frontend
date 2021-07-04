@@ -42,8 +42,8 @@ function CreateOrderView(props) {
       }, [user, props.history]);
 
 
-    const onConfirm = (price, gamerId, postId) => {
-        props.dispatch(createOrder(price, gamerId, postId, user.balance));
+    const onConfirm = (price, gamerId, postId, companionId) => {
+        props.dispatch(createOrder(price, gamerId, postId, companionId, user.balance));
         //TODO: change that to my order page!
         props.history.push("/");
     };

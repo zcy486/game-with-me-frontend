@@ -5,7 +5,7 @@ export default class OrderService {
         return "http://localhost:4000/order";
     }
 
-    static createOrder(price, gamerId, postId
+    static createOrder(price, gamerId, postId, companionId
         ) {
         return new Promise((resolve, reject) => {
             HttpService.post(
@@ -13,7 +13,8 @@ export default class OrderService {
                 {
                     orderPrice: price,
                     gamerId: gamerId,
-                    postId: postId
+                    postId: postId,
+                    companionId: companionId,
                 },
                 function (data) {
                     resolve(data);
@@ -87,6 +88,17 @@ export default class OrderService {
         });
     }
 
-
-   
+    //get orders for companion with this id
+    static getCompanionOrders(id) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${OrderService.baseURL()}/companion/${id}`,
+                function (data) {
+                    resolve(data);
+                    console.log(data);
+                }, function (textStatus) {
+                    reject(textStatus);
+                });
+        });
+    }
 }

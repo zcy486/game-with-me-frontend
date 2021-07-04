@@ -12,7 +12,7 @@ import routes from "./routes";
 import Header from "./components/Header";
 import theme from "./theming/themes";
 import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
+import CancelIcon from '@material-ui/icons/Cancel';
 import OrderService from "../src/services/OrderService";
 
 const useStyles = makeStyles(() => ({
@@ -67,8 +67,8 @@ function App() {
                         </Switch>
                         {hasOrder ?
                             <Fab variant="extended" className={classes.fab} color={"secondary"} onClick={cancel}>
-                                <NavigationIcon />
-                                Cancel your order
+                                <CancelIcon/>
+                                Cancel current order
                             </Fab> : null}
                     </React.Fragment>
                 </Provider>

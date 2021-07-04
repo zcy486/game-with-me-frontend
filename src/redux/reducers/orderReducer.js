@@ -3,11 +3,10 @@ const getOrder = () => {
         let orderJson = JSON.parse(window.localStorage.getItem("order"));
         // if 15 mins later than createdtime, order is deleted and return {}
         let createTime = orderJson.createdAt;
-        //TODO: here example 2 mins
-        let expireTime = Date.parse(createTime) + 120000
+        let expireTime = Date.parse(createTime) + 900000
         if (expireTime < Date.now()) {
-          //  window.localStorage.removeItem("order");
-          //  return {};
+            window.localStorage.removeItem("order");
+            return {};
         }
         return {
             order: {
@@ -28,6 +27,8 @@ export default function orders(state = getOrder(), action) {
             return { error: action.error };
         case "CREATEORDER_SUCCESS":
             return { order: action.order };
+        case "COMPANIONORDERS":
+            return { companionorders: action.companionorders };
         default:
             return state;
     }

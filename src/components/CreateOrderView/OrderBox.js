@@ -40,7 +40,7 @@ function OrderBox(props) {
 
   const onConfirm = (event) => {
     event.preventDefault();
-    props.onConfirm(totalAmount, props.user._id, props.post._id);
+    props.onConfirm(totalAmount, props.user._id, props.post._id, props.post.companionId);
   };
 
   const onRecharge = (event) => {

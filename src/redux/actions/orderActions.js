@@ -40,10 +40,15 @@ export function createOrder(price, gamerId, postId, currentBalance) {
         try {
             let order = await OrderService.createOrder(price, gamerId, postId);
             await UserService.updateBalance(gamerId, (currentBalance - price));
+
+            //Store the TO-BE-UPDATED order in the localStorage 
             localStorage.setItem("order", JSON.stringify(order));
 
-            setTimeout(shouldDelete(order._id), 20000);
-            //Store the TO-BE-UPDATED order in the localStorage 
+            //get the latest order fron backend every 3 seconds 
+            let interval = setInterval(updatedOrder(order._id),3000);
+
+            //if more than 20s order status still not changed, then delete the order, and clear the interval 
+            setTimeout(shouldDelete(order._id, interval), 20000);
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);
@@ -110,16 +115,21 @@ export function deleteOrder(id) {
 };
 
 
-function shouldDelete(id) {
+function shouldDelete(id, interval) {
     return async () => {
         try {
             if (window.localStorage["order"]) {
+                clearInterval(interval);
                 let order = await OrderService.getOrder(id);
                 if (order.orderStatus === "Created") {
                     alert("Your order has been automatically cancelled because companion didn't confirmed.")
                     await OrderService.deleteOrder(id);
-                    localStorage.removeItem("order");
                 }
+                if (order.orderStatus === "Confirmed") {
+                    alert("Your order has been confirmed by the companion")
+                }
+                //clear the storage anyway even if it's confirmed
+                localStorage.removeItem("order");
             }
 
         } catch (e) {
@@ -128,10 +138,13 @@ function shouldDelete(id) {
     }
 }
 
-export function cancelOrder(id) {
+function updatedOrder(id) {
     return async () => {
-        try {
-            await OrderService.deleteOrder(id);
+        try { 
+            if (window.localStorage["order"]) {
+            let order = await OrderService.getOrder(id);
+            localStorage.setItem("order", JSON.stringify(order));
+            }
 
         } catch (e) {
             console.log(e);

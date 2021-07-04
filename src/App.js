@@ -66,9 +66,9 @@ function App() {
                             ))}
                         </Switch>
                         {hasOrder ?
-                            <Fab variant="extended" className={classes.fab} onClick={cancel}>
+                            <Fab variant="extended" className={classes.fab} color={"secondary"} onClick={cancel}>
                                 <NavigationIcon />
-                                Order
+                                Cancel your order
                             </Fab> : null}
                     </React.Fragment>
                 </Provider>

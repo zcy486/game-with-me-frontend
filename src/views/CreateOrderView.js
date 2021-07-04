@@ -28,7 +28,6 @@ function CreateOrderView(props) {
     const classes = useStyles();
     const user = useSelector((state) => state.user.user);
     const post = useSelector((state) => state.posts.post);
-    const order = useSelector((state) => state.order.order);
     let { match } = props;
 
     useEffect(() => {
@@ -46,12 +45,11 @@ function CreateOrderView(props) {
     const onConfirm = (price, gamerId, postId) => {
         props.dispatch(createOrder(price, gamerId, postId, user.balance));
         //TODO: change that to my order page!
-      //  props.history.push("/");
+        props.history.push("/");
     };
 
     const onRecharge = () => {
         handleClickOpen();
-        console.log(order)
     }
     const [open, setOpen] = React.useState(false);
 

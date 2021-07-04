@@ -29,7 +29,7 @@ function MessagePanel(props) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [props.selectedUser.messages]);
+  }, [props.scroll]);
 
   return (
     <ScrollContainer>

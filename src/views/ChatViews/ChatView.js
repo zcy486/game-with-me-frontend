@@ -28,6 +28,7 @@ function ChatView(props) {
   const me = useSelector((state) => state.user.user);
 
   const [input, setInput] = React.useState("");
+  const [scroll, setScroll] = React.useState(false);
   const [allUsers, setAllUsers] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState(null);
 
@@ -45,7 +46,7 @@ function ChatView(props) {
     return () => {
       console.log("Leaving the chat room...");
       socket.disconnect();
-    }
+    };
   }, [me]);
 
   useEffect(() => {
@@ -131,10 +132,9 @@ function ChatView(props) {
             content,
             fromSelf,
           });
-          if (
-            !selectedUser ||
-            (selectedUser && selectedUser.userID !== user.userID)
-          ) {
+          if (selectedUser && selectedUser.userID === user.userID) {
+            setScroll((value) => !value);
+          } else {
             user.hasNewMessages = true;
           }
           break;
@@ -158,6 +158,7 @@ function ChatView(props) {
   const onSelectUser = (user) => {
     user.hasNewMessages = false;
     setSelectedUser(user);
+    setScroll((value) => !value);
   };
 
   const sendMessage = (content) => {
@@ -170,8 +171,7 @@ function ChatView(props) {
         content,
         fromSelf: true,
       });
-      //TODO
-      //setSelectedUser(_selectedUser);
+      setScroll((value) => !value);
     }
     setInput("");
   };
@@ -192,7 +192,7 @@ function ChatView(props) {
         <div className={classes.rightPanel}>
           <ChatHeader selectedUser={selectedUser} />
           <Divider />
-          <MessagePanel selectedUser={selectedUser} />
+          <MessagePanel selectedUser={selectedUser} scroll={scroll} />
           <Divider />
           <UserInput
             input={input}

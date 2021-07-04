@@ -110,9 +110,9 @@ function PostDetailsView(props) {
             user={user}
           />
           <GridList className={classes.gridList} cols={2.5}>
-            {screenshots.map((screenshot) => (
-              <GridListTile key={screenshot.original}>
-                <img src={screenshot.original} alt={screenshot.originalAlt} />
+            {post && post.screenshots && !post.screenshots.isEmpty && Array.isArray(post.screenshots) && post.screenshots.map((screenshot) => (
+              <GridListTile key={screenshot}>
+                <img src={screenshot} alt={"screenshot"} />
               </GridListTile>
             ))}
           </GridList>

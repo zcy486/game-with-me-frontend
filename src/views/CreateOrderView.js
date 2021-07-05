@@ -28,8 +28,6 @@ function CreateOrderView(props) {
     const classes = useStyles();
     const user = useSelector((state) => state.user.user);
     const post = useSelector((state) => state.posts.post);
-
-
     let { match } = props;
 
     useEffect(() => {
@@ -44,8 +42,8 @@ function CreateOrderView(props) {
       }, [user, props.history]);
 
 
-    const onConfirm = (price, postId, gamerId) => {
-        props.dispatch(createOrder(price, postId, gamerId));
+    const onConfirm = (price, gamerId, postId, companionId) => {
+        props.dispatch(createOrder(price, gamerId, postId, companionId, user.balance));
         //TODO: change that to my order page!
         props.history.push("/");
     };

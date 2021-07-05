@@ -8,6 +8,7 @@ import CreateOrderView from "./views/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
+import CompanionOrderView from "./views/CompanionOrderView";
 
 const routes = [
   {
@@ -33,6 +34,7 @@ const routes = [
   {
     path: "/companion/:companionId",
     component: CompanionPostView,
+    exact: true,
   },
   {
     path: "/login",
@@ -53,6 +55,11 @@ const routes = [
   {
     path: "/chat",
     component: ChatView,
+  },
+  {
+    path: "/companionorder/:companionId",
+    component: CompanionOrderView,
+    exact: true,
   },
 ];
 

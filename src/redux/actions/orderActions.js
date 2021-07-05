@@ -44,11 +44,11 @@ export function createOrder(price, gamerId, postId, companionId, currentBalance)
             //Store the TO-BE-UPDATED order in the localStorage 
             localStorage.setItem("order", JSON.stringify(order));
 
-            //get the latest order fron backend every 3 seconds 
-        //    let interval = setInterval(updatedOrder(order._id),3000);
+            //get the latest order fron backend every 5 seconds 
+            let interval = setInterval(updatedOrder(order._id),5000);
 
             //if more than 20s order status still not changed, then delete the order, and clear the interval 
-           // setTimeout(shouldDelete(order._id, interval, gamerId, currentBalance), 20000);
+            setTimeout(shouldDelete(order._id, interval, gamerId, currentBalance), 20000);
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);

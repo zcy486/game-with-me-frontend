@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Helvetica",
         padding: theme.spacing(2),
         marginBottom: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
     },
     paperContent: {
         display: "flex",

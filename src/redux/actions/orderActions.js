@@ -176,6 +176,24 @@ export const getCompanionOrders = (id) => {
     };
 };
 
+export const updateCompanionOrders = (orderId, status, id) => {
+    function onSuccess(companionorders) {
+        return { type: "COMPANIONORDERS_CHANGED", companionorders: companionorders };
+    }
+    function onFailure(error) {
+        console.log("GETORDER_FAILURE", error);
+    }
+
+    return async (dispatch, getState) => {
+        try {
+            await OrderService.updateStatus(orderId, status);
+            let orders = await OrderService.getCompanionOrders(id);
+            dispatch(onSuccess(orders));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+};
 
 
 

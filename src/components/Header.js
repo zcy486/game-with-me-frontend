@@ -18,6 +18,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserMenu from "./UserRelevant/UserMenu";
 import SearchService from "../services/SearchService";
+import UserService from "../services/UserService";
 //import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
@@ -137,6 +138,7 @@ function Header(props) {
       setOptions([]);
     }
   }, [open]);
+
 
   const onInputChange = (event, value) => {
     setOptions([]);

@@ -26,13 +26,18 @@ function UserMenu(props) {
     useEffect(() => {
         (async () => {
             if (user.user) {
+                try{
                 let plusFields = await UserService.getCompanionProfile(user.user._id);
                 if (Object.keys(plusFields).length > 0) {
                     setCompanion(plusFields);
                 }
             }
+            catch(e){
+                window.location.reload();
+            }
+            }
         })();
-    }, [props.history]);
+    }, [ user, props.history]);
 
     const onClickLogin = () => {
         props.onClose();
@@ -55,6 +60,7 @@ function UserMenu(props) {
 
     const onClickProfile = () => {
         props.onClose();
+        console.log(user)
         props.history.push("/profile");
     };
 
@@ -83,7 +89,7 @@ function UserMenu(props) {
                         Profile of: {user.user.username}
                     </MenuItem>
                     <MenuItem key={"myorders"} className={classes.menuItem}>My Orders</MenuItem>
-                {companion 
+                {(companion !== null)
                 ?
                     <MenuItem key={"companionOrders"} className={classes.menuItem} onClick={onClickCompanionOrder}>
                         My companion orders

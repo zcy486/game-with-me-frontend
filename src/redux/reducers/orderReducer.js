@@ -29,6 +29,8 @@ export default function orders(state = getOrder(), action) {
             return { order: action.order };
         case "COMPANIONORDERS":
             return { companionorders: action.companionorders };
+        case "COMPANIONORDERS_CHANGED":
+            return { companionorders: action.companionorders };
         default:
             return state;
     }

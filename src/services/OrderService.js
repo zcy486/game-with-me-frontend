@@ -95,10 +95,11 @@ export default class OrderService {
                 `${OrderService.baseURL()}/companion/${id}`,
                 function (data) {
                     resolve(data);
-                    console.log(data);
                 }, function (textStatus) {
                     reject(textStatus);
                 });
         });
     }
+
+
 }

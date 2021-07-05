@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
 import ECoin from "../ECoin";
 import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         width: 840,
         fontFamily: "Helvetica",
         padding: theme.spacing(2),
-        marginBottom: theme.spacing(1),
+        marginBottom: theme.spacing(2),
     },
     paperContent: {
         display: "flex",
@@ -57,20 +56,25 @@ const useStyles = makeStyles((theme) => ({
 function CompanionOrderBox(props) {
     const classes = useStyles();
 
-    const onClick = (event) => {
+    const onClickConfirm = (event) => {
         event.preventDefault();
-        props.onClick(props.post._id);
+        props.onClickConfirm(props.order._id);
+    };
+
+    const onClickComplete = (event) => {
+        event.preventDefault();
+        props.onClickComplete(props.order._id);
     };
 
     const switchStatus = (status) => {
         switch(status) {
             case "Created":
-                return (<Button variant={"contained"} color={"secondary"}>
+                return (<Button variant={"contained"} color={"secondary"} onClick={onClickConfirm}>
                     Confirm
                 </Button>);
             case "Confirmed":
                 return(
-                <Button variant={"contained"} color={"secondary"}>
+                <Button variant={"contained"} color={"secondary"} onClick={onClickComplete}>
                     Complete
                 </Button>);
             case "CompletedByCompanion":
@@ -84,10 +88,8 @@ function CompanionOrderBox(props) {
         }
     }
 
-
-
     return (
-        <ButtonBase>
+ 
             <Paper className={classes.paper}>
                 <Grid className={classes.paperContent}>
                     <Grid item>
@@ -126,7 +128,7 @@ function CompanionOrderBox(props) {
           </Grid>
                 </Grid>
             </Paper>
-        </ButtonBase>
+   
     );
 }
 

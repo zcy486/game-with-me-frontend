@@ -7,7 +7,7 @@ import ScrollContainer from "../components/ScrollContainer";
 import backgroundPic from "../images/bg_postlist.png";
 import MockAvatar from "../images/avatar.svg";
 import CompanionOrderBox from "../components/CompanionOrderView/CompanionOrderBox";
-import { getCompanionOrders } from "../redux/actions";
+import { getCompanionOrders, updateCompanionOrders } from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     pageTitle: {
         fontSize: "40px",
         fontFamily: "Helvetica",
+        paddingBottom: theme.spacing(8),
     },
     placeHolder: {
         flexGrow: 1,
@@ -58,12 +59,19 @@ function CompanionOrderView(props) {
 
     const orders = useSelector((state) => state.order.companionorders);
 
-
     useEffect(() => {
-        props.dispatch(getCompanionOrders(match.params.companionId));
+       props.dispatch(getCompanionOrders(match.params.companionId));
     }, [match.params]);
 
 
+ 
+    const onClickComplete = (id) => {
+        props.dispatch(updateCompanionOrders(id, "CompletedByCompanion", match.params.companionId));
+    }
+
+    const onClickConfirm = (id) => {
+        props.dispatch(updateCompanionOrders(id, "Confirmed", match.params.companionId));
+    }
     return (
 
         <ScrollContainer>
@@ -78,6 +86,7 @@ function CompanionOrderView(props) {
                             return (
                                 <CompanionOrderBox
                                     key={i}
+                                    order={order}
                                     gamerName={order.gamerName}
                                     gameName={order.gameName}
                                     price={order.orderPrice}
@@ -85,6 +94,8 @@ function CompanionOrderView(props) {
                                     status={order.orderStatus}
                                     gameNumber = {order.gameNumber}
                                     avatar={order.gamerAvatarUrl? order.gamerAvatarUrl: MockAvatar}
+                                    onClickConfirm={onClickConfirm}
+                                    onClickComplete={onClickComplete}
                                 />
                             );
                         })}

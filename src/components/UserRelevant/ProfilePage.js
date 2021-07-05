@@ -222,6 +222,12 @@ function ProfilePage(props) {
     props.onRecharge();
   };
 
+  const onWithdraw = () => {
+    props.onWithdraw();
+  };
+
+
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -354,6 +360,7 @@ function ProfilePage(props) {
               className={classes.secondButton}
               variant={"outlined"}
               size={"small"}
+              onClick={onWithdraw}
             >
               Withdraw
             </Button>

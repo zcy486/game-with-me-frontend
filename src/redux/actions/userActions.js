@@ -66,7 +66,7 @@ export function updateProfile(updatedUser) {
 }
 
 
-export function updateBalance(id, balance) {
+export function updateBalance(id, balance, type, amount, account) {
     function onSuccess(user) {
         return { type: "UPDATEBALANCE_SUCCESS", user: user };
     }
@@ -78,6 +78,7 @@ export function updateBalance(id, balance) {
     return async (dispatch) => {
         try {
             let resp = await UserService.updateBalance(id, balance);
+            await UserService.recordPayment(id, type, amount, account);
             dispatch(onSuccess(resp.user));
         } catch (e) {
             dispatch(onFailure(e));

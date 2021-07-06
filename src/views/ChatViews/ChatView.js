@@ -29,6 +29,7 @@ function ChatView(props) {
 
   const [input, setInput] = React.useState("");
   const [scroll, setScroll] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
   const [allUsers, setAllUsers] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [postLink, setPostLink] = React.useState(null);
@@ -88,14 +89,10 @@ function ChatView(props) {
     socket.on("users", (users) => {
       let _allUsers = [...allUsers];
       users.forEach((user) => {
-        user.messages.forEach((message) => {
-          message.fromSelf = message.from === socket.userID;
-        });
         for (let i = 0; i < _allUsers.length; i++) {
           const existingUser = _allUsers[i];
           if (existingUser.userID === user.userID) {
             existingUser.connected = user.connected;
-            existingUser.messages = user.messages;
             return;
           }
         }
@@ -140,6 +137,16 @@ function ChatView(props) {
       setAllUsers(_allUsers);
     });
 
+    socket.on("loaded messages", (messages) => {
+      messages.forEach((message) => {
+        message.fromSelf = message.from === socket.userID;
+      });
+      if (selectedUser) {
+        selectedUser.messages = messages;
+        setScroll((value) => !value);
+      }
+    });
+
     socket.on("private message", ({ content, from, to }) => {
       let _allUsers = [...allUsers];
       for (let i = 0; i < _allUsers.length; i++) {
@@ -165,17 +172,21 @@ function ChatView(props) {
       socket.off("users");
       socket.off("user connected");
       socket.off("user disconnected");
+      socket.off("loaded messages");
       socket.off("private message");
     };
   }, [socket, allUsers, selectedUser]);
 
   const initReactiveProperties = (user) => {
+    user.messages = [];
+    user.loaded = false;
     user.hasNewMessages = false;
   };
 
   const onSelectUser = (user) => {
     user.hasNewMessages = false;
     setSelectedUser(user);
+    setLoaded(user.loaded);
     setScroll((value) => !value);
   };
 
@@ -199,6 +210,18 @@ function ChatView(props) {
     setInput(event.target.value);
   };
 
+  const onClickLoad = (event) => {
+    event.preventDefault();
+    if (selectedUser && !selectedUser.loaded) {
+      setLoaded(true);
+      selectedUser.loaded = true;
+      socket.emit("load messages", {
+        from: socket.userID,
+        to: selectedUser.userID,
+      });
+    }
+  };
+
   return (
     <div className={classes.root}>
       <ChatList
@@ -210,7 +233,12 @@ function ChatView(props) {
         <div className={classes.rightPanel}>
           <ChatHeader selectedUser={selectedUser} postLink={postLink} />
           <Divider />
-          <MessagePanel selectedUser={selectedUser} scroll={scroll} />
+          <MessagePanel
+            selectedUser={selectedUser}
+            scroll={scroll}
+            loaded={loaded}
+            onLoad={onClickLoad}
+          />
           <Divider />
           <UserInput
             input={input}

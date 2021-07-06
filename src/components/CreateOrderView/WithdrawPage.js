@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Radio from '@material-ui/core/Radio';
@@ -33,106 +32,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-//add the PayPal Button
 
-const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
-
-
-
-
-
-
-function RechargePage(props) {
+function WithdrawPage(props) {
     const classes = useStyles();
 
-    const createPayPalOrder = (data, actions, err) => {
-        return actions.order.create({
-            purchase_units: [
-                {
-
-                    description: "RechargeEcoin",
-                    amount: {
-                        value: payValue,
-                        breakdown: {
-                            item_total: {
-                                currency_code: "EUR",
-                                value: payValue,
-                            },
-
-                            shipping: {
-                                currency_code: "EUR",
-                                value: "0",
-                            },
-                            tax_total: {
-                                currency_code: "EUR",
-                                value: "0",
-                            },
-                            discount: {
-                                currency_code: "EUR",
-                                value: "0",
-                            },
-                            handling: {
-                                currency_code: "EUR",
-                                value: "0",
-                            }
-
-                        },
-                        insurance: {
-                            currency_code: "EUR",
-                            value: "0",
-                        },
-                        shipping_discount: {
-                            currency_code: "EUR",
-                            value: "0",
-                        },
-
-                    },
-                    items: [
-                        {
-
-
-                            name: "Ecoin",
-                            price: "1",
-
-                            quantity: value,
-                            unit_amount: {
-                                currency_code: "EUR",
-                                value: "1.1",
-                            }
-                        },
-
-
-                    ],
-                },
-
-
-
-            ]
-        });
-    };
-
-
-
-    const onCancel = (data) => {
+    const onCancel = () => {
         props.handleClose();
     };
 
     const onError = (err) => {
         console.log(err)
     }
-
-    const onApprove = (data, actions) => {
-        return actions.order.capture().then(function (details) {
-            // This function shows a transaction success message to your buyer.
-            props.handleClose();
-            const newBalance = props.currentBalance + Number(details.purchase_units[0].items[0].quantity);
-            props.handleRecharge(newBalance, Number(details.purchase_units[0].items[0].quantity), details.payer.email_address);
-
-        });
-
-
-
-    };
 
     //user selected radio quantities
     const [value, setValue] = useState(10);
@@ -141,9 +51,12 @@ function RechargePage(props) {
     const [inputValue, setInputValue] = useState(100);
 
 
+    const [account, setAccount] = useState(null)
 
     const invalidValue = (value <= 0);
 
+
+    const invalidAccount = (account === null);
 
     const handleInputChange = (e) => {
 
@@ -157,15 +70,23 @@ function RechargePage(props) {
 
     };
 
-
+    const handleAccountChange = (e) => {
+        setAccount(e.target.value)
+    }
 
 
     const handleClose = () => {
         props.handleClose();
     };
 
-    var payValue = Math.round((value * 1.1) * 100) / 100;
+    var outValue = Math.round((value * 0.9) * 100) / 100;
 
+
+    const handleWithdraw = () => {
+        const newBalance = props.currentBalance - Number(value);
+        props.handleWithdraw(newBalance, Number(value), account);
+        props.handleClose();
+    }
 
     return (
         <Dialog
@@ -176,12 +97,28 @@ function RechargePage(props) {
             maxWidth={'lg'}
         >
             <DialogTitle id="dialog-title">
-                {"Recharge Page"}
+                {"Withdraw Page"}
             </DialogTitle>
             <DialogContent dividers={true}>
 
                 <DialogContentText id="dialog-description">
-                    Please choose the amount of E-coins you want to charge:
+                    Please tell us your Paypal account:
+                </DialogContentText>
+
+
+                <TextField
+                    required
+                    id="standard-required"
+                    type="text"
+                    label="Paypal account"
+                    rows={1}
+                    error={account == null}
+                    variant="standard"
+                    onChange={handleAccountChange}
+                />
+
+                <DialogContentText id="dialog-description">
+                    Please choose the amount of E-coins you want to withdraw:
                 </DialogContentText>
                 <FormControl>
                     <FormLabel> Amount</FormLabel>
@@ -205,30 +142,25 @@ function RechargePage(props) {
                         />} >
 
                         </FormControlLabel>
-
-
-
-
                     </RadioGroup>
+
+
                 </FormControl>
 
-                {invalidValue ?
+                {invalidValue || invalidAccount ?
                     <DialogContentText id="dialog-description">
-                        Please choose a valid amount.
+                        Please enter a valid information.
                     </DialogContentText> : <Grid>
                         <DialogContentText id="dialog-description">
-                            You will have to pay {payValue} EURO to get {Number(value)} ecoins.
+                            You will get {outValue} EURO to yout Paypal account: {account} for withdrawing {Number(value)} ecoins.
                         </DialogContentText>
-
                         <Grid>
-                            <PayPalButton createOrder={(data, actions) => createPayPalOrder(data, actions)}
-                                onApprove={(data, actions) => onApprove(data, actions)} onCancel={(data) => onCancel(data)}
-                                onError={(err) => onError(err)}></PayPalButton>
                         </Grid>
                     </Grid>}
             </DialogContent>
             <DialogActions>
 
+                <Button onClick={handleWithdraw}>Confirm</Button>
 
                 <Button onClick={handleClose}>Cancel</Button>
             </DialogActions>
@@ -237,4 +169,4 @@ function RechargePage(props) {
     );
 }
 
-export default RechargePage;
+export default WithdrawPage;

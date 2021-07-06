@@ -62,8 +62,8 @@ function CreateOrderView(props) {
     };
 
    
-    const handleRecharge = (amount) => {
-        props.dispatch(updateBalance(user._id, amount));
+    const handleRecharge = (total, amount, account) => {
+        props.dispatch(updateBalance(user._id, total, "Recharge", amount, account));
     };
 
 

@@ -29,6 +29,10 @@ function PostDetailsView(props) {
 
   const post = useSelector((state) => state.posts.post)
 
+  const user = useSelector((state) => state.user.user)
+
+  const [canOrder, setCanOrder] = React.useState(true);
+
   useEffect(() => {
     props.dispatch(getPost(match.params.postId));
   }, [match.params]);
@@ -37,6 +41,18 @@ function PostDetailsView(props) {
     props.history.push(window.location.pathname + "/order");
   };
 
+
+  useEffect(() => {
+     
+    if(user && post){ 
+        if(user._id === post.companionId || window.localStorage["order"]){
+            setCanOrder(false);
+        }
+    } else  setCanOrder(false);
+  }, [user, post]);
+
+
+  
   //TODO add Loading with post (useSelector) together
   return (
     <ScrollContainer>
@@ -55,6 +71,8 @@ function PostDetailsView(props) {
             platform={post && post.platforms}
             avatar={post && post.avatarUrl}
             clickOrder={clickOrder}
+            canOrder={canOrder}
+            user={user}
           />
           <Comments
             numComments={post && post.reviewNumber}

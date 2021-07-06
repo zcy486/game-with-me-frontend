@@ -128,4 +128,31 @@ export default class UserService {
     static logout() {
         window.localStorage.removeItem("jwtToken");
     }
+
+
+    static paymentURL() {
+        return "http://localhost:4000/payment";
+    }
+
+    static recordPayment(id, type, amount, account) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${UserService.paymentURL()}/`,
+                {
+                    userId: id,
+                    type: type,
+                    totalEcoin: amount,
+                    account: account,
+
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
 }

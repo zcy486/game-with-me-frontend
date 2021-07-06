@@ -66,7 +66,7 @@ function GameBox(props) {
       <Paper className={classes.paper}>
         <Grid container direction={"row"}>
           <Grid item>
-            <img className={classes.img} alt="avatar" src={GameAvatar} />
+            <img className={classes.img} alt="avatar" src={props.gamePic} />
           </Grid>
           <Grid className={classes.titleAndPrice}>
             <Typography>{props.gameName}</Typography>

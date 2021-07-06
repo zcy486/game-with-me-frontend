@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
+import {MenuItem, Select, InputLabel, FormControl, Avatar} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";

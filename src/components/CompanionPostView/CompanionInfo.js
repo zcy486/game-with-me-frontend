@@ -65,7 +65,7 @@ function CompanionInfo(props) {
           </Grid>
         </Grid>
         <Grid className={classes.buttonRow}>
-          <Button variant={"contained"} color={"primary"}>
+          <Button variant={"contained"} color={"primary"} onClick={props.clickChat}>
             Chat
           </Button>
         </Grid>

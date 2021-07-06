@@ -9,6 +9,7 @@ import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
 import CompanionOrderView from "./views/CompanionOrderView";
+import MyPostsView from "./views/PostViews/MyPostsView";
 
 const routes = [
   {
@@ -49,18 +50,34 @@ const routes = [
     component: ProfileView,
   },
   {
-    path:'/createpost',
+    path: "/createpost",
     component: CreatePostView,
   },
   {
     path: "/chat",
     component: ChatView,
+    exact: true,
+  },
+  {
+    path: "/chat/:targetID/:targetName",
+    component: ChatView,
+    exact: true,
+  },
+  {
+    path: "/chat/:targetID/:targetName/:gameId/:gameName/:price/:postId",
+    component: ChatView,
+    exact: true,
   },
   {
     path: "/companionorder/:companionId",
     component: CompanionOrderView,
     exact: true,
   },
+  {
+    path: "/posts/:userId",
+    component: MyPostsView,
+    exact: true,
+  }
 ];
 
 export default routes;

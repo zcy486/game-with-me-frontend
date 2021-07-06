@@ -1,64 +1,75 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import AnnouncementIcon from "@material-ui/icons/Announcement";
+import { Divider } from "@material-ui/core";
 
 import socket from "../../socket";
+import ChatList from "../../components/Chat/ChatList";
+import ChatHeader from "../../components/Chat/ChatHeader";
+import MessagePanel from "../../components/Chat/MessagePanel";
+import UserInput from "../../components/Chat/UserInput";
 
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
   },
-  panel: {
+  rightPanel: {
+    width: "100%",
     display: "flex",
     flexDirection: "column",
   },
-  userInput: {
-    display: "flex",
-  },
 }));
 
-function ChatView() {
+function ChatView(props) {
   const classes = useStyles();
+
+  let { match } = props;
 
   const me = useSelector((state) => state.user.user);
 
   const [input, setInput] = React.useState("");
+  const [scroll, setScroll] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
   const [allUsers, setAllUsers] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState(null);
+  const [postLink, setPostLink] = React.useState(null);
+
+  useEffect(() => {
+    if (
+      match.params.gameId &&
+      match.params.gameName &&
+      match.params.price &&
+      match.params.postId
+    ) {
+      setPostLink({
+        gameId: match.params.gameId,
+        gameName: match.params.gameName,
+        price: match.params.price,
+        postId: match.params.postId,
+        targetId: match.params.targetID,
+      });
+    }
+  }, [match.params]);
 
   useEffect(() => {
     if (me) {
-      console.log("Enter chat room and try first connection.");
+      console.log("Entering the chat room...");
       socket.auth = { userID: me._id, username: me.username };
+      if (match.params.targetID && match.params.targetName) {
+        socket.auth.targetID = match.params.targetID;
+        socket.auth.targetName = match.params.targetName;
+      }
       socket.connect();
     }
     // clean up when this view unmounts
-    return () => socket.disconnect();
+    return () => {
+      console.log("Leaving the chat room...");
+      socket.disconnect();
+    };
   }, [me]);
 
   useEffect(() => {
-    const sessionID = localStorage.getItem("sessionID");
-
-    if (sessionID) {
-      socket.auth = { sessionID };
-      socket.connect();
-    }
-
-    socket.on("session", ({ sessionID, userID }) => {
-      // attach the session ID to the next reconnection attempts
-      socket.auth = { sessionID };
-      // store it in the localStorage
-      localStorage.setItem("sessionID", sessionID);
+    socket.on("session", ({ userID }) => {
       // save the ID of the user
       socket.userID = userID;
     });
@@ -75,26 +86,6 @@ function ChatView() {
   }, []);
 
   useEffect(() => {
-    socket.on("connect", () => {
-      let _allUsers = [...allUsers];
-      _allUsers.forEach((user) => {
-        if (user.self) {
-          user.connected = true;
-        }
-      });
-      setAllUsers(_allUsers);
-    });
-
-    socket.on("disconnect", () => {
-      let _allUsers = [...allUsers];
-      _allUsers.forEach((user) => {
-        if (user.self) {
-          user.connected = false;
-        }
-      });
-      setAllUsers(_allUsers);
-    });
-
     socket.on("users", (users) => {
       let _allUsers = [...allUsers];
       users.forEach((user) => {
@@ -105,14 +96,14 @@ function ChatView() {
             return;
           }
         }
-        user.self = user.userID === socket.userID;
         initReactiveProperties(user);
+        if (user.userID === match.params.targetID) {
+          setSelectedUser(user);
+        }
         _allUsers.push(user);
       });
       // put the current user first, and sort by username
       _allUsers.sort((a, b) => {
-        if (a.self) return -1;
-        if (b.self) return 1;
         if (a.username < b.username) return -1;
         return a.username > b.username ? 1 : 0;
       });
@@ -146,6 +137,16 @@ function ChatView() {
       setAllUsers(_allUsers);
     });
 
+    socket.on("loaded messages", (messages) => {
+      messages.forEach((message) => {
+        message.fromSelf = message.from === socket.userID;
+      });
+      if (selectedUser) {
+        selectedUser.messages = messages;
+        setScroll((value) => !value);
+      }
+    });
+
     socket.on("private message", ({ content, from, to }) => {
       let _allUsers = [...allUsers];
       for (let i = 0; i < _allUsers.length; i++) {
@@ -156,10 +157,9 @@ function ChatView() {
             content,
             fromSelf,
           });
-          if (
-            !selectedUser ||
-            (selectedUser && selectedUser.userID !== user.userID)
-          ) {
+          if (selectedUser && selectedUser.userID === user.userID) {
+            setScroll((value) => !value);
+          } else {
             user.hasNewMessages = true;
           }
           break;
@@ -169,37 +169,38 @@ function ChatView() {
     });
     // clean up
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
       socket.off("users");
       socket.off("user connected");
       socket.off("user disconnected");
+      socket.off("loaded messages");
       socket.off("private message");
     };
   }, [socket, allUsers, selectedUser]);
 
   const initReactiveProperties = (user) => {
     user.messages = [];
+    user.loaded = false;
     user.hasNewMessages = false;
   };
 
   const onSelectUser = (user) => {
     user.hasNewMessages = false;
     setSelectedUser(user);
+    setLoaded(user.loaded);
+    setScroll((value) => !value);
   };
 
   const sendMessage = (content) => {
     if (selectedUser && content.length > 0) {
-      let _selectedUser = { ...selectedUser };
       socket.emit("private message", {
         content,
-        to: _selectedUser.userID,
+        to: selectedUser.userID,
       });
-      _selectedUser.messages.push({
+      selectedUser.messages.push({
         content,
         fromSelf: true,
       });
-      setSelectedUser(_selectedUser);
+      setScroll((value) => !value);
     }
     setInput("");
   };
@@ -209,51 +210,45 @@ function ChatView() {
     setInput(event.target.value);
   };
 
+  const onClickLoad = (event) => {
+    event.preventDefault();
+    if (selectedUser && !selectedUser.loaded) {
+      setLoaded(true);
+      selectedUser.loaded = true;
+      socket.emit("load messages", {
+        from: socket.userID,
+        to: selectedUser.userID,
+      });
+    }
+  };
+
   return (
     <div className={classes.root}>
-      <List>
-        {allUsers.map((user, i) => {
-          return (
-            <ListItem
-              key={i}
-              button
-              onClick={() => onSelectUser(user)}
-              selected={selectedUser && selectedUser.userID === user.userID}
-            >
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={user.username}
-                secondary={user.connected ? "online" : "offline"}
-              />
-              {user.hasNewMessages ? <AnnouncementIcon /> : <div />}
-            </ListItem>
-          );
-        })}
-      </List>
-      <div className={classes.panel}>
-        <p>You are chat with: {selectedUser && selectedUser.username}</p>
-        {selectedUser &&
-          selectedUser.messages.map((message, i) => {
-            return (
-              <p key={i}>
-                {message.fromSelf ? "me" : selectedUser.username}:{" "}
-                {message.content}
-              </p>
-            );
-          })}
-        <div className={classes.userInput}>
-          <TextField
-            value={input}
-            onChange={onChange}
-            label="Write here..."
-            variant="outlined"
-            color={"secondary"}
+      <ChatList
+        allUsers={allUsers}
+        selectedUser={selectedUser}
+        onSelectUser={onSelectUser}
+      />
+      {selectedUser ? (
+        <div className={classes.rightPanel}>
+          <ChatHeader selectedUser={selectedUser} postLink={postLink} />
+          <Divider />
+          <MessagePanel
+            selectedUser={selectedUser}
+            scroll={scroll}
+            loaded={loaded}
+            onLoad={onClickLoad}
           />
-          <Button onClick={() => sendMessage(input)}>Send</Button>
+          <Divider />
+          <UserInput
+            input={input}
+            onChange={onChange}
+            sendMessage={sendMessage}
+          />
         </div>
-      </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

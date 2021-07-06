@@ -30,8 +30,11 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: "30px",
         margin: "25px",
     },
-    noposts: {
-        marginBottom: "300px",
+    noPosts: {
+        marginBottom: "500px",
+    },
+    multiplePosts: {
+        marginBottom: "200px",
     }
 }));
 
@@ -86,12 +89,11 @@ function MyPostsView(props) {
           </div>
           <div>
             {isCompanion ? (
-              <div>
+              <div className={classes.multiplePosts}>
                 {ownedPosts.length === 0 ? (
                   <NoPosts myself={true} />
                 ) : (
                   ownedPosts.map((post, i) => {
-                    console.log(post.gamePic);
                     return (
                       <GameBox
                         key={i}
@@ -108,7 +110,7 @@ function MyPostsView(props) {
                 )}
               </div>
             ) : (
-              <div className={classes.noposts}>
+              <div className={classes.noPosts}>
                 <h1>
                   You're not a companion yet. Create a post to become a
                   companion!

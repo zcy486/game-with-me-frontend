@@ -106,7 +106,7 @@ function UserMenu(props) {
               className={classes.menuItem}
               onClick={onClickCompanionOrder}
             >
-              My companion orders
+              My Companion Orders
             </MenuItem>
           ) : null}
           <MenuItem
@@ -116,7 +116,6 @@ function UserMenu(props) {
           >
             My Posts
           </MenuItem>
-          ,
           <MenuItem
             key={"logout"}
             className={classes.menuItem}

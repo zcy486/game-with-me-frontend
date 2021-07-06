@@ -206,6 +206,7 @@ function PostDetails(props) {
               variant={"contained"}
               color={"primary"}
               size={"small"}
+              onClick={props.clickChat}
             >
               Chat
             </Button>

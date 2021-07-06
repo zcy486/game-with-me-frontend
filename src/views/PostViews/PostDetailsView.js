@@ -6,13 +6,13 @@ import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
-import { getPost } from "../../redux/actions";
 
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { getPost } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,8 +52,6 @@ function PostDetailsView(props) {
 
   let { match } = props;
 
-  const post = useSelector((state) => state.posts.post);
-
   //TODO: replace mock screenshots
   const screenshots = [
     { original: MockAvatar, originalAlt: "1" },
@@ -63,9 +61,9 @@ function PostDetailsView(props) {
     { original: MockAvatar, originalAlt: "5" },
   ];
 
-  const user = useSelector((state) => state.user.user)
-
   const [canOrder, setCanOrder] = React.useState(true);
+  const user = useSelector((state) => state.user.user);
+  const post = useSelector((state) => state.posts.post);
 
   useEffect(() => {
     props.dispatch(getPost(match.params.postId));
@@ -74,7 +72,6 @@ function PostDetailsView(props) {
   const clickOrder = () => {
     props.history.push(window.location.pathname + "/order");
   };
-
 
   useEffect(() => {
      
@@ -85,8 +82,27 @@ function PostDetailsView(props) {
     } else  setCanOrder(false);
   }, [user, post]);
 
+  const onClickChat = (event) => {
+    event.preventDefault();
+    if(!user) {
+      props.history.push("/login");
+    } else {
+      const targetID = post && post.companionId;
+      const targetName = post && post.companionName;
+      const gameId = post && post.gameId;
+      const gameName = post && post.gameName;
+      const price = post && post.price;
+      const postId = post && post._id;
+      if (user._id === targetID) {
+        window.alert("You cannot chat to yourself!");
+      } else {
+        props.history.push(
+          `/chat/${targetID}/${targetName}/${gameId}/${gameName}/${price}/${postId}`
+        );
+      }
+    }
+  };
 
-  
   //TODO add Loading with post (useSelector) together
   return (
     <ScrollContainer>
@@ -108,6 +124,7 @@ function PostDetailsView(props) {
             clickOrder={clickOrder}
             canOrder={canOrder}
             user={user}
+            clickChat={onClickChat}
           />
           <GridList className={classes.gridList} cols={2.5}>
             {post && post.screenshots && !post.screenshots.isEmpty && Array.isArray(post.screenshots) && post.screenshots.map((screenshot) => (

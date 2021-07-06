@@ -29,6 +29,7 @@ function CompanionPostView(props) {
 
   let { match } = props;
 
+  const me = useSelector((state) => state.user.user);
   const postsByCompanion = useSelector((state) => state.posts.companion);
   const ownedPosts = postsByCompanion ? postsByCompanion.posts : [];
 
@@ -40,6 +41,23 @@ function CompanionPostView(props) {
     const postRoute = "/games/" + gameId + "/detail/" + postId;
     props.history.push(postRoute);
   };
+
+  const onClickChat = (event) => {
+    event.preventDefault();
+    if(!me) {
+      props.history.push("/login");
+    }
+    else {
+      const targetID = match.params.companionId;
+      const targetName = postsByCompanion && postsByCompanion.username;
+      if (me._id === targetID) {
+        window.alert("You cannot chat to yourself!");
+      }
+      else {
+        props.history.push("/chat/"+targetID+"/"+targetName);
+      }
+    }
+  }
 
   return (
     <ScrollContainer>
@@ -54,6 +72,7 @@ function CompanionPostView(props) {
             reviewNumber={postsByCompanion && postsByCompanion.reviewNumber}
             orderNumber={postsByCompanion && postsByCompanion.orderNumber}
             avatarUrl={postsByCompanion && postsByCompanion.avatarUrl}
+            clickChat={onClickChat}
           />
           <h1>Published Games</h1>
           {ownedPosts.length === 0 ? (

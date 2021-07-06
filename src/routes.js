@@ -50,12 +50,23 @@ const routes = [
     component: ProfileView,
   },
   {
-    path:'/createpost',
+    path: "/createpost",
     component: CreatePostView,
   },
   {
     path: "/chat",
     component: ChatView,
+    exact: true,
+  },
+  {
+    path: "/chat/:targetID/:targetName",
+    component: ChatView,
+    exact: true,
+  },
+  {
+    path: "/chat/:targetID/:targetName/:gameId/:gameName/:price/:postId",
+    component: ChatView,
+    exact: true,
   },
   {
     path: "/companionorder/:companionId",

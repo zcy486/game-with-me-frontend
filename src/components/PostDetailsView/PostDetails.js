@@ -210,17 +210,19 @@ function PostDetails(props) {
             >
               Chat
             </Button>
-            <Tooltip
-              title={
-                !props.canOrder
-                  ? hasOrder
-                    ? "You have a not-yet-confirmed order now, please wait for response."
-                    : props.user
-                    ? "You can not place order for yourself."
-                    : "Please sign in / register to make order."
-                  : ""
-              }
-            >
+            <Tooltip title={
+                            props.user
+                                ?
+                                hasOrder ?
+                                    "You have a not-yet-confirmed order now, please wait for response."
+                                    :
+                                    props.myPost ?
+                                        "You can not place order for yourself."
+                                        : ""
+                                :
+                                "Please sign in / register to make order."
+
+                        }>
               <span>
                 <Button
                   variant={"contained"}

@@ -6,7 +6,6 @@ import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
-
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -48,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PostDetailsView(props) {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  let { match } = props;
+    let { match } = props;
 
   //TODO: replace mock screenshots
   const screenshots = [
@@ -61,26 +60,27 @@ function PostDetailsView(props) {
     { original: MockAvatar, originalAlt: "5" },
   ];
 
-  const [canOrder, setCanOrder] = React.useState(true);
+  const [canOrder, setCanOrder] = React.useState(false);
   const user = useSelector((state) => state.user.user);
   const post = useSelector((state) => state.posts.post);
 
-  useEffect(() => {
-    props.dispatch(getPost(match.params.postId));
-  }, [match.params]);
+    useEffect(() => {
+        props.dispatch(getPost(match.params.postId));
+    }, [match.params]);
 
-  const clickOrder = () => {
-    props.history.push(window.location.pathname + "/order");
-  };
+    const clickOrder = () => {
+        props.history.push(window.location.pathname + "/order");
+    };
 
-  useEffect(() => {
-     
-    if(user && post){ 
-        if(user._id === post.companionId || window.localStorage["order"]){
-            setCanOrder(false);
-        }
-    } else  setCanOrder(false);
-  }, [user, post]);
+    const myPost = (post && user && user._id === post.companionId)
+
+    useEffect(() => {
+            if (user && post) {
+                if (user._id !== post.companionId && !window.localStorage["order"]) {
+                    setCanOrder(true);
+                }
+            }
+    }, [user, post]);
 
   const onClickChat = (event) => {
     event.preventDefault();
@@ -124,6 +124,7 @@ function PostDetailsView(props) {
             clickOrder={clickOrder}
             canOrder={canOrder}
             user={user}
+            myPost={myPost}
             clickChat={onClickChat}
           />
           <GridList className={classes.gridList} cols={2.5}>

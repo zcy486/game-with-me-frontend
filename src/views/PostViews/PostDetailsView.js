@@ -6,13 +6,13 @@ import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
 import MockAvatar from "../../images/avatar.svg";
-import { getPost } from "../../redux/actions";
 
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { getPost } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,18 +86,23 @@ function PostDetailsView(props) {
     event.preventDefault();
     if(!user) {
       props.history.push("/login");
-    }
-    else {
+    } else {
       const targetID = post && post.companionId;
       const targetName = post && post.companionName;
+      const gameId = post && post.gameId;
+      const gameName = post && post.gameName;
+      const price = post && post.price;
+      const postId = post && post._id;
       if (user._id === targetID) {
         window.alert("You cannot chat to yourself!");
-      }
-      else {
-        props.history.push("/chat/"+targetID+"/"+targetName);
+      } else {
+        props.history.push(
+          `/chat/${targetID}/${targetName}/${gameId}/${gameName}/${price}/${postId}`
+        );
       }
     }
-  }
+  };
+
   //TODO add Loading with post (useSelector) together
   return (
     <ScrollContainer>

@@ -31,6 +31,24 @@ function ChatView(props) {
   const [scroll, setScroll] = React.useState(false);
   const [allUsers, setAllUsers] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState(null);
+  const [postLink, setPostLink] = React.useState(null);
+
+  useEffect(() => {
+    if (
+      match.params.gameId &&
+      match.params.gameName &&
+      match.params.price &&
+      match.params.postId
+    ) {
+      setPostLink({
+        gameId: match.params.gameId,
+        gameName: match.params.gameName,
+        price: match.params.price,
+        postId: match.params.postId,
+        targetId: match.params.targetID,
+      });
+    }
+  }, [match.params]);
 
   useEffect(() => {
     if (me) {
@@ -190,7 +208,7 @@ function ChatView(props) {
       />
       {selectedUser ? (
         <div className={classes.rightPanel}>
-          <ChatHeader selectedUser={selectedUser} />
+          <ChatHeader selectedUser={selectedUser} postLink={postLink} />
           <Divider />
           <MessagePanel selectedUser={selectedUser} scroll={scroll} />
           <Divider />

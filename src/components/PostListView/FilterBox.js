@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 0,
     color: "black",
   },
+  items: {
+    fontFamily: "Helvetica",
+  }
 }));
 
 function FilterBox(props) {
@@ -33,11 +36,11 @@ function FilterBox(props) {
       </FormHelperText>
       <FormControl className={classes.formControl}>
         <Select value={props.value} onChange={handleChange}>
-          <MenuItem value="">
+          <MenuItem value="" className={classes.items}>
             <em>None</em>
           </MenuItem>
           {props.choices && props.choices.map((choice) => (
-            <MenuItem value={choice}>{choice}</MenuItem>
+            <MenuItem value={choice} className={classes.items}>{choice}</MenuItem>
           ))}
         </Select>
       </FormControl>

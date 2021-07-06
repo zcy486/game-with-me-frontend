@@ -57,7 +57,7 @@ function CompanionPostView(props) {
           />
           <h1>Published Games</h1>
           {ownedPosts.length === 0 ? (
-            <NoPosts />
+            <NoPosts myself={false}/>
           ) : (
             ownedPosts.map((post, i) => {
               return (
@@ -65,6 +65,7 @@ function CompanionPostView(props) {
                   key={i}
                   gameId={post.gameId}
                   gameName={post.gameName}
+                  gamePic={post.gamePic}
                   price={post.price}
                   languages={post.language}
                   postId={post._id}

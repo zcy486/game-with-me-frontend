@@ -7,14 +7,15 @@ import { connect, useSelector } from "react-redux";
 import { getPostsByCompanion } from "../../redux/actions";
 import NoPosts from "../../components/CompanionPostView/NoPosts";
 import GameBox from "../../components/CompanionPostView/GameBox";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundImage: `url(${backgroundPic})`,
         backgroundPosition: "center",
         backgroundRepeat: "repeat",
-        height: "100%",
+      //backgroundSize: "cover",
+        //backgroundAttachment: "scroll",
     },
     pageArea: {
         paddingTop: theme.spacing(12),
@@ -22,6 +23,16 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(25),
         paddingBottom: theme.spacing(10),
     },
+    title: {
+        display: "flex",
+    },
+    button: {
+        maxHeight: "30px",
+        margin: "25px",
+    },
+    noposts: {
+        marginBottom: "300px",
+    }
 }));
 
 function MyPostsView(props) {
@@ -37,9 +48,9 @@ function MyPostsView(props) {
     props.history.push(postRoute);
   };
 
-    const clickCreate = () => {
-        props.history.push("/createpost");
-    };
+  const clickCreate = () => {
+    props.history.push("/createpost");
+  };
 
   useEffect(() => {
     (async () => {
@@ -61,19 +72,32 @@ function MyPostsView(props) {
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
-          <h1>My posts</h1>
+          <div className={classes.title}>
+            <h1>My posts</h1>
+            <Button
+              variant={"contained"}
+              color={"secondary"}
+              size={"small"}
+              onClick={clickCreate}
+              className={classes.button}
+            >
+              Create Post
+            </Button>
+          </div>
           <div>
             {isCompanion ? (
               <div>
                 {ownedPosts.length === 0 ? (
-                  <NoPosts />
+                  <NoPosts myself={true} />
                 ) : (
                   ownedPosts.map((post, i) => {
+                    console.log(post.gamePic);
                     return (
                       <GameBox
                         key={i}
                         gameId={post.gameId}
                         gameName={post.gameName}
+                        gamePic={post.gamePic}
                         price={post.price}
                         languages={post.language}
                         postId={post._id}
@@ -84,19 +108,11 @@ function MyPostsView(props) {
                 )}
               </div>
             ) : (
-              <div>
+              <div className={classes.noposts}>
                 <h1>
                   You're not a companion yet. Create a post to become a
                   companion!
                 </h1>
-                  <Button
-                      variant={"contained"}
-                      color={"secondary"}
-                      size={"small"}
-                      onClick={clickCreate}
-                  >
-                      Create Post
-                  </Button>
               </div>
             )}
           </div>

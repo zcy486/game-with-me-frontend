@@ -120,7 +120,7 @@ function CompanionOrderBox(props) {
                     <Grid className={classes.paperColumn}>
                         <Grid className={classes.dateInfo}>
 
-                            <Typography>{props.dateTime}</Typography>
+                            <Typography>{timestampFormatter(props.dateTime)}</Typography>
                         </Grid>
                        
                             <Grid item>
@@ -133,6 +133,14 @@ function CompanionOrderBox(props) {
             </Paper>
    
     );
+}
+
+function timestampFormatter(timestamp) {
+    let stringTime = timestamp.toString()
+    let date = stringTime.substring(0, 10);
+    let time = stringTime.substring(11,16);
+    let result = date + " " + time;
+    return result
 }
 
 export default CompanionOrderBox;

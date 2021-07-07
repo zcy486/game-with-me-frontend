@@ -1,9 +1,8 @@
-import OrderService from "../../services/ReviewService";
+import ReviewService from "../../services/ReviewService";
 
-
+//get reviews by companion id
 export function getReviews() {
-    // when the backend call was successfull and the Orders are retrieved
-    // in the dispatcher the Orders will be added to the global state
+
     function onSuccess(reviews) {
         return { type: "GETREVIEWS_SUCCESS", reviews: reviews };
     }
@@ -15,7 +14,7 @@ export function getReviews() {
 
     return async (dispatch) => {
         try {
-            // ask for the Orders in the backend
+            // ask for the Reviews in the backend
             let reviews = await ReviewService.getReviews();
             // call onSuccess in context of redux
             dispatch(onSuccess(reviews));
@@ -27,7 +26,7 @@ export function getReviews() {
 
 
 //
-export function createReview(star, label, text)
+export function createReview(star, label, reviewText, companionId, gamerId, orderId)
     {
     function onSuccess() {
         return { type: "CREATEREVIEW_SUCCESS" };
@@ -38,26 +37,26 @@ export function createReview(star, label, text)
 
     return async (dispatch) => {
         try {
-            let review = await ReviewService.createReview(star, label, text);
-            dispatch(onSuccess(reviews));
+            let review = await ReviewService.createReview(star, label, reviewText, companionId, gamerId, orderId);
+            dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
         }
     };
 }
 
-export function updateReview(status) {
+export function updateReview(reviewId, updateObj) {
     function onSuccess(review) {
-        return { type: "UPDATESTATUS_SUCCESS", review: review };
+        return { type: "UPDATEREVIEW_SUCCESS", review: review };
     }
 
     function onFailure(error) {
-        console.log("update status failure", error);
+        console.log("UPDATEREVIEW_FAILURE", error);
     }
 
     return async (dispatch) => {
         try {
-            let review = await ReviewService.updateReview(status);
+            let review = await ReviewService.updateReview(reviewId, updateObj);
             dispatch(onSuccess(review));
         } catch (e) {
             onFailure(e);
@@ -65,18 +64,18 @@ export function updateReview(status) {
     };
 }
 
-//get review by review Id
-export const getReview = (id) => {
+//get review by order Id
+export const getReviewByOrderId = (orderId) => {
     function onSuccess(review) {
-        return { type: "GETREVIEW__SUCCESS", review: review };
+        return { type: "GETREVIEW_BY_ORDERID__SUCCESS", review: review };
     }
     function onFailure(error) {
-        console.log("GETREVIEW__FAILURE", error);
+        console.log("GETREVIEW_BY_ORDERID__FAILURE", error);
     }
 
     return async (dispatch, getState) => {
         try {
-            let review = await ReviewService.getReview(id);
+            let review = await ReviewService.getReviewByOrderId(orderId);
             dispatch(onSuccess(review));
         } catch (e) {
             onFailure(e);
@@ -85,7 +84,7 @@ export const getReview = (id) => {
 };
 
 //get review by companion Id
-export const getReviewByUserId = (userId) => {
+export const getReviewByCompanionId = (userId) => {
     function onSuccess(review) {
         return { type: "GETREVIEW_BY_COMPANION_SUCCESS", reviewlist: review };
     }
@@ -95,7 +94,7 @@ export const getReviewByUserId = (userId) => {
     
     return async (dispatch, getState) => {
         try {
-            let review = await ReviewService.getReviewByUserId(userId);
+            let review = await ReviewService.getReviewByCompanionId(userId);
             dispatch(onSuccess(review));
         } catch (e) {
             onFailure(e);
@@ -104,7 +103,7 @@ export const getReviewByUserId = (userId) => {
 };
 
 
-export function deleteReview(id) {
+export function deleteReview(id) {//by review id
     function onSuccess(reviews) {
         return { type: "DELETEORDER_SUCCESS", reviews: reviews };
     }
@@ -113,7 +112,7 @@ export function deleteReview(id) {
     }
     return async (dispatch) => {
         try {
-            await OrderService.deleteOrder(id);
+            await ReviewService.deleteOrder(id);
             let reviews = await ReviewService.getReviews();
             dispatch(onSuccess(reviews));
         } catch (e) {

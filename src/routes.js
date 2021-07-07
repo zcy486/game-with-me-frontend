@@ -55,28 +55,28 @@ const routes = [
     path:'/createpost',
     component: CreatePostView,
   },
-  { 
+/*   { 
     path: "/orderDetails/review",
     component:CreateReviewView,
   },
   {
     path: "/orderDetails/:orderId",
     component:MyOrderDetailView,
-  },
+  }, */
   {
     path: "/chat",
     component: ChatView,
   },
   {
-    path: "/orderDetails/review",
+    path: "/orderDetails/review/:orderId/:companionId",
     component:CreateReviewView,
 },
 {
-    path: "/orderDetails",
+    path: "/myOrders/gamerId/:gamerId/details/:orderId",
     component:MyOrderDetailView,
 },
 {
-    path: "/myorders",
+    path: "/myOrders/gamerId/:gamerId",
     component:OrderListView,
 },
  {   path: "/companionorder/:companionId",

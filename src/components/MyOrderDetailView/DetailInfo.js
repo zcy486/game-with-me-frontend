@@ -34,7 +34,7 @@ function DetailInfo(props) {
   
   const createView = () => {
     //props.onClose();
-    props.history.push("/orderDetails/review");
+    props.history.push("/orderDetails/review/"+ props.orderId + "/"+ props.companionId);
   };
 
   return (
@@ -49,25 +49,28 @@ function DetailInfo(props) {
           ----------GAME WITH ME----------
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Order-Number:
+          {bull}Order-Number:&nbsp;{props.orderId}
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Companion:
+          {bull}Companion:&nbsp;{props.companionName}
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Game:
+          {bull}Game:&nbsp;{props.gameName}
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Game amount:
+          {bull}Game amount:&nbsp;{props.gameNumber}
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Total price:
+          {bull}Total price:&nbsp;{props.price}
         </Typography>
         <Typography variant="h9" component="h2">
-          {bull}Order Status:
-          <OrderStatus/>
+          {bull}Order Status:&nbsp;{props.status}
+          <OrderStatus
+            handleFinish={props.handleFinish}
+            confirmStatus = {props.status}
+          />
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+   {/*      <Typography className={classes.pos} color="textSecondary">
           The order will be confirmed by your companion in 15 minutes, otherwise
           the order would be canceled and the e-coins would be transferred back.
           <br />
@@ -77,7 +80,7 @@ function DetailInfo(props) {
             You can also find your order information from your user profile. 
           <br />
           Hope you have a good time in your games!!!
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions>
         <Button
@@ -85,13 +88,11 @@ function DetailInfo(props) {
               color={"secondary"}
               size={"large"}
               
-              //disabled={
+              disabled={
                   //status is finish
-                //  Order.orderStatus == 0 && //Order has been placed
-                //  orderStatus == 1 && //Waiting for your companion\'s confirmation
-                //  orderStatus == 2  //Order is completed by your companion
-              //}
-              onClick={createView} size="big" color ="primary">
+                  props.status !== "CompletedByGamer"
+              }
+              onClick={createView} size="big" color ="secondary">
           Create review
         </Button>
       </CardActions>

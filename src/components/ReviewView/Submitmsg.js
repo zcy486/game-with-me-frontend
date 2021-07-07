@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,6 +19,7 @@ import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisf
 import TextField from '@material-ui/core/TextField';
 import CancelButton from "../../components/ReviewView/CancelButton";
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 /* const styles = {
     submit0: {
@@ -102,38 +103,70 @@ const Textfield = makeStyles((theme) => ({
   },
 }));
 
-function SubmitReview(props) {
+function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
+  //debugger;
+  //deconstruct review based on Review Model
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false); //for dialog
+  //construct basic review data based on Review Model
+/*   const [_id, setId] = useState(review._id || ""); //review _id
+  const [star, setStar] = useState(review.star || 0); //review star
+  const [label, setLabel] = useState(review.label || []); //review label
+  const [reviewText, setReviewText] = useState(review.reviewText || ""); //review reviewText */
 
-  const [star, setStar] = React.useState(0); //star
+  const [_id, setId] = useState(""); //review _id
+  const [star, setStar] = useState(0); //review star
+  const [label, setLabel] = useState([]); //review label
+  const [reviewText, setReviewText] = useState(""); //review reviewText
+  useEffect(() => {
+    if(review.review && Object.keys(review.review).length !== 0){
+      setId(review.review._id)
+      setStar(review.review.star)
+      setLabel(review.review.label)
+      setReviewText(review.review.reviewText)
+    }
+  },[review]);
+  
+  //TODO: uncomment if needed
+  // const [orderId, setOrderId] = useState(orderId); //
+  // const [companionId, setCompanionId] = useState(companionId); //
+  // const [gamerId, setGamerId] = useState(gamerId); //
+  //construct frontend logic controller states
+  const [open, setOpen] = React.useState(false); //for dialog
   const [hover, setHover] = React.useState(-1); //star
 
-  const [label, setLabel] = React.useState({}); //for label
+  const LABEL_ENUMS = ["Humorous", "Carry in game", "Interactive", "Friendly", "Patient", "Rude"];
 
-  const [text, setText] = React.useState('Controlled'); //for review text
-
-  const handleChange = (event) => {
-    setLabel({ ...label, [event.target.name]: event.target.checked }); //for label
+  //declare callback functions for frontend logics
+  const handleLabling = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const labelObject = label.reduce((acc, curr) => {
+      if(acc[curr] === undefined){
+        acc[curr] = true;
+        return acc;
+      }
+    },{})
+    labelObject[event.target.name] = event.target.checked;
+    const newLabels = Object.keys(labelObject).reduce((acc, key) => {
+      if(labelObject[key]){
+        acc.push(key)
+      }
+      return acc;
+    }, [])
+    setLabel(newLabels); //for label
   };
-
   const handleTextChange = (event) => {
-    setText(event.target.value); //review text
+    setReviewText(event.target.value);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-
-
-
 //extract on gamer or companion or reviewId???
-  const extractReview = () => {
+/*   const extractReview = () => {
     if (!props.review) {
       return;
     }
@@ -141,8 +174,8 @@ function SubmitReview(props) {
     setStar(props.review.star);
     setLabel(props.review.label);
     setText(props.review.reviewText);
-  };
-
+  }; */
+/* 
   const packReview = () => {
     let back = {
       ...props.review,
@@ -152,40 +185,26 @@ function SubmitReview(props) {
     back.label = label;
     back.text = text;
     return back;
-  };
+  }; */
 
   // triggers when the new parameter is changed
-  useEffect(() => {
+/*   useEffect(() => {
     extractReview();
-  }, [props.review]);
+  }, [props.review]); */
 
 
-
-
-
-
-
-
-
-
-  const reviewSubmit = (event) => {
+/*   const reviewSubmit = (event) => {
     event.preventDefault();
     props.onCreate(packReview());
-  };
+  }; */
   const backToHomepage = () => {
     //props.onClose();
-    props.history.push('/');
+    history.push('/');
   };
-
-
-
-
-
 
 //1.rating star; 2.label; 3.review text
   return (
     <div>
-      
       <h3 className={classes.subTitle}>Give an Overall Rating</h3>
       <div className={classes.star}>
         <Rating
@@ -201,38 +220,44 @@ function SubmitReview(props) {
         />
         {star !== null && <Box ml={2}>{stars[hover !== -1 ? hover : star]}</Box>}
       </div>
-
       <h3 className={classes.subTitle}>Add Labels(Optional)</h3>
       <div>  
         <FormGroup row>
-          <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedA} onChange={handleChange} name="checkedA" />}
+          {LABEL_ENUMS.map((labelText) => {
+            const ifChecked = label.includes(labelText)
+            return <FormControlLabel
+              control={(labelText === "Rude")? <PurpleCheckbox icon={<SentimentDissatisfiedIcon />} checked={ifChecked} onChange={handleLabling} name={labelText} />:
+              <BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={ifChecked} onChange={handleLabling} name={labelText} />}
+              label={labelText}
+            />
+          })}
+          {/* <FormControlLabel
+            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedA} onChange={handleLabling} name="checkedA" />}
             label="Humorous"
           />
           <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedB} onChange={handleChange} name="checkedB" />}
+            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedB} onChange={handleLabling} name="checkedB" />}
             label="Carry in game"
           />
           <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedC} onChange={handleChange} name="checkedC" />}
+            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedC} onChange={handleLabling} name="checkedC" />}
             label="Interactive"
           />
           <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedD} onChange={handleChange} name="checkedD" />}
+            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedD} onChange={handleLabling} name="checkedD" />}
             label="Friendly"
           />
           <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedE} onChange={handleChange} name="checkedE" />}
+            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedE} onChange={handleLabling} name="checkedE" />}
             label="Patient"
           />
           <FormControlLabel
-            control={<PurpleCheckbox icon={<SentimentDissatisfiedIcon />} checked={label.checkedF} onChange={handleChange} name="checkedF" />}
+            control={<PurpleCheckbox icon={<SentimentDissatisfiedIcon />} checked={label.checkedF} onChange={handleLabling} name="checkedF" />}
             label="Rude"
-          />
+          /> */}
         </FormGroup>
 
       </div>
-    
       <h3 className={classes.subTitle}>Write a review(Optional)</h3>  
       <div>
           <form className={classes.textField} noValidate autoComplete="off">
@@ -241,7 +266,8 @@ function SubmitReview(props) {
                 id="filled-multiline-static"          
                 multiline
                 rows={10}
-                placeholder="Max. 500 words."
+                value={reviewText}
+                placeholder="Max. 200 words."
                 onChange={handleTextChange}
                 variant="filled"
               />
@@ -255,10 +281,21 @@ function SubmitReview(props) {
         //disabled={
         // star === "" || label === ""         
         //}
-          onClick={handleClickOpen} onclick={reviewSubmit} >
+          onClick={() => {
+            if(_id === ""){
+              debugger;
+              //create new Review, o
+              //const {orderId, companionId, gamerId} = order;
+              handleSubmit(star, label, reviewText,  order.order.companionId, order.order.gamerId, order.order._id);
+            }else{
+              //update Review
+              handleUpdate(_id, {reviewText, label, star});
+            }
+            handleClickOpen();
+          }}>
           Submit
         </Button>
-        <CancelButton/>
+        <CancelButton />
       </div>  
       
       <Dialog
@@ -274,7 +311,11 @@ function SubmitReview(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} onClick={backToHomepage} color="primary">
+          <Button onClick={
+            () => {
+              handleClose()
+              backToHomepage()
+            }} color="primary">
             ok
           </Button>
           
@@ -284,4 +325,5 @@ function SubmitReview(props) {
       </div>
   );
 }
-export default withRouter(/* withStyles(styles)( */SubmitReview);
+//TODO: uncomment if withStyles is needed
+export default connect()(withRouter(/* withStyles(styles)( */SubmitReview));

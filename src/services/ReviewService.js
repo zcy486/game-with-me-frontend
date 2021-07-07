@@ -5,17 +5,18 @@ export default class reviewService {
         return "http://localhost:4000/review";
     }
 
-    static createReview(star, label, text
+    static createReview(star, label, reviewText, companionId, gamerId, orderId,
         ) {
         return new Promise((resolve, reject) => {
             HttpService.post(
                 `${reviewService.baseURL()}`,
                 {
-                    star: star,
-                    label: label,
-                    reviewText: text,
-                    companionId: companionId,
-                    gamerId: gamerId
+                    star,
+                    label,
+                    reviewText,
+                    companionId,
+                    gamerId,
+                    orderId
                 },
                 function (data) {
                     resolve(data);
@@ -40,10 +41,10 @@ export default class reviewService {
         });
     }
 
-    static getReview(id) {
+    static getReviewByOrderId(orderId) {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                `${reviewService.baseURL()}/${id}`,
+                `${reviewService.baseURL()}/orderId/${orderId}`,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
@@ -58,10 +59,10 @@ export default class reviewService {
         });
     }
     //user id is about companion's Id
-    static getReviewByUserId(userId) {       
+    static getReviewByCompanionId(userId) {       
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                `${reviewService.baseURL()}/gamerId/${userId}`,
+                `${reviewService.baseURL()}/companionId/${userId}`,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
@@ -76,11 +77,11 @@ export default class reviewService {
         });
     }
     //userId is about companion
-    static updateReview(review) {
+    static updateReview(reviewId, updateObj) {
         return new Promise((resolve, reject) => {
             HttpService.put(
-                `${reviewService.baseURL()}/${userId}`,
-                review,
+                `${reviewService.baseURL()}/${reviewId}`,
+                updateObj,
                 function (data) {
                     resolve(data);
                 },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ShortRecapBox from "../components/ReviewView/ShortRecapBox";
 import StarForRating from "../components/ReviewView/StarForRating";
@@ -10,6 +10,11 @@ import Submitmsg from "../components/ReviewView/Submitmsg";
 import CancelButton from "../components/ReviewView/CancelButton";
 import backgroundPic from "../images/bg_postlist.png";
 import { ArrowRight } from "@material-ui/icons";
+import { connect, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import MockAvatar from "../images/avatar.svg";
+import {createReview,getReviewByOrderId,updateReview,getReviewByCompanionId} from "../redux/actions/reviewAction";
+import {getOrder} from "../redux/actions/orderActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,15 +50,50 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function CreateReviewView() {
+function CreateReviewView(props) {
   const classes = useStyles();
-   
+  //short recap
+  let { match } = props;
+  //deconstruct from redux state.review
+  const review = useSelector((state) => state.review);
+  // console.log(match.params.orderId);
+  const reviewlist = useSelector((state) => state.review.reviewlist);
+
+  const handleSubmit = (star, label, reviewText, companionId, gamerId, orderId) => {
+    props.dispatch(createReview(star, label, reviewText, companionId, gamerId, orderId));
+  }
+  const handleUpdate = (_id, updateObj) => {
+    props.dispatch(updateReview(_id, updateObj));
+  }
+
+  useEffect(() => {
+    props.dispatch(getReviewByOrderId(match.params.orderId));
+  }, []);
+  useEffect(() => {
+    props.dispatch(getReviewByCompanionId(match.params.companionId));
+  }, []);
+
+  //fetch Order info for orderId/gamerId/companionId
+  const order = useSelector((state) => state.order);
+  console.log(review)
+  useEffect(() => {
+      props.dispatch(getOrder(match.params.orderId));
+    }, []); 
+
+  const clickOrder = () => {
+    props.history.push(window.location.pathname + "/order");
+  };
+
   return (
     <div className={classes.root}>
-     
         <div className={classes.content}>
           <h2 className={classes.title}>Create Review For:</h2>
-            <ShortRecapBox/>
+          
+          {reviewlist && <ShortRecapBox
+              avatarUrl={reviewlist.avatar? reviewlist.avatar : MockAvatar}
+              companionName={reviewlist.name}
+              ratings={reviewlist.ratings}
+              /> }
           {/* <h3 className={classes.subTitle}>Give an Overall Rating</h3>
             <StarForRating/>
           <h3 className={classes.subTitle}>Add Labels(Optional)</h3>
@@ -62,8 +102,9 @@ function CreateReviewView() {
           <h3 className={classes.subTitle}>Write a review(Optional)</h3>
             <ReviewTextField/> */}
          
-           <div className={classes.buttomS}>
-            <Submitmsg/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          <div className={classes.buttomS}>
+            
+          <Submitmsg order={order} review={review} handleUpdate={handleUpdate} handleSubmit={handleSubmit}/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
 {/*             <CancelButton/>
  */}           </div> 
       
@@ -73,4 +114,4 @@ function CreateReviewView() {
   );
 }
 
-export default CreateReviewView;
+export default connect() (withRouter(CreateReviewView));

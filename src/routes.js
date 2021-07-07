@@ -8,6 +8,9 @@ import CreateOrderView from "./views/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
+import CreateReviewView from "./views/CreateReviewView";
+import MyOrderDetailView from "./views/MyOrderDetailView";
+import OrderListView from "./views/OrderListView";
 import CompanionOrderView from "./views/CompanionOrderView";
 import MyPostsView from "./views/PostViews/MyPostsView";
 
@@ -53,6 +56,14 @@ const routes = [
     path: "/createpost",
     component: CreatePostView,
   },
+/*   { 
+    path: "/orderDetails/review",
+    component:CreateReviewView,
+  },
+  {
+    path: "/orderDetails/:orderId",
+    component:MyOrderDetailView,
+  }, */
   {
     path: "/chat",
     component: ChatView,
@@ -69,7 +80,18 @@ const routes = [
     exact: true,
   },
   {
-    path: "/companionorder/:companionId",
+    path: "/orderDetails/review/:orderId/:companionId",
+    component:CreateReviewView,
+},
+{
+    path: "/myOrders/gamerId/:gamerId/details/:orderId",
+    component:MyOrderDetailView,
+},
+{
+    path: "/myOrders/gamerId/:gamerId",
+    component:OrderListView,
+},
+ {   path: "/companionorder/:companionId",
     component: CompanionOrderView,
     exact: true,
   },

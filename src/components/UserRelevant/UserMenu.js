@@ -70,10 +70,10 @@ function UserMenu(props) {
     props.history.push(postRoute);
   };
 
-  /*
-    const onClickMyOrders = () => {
+   const onClickMyOrders = () => {
+        props.onClose();
+        props.history.push("/myOrders/gamerId/" + user.user._id);
     };
-    */
 
   const onClickCompanionOrder = () => {
     props.onClose();
@@ -97,7 +97,7 @@ function UserMenu(props) {
           >
             Profile of: {user.user.username}
           </MenuItem>
-          <MenuItem key={"myorders"} className={classes.menuItem}>
+          <MenuItem key={"myorders"} className={classes.menuItem} onClick={onClickMyOrders}>
             My Orders
           </MenuItem>
           {companion !== null ? (

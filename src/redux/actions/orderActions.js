@@ -75,7 +75,7 @@ export function updateOrderStatus(id, status) {
     };
 }
 
-export const getOrder = (id) => {
+export function getOrder(id) {
     function onSuccess(order) {
         return { type: "GETORDER_SUCCESS", order: order };
     }
@@ -91,9 +91,28 @@ export const getOrder = (id) => {
             onFailure(e);
         }
     };
+}
+
+//zy
+export const getOrderByGamerId = (gamerId) => {
+    function onSuccess(order) {
+        return { type: "GETORDERBYGAMERID_SUCCESS", orderlist: order };
+    }
+    function onFailure(error) {
+        console.log("GETORDERBYGAMERID_FAILURE", error);
+    }
+    
+    return async (dispatch, getState) => {
+        try {
+            let order = await OrderService.getOrderByGamerId(gamerId);
+            dispatch(onSuccess(order));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
 };
 
-// changed for order
+
 export function deleteOrder(id) {
     function onSuccess(orders) {
         return { type: "DELETEORDER_SUCCESS", orders: orders };

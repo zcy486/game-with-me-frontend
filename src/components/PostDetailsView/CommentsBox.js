@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Rating from "@material-ui/lab/Rating";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import UserService from "../../services/UserService";
 import theme from "../../theming/themes";
 
 const useStyles = makeStyles((theme) => ({

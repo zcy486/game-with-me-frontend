@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import backgroundPic from "../images/bg_postlist.png";
-import ThanksForYourOrder from "../components/MyOrderDetailView/ThanksForYourOrder";
-import DetailInfo from "../components/MyOrderDetailView/DetailInfo";
+import backgroundPic from "../../images/bg_postlist.png";
+import ThanksForYourOrder from "../../components/MyOrderDetailView/ThanksForYourOrder";
+import DetailInfo from "../../components/MyOrderDetailView/DetailInfo";
 import { connect, useSelector } from "react-redux";
-import {getOrder, updateOrderStatus} from "../redux/actions";
+import {getOrder, updateOrderStatus} from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

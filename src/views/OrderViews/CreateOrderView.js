@@ -1,14 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
-import ScrollContainer from "../components/ScrollContainer";
-import backgroundPic from "../images/bg_postlist.png";
-import OrderBox from "../components/CreateOrderView/OrderBox";
-import CompanionBox from "../components/CreateOrderView/CompanionBox";
-import { createOrder } from "../redux/actions";
+import ScrollContainer from "../../components/ScrollContainer";
+import backgroundPic from "../../images/bg_postlist.png";
+import OrderBox from "../../components/CreateOrderView/OrderBox";
+import CompanionBox from "../../components/CreateOrderView/CompanionBox";
+import { createOrder } from "../../redux/actions";
 import { connect, useSelector } from "react-redux";
-import { getPost } from "../redux/actions";
-import RechargePage from "../components/CreateOrderView/RechargePage";
-import { updateBalance } from "../redux/actions";
+import { getPost } from "../../redux/actions";
+import RechargePage from "../../components/CreateOrderView/RechargePage";
+import { updateBalance } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {

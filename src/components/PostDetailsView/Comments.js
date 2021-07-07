@@ -7,8 +7,6 @@ import CommentBox from "./CommentsBox";
 import MockAvatar from "../../images/avatar.svg";
 import { connect, useSelector } from "react-redux";
 import {
-  getPost,
-  getReviewByOrderId,
   getReviewWithLabels,
 } from "../../redux/actions";
 

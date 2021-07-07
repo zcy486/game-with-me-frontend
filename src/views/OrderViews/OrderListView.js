@@ -1,27 +1,18 @@
 import React, { useEffect } from "react";
 import Pagination from "@material-ui/lab/Pagination";
 import { Button } from "@material-ui/core";
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ScrollContainer from "../components/ScrollContainer";
-import ListItemText from '@material-ui/core/ListItemText';
-import OrderGrid from "../components/MyOrdersView/OrderGrid";
-import backgroundPic from "../images/bg_postlist.png";
+import OrderGrid from "../../components/MyOrdersView/OrderGrid";
+import backgroundPic from "../../images/bg_postlist.png";
 import { connect, useSelector } from "react-redux";
-import { getOrderByGamerId } from "../redux/actions";
-import MockAvatar from "../images/avatar.svg";
-import noOrderImage from "../images/oops.png";
-
-import Typography from '@material-ui/core/Typography';
+import { getOrderByGamerId } from "../../redux/actions";
+import MockAvatar from "../../images/avatar.svg";
+import noOrderImage from "../../images/oops.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexDirection: "row", 
-    //width: 2000,
-    //height: 1000,
-    //maxWidth: 3000,
+    flexDirection: "row",
     background: `url(${backgroundPic})`,
     backgroundSize: "cover",
     backgroundRepeat: "repeat",
@@ -59,35 +50,11 @@ panination: {
 },
 }));
 
-/*function OrderListView(props) {
-  const { index, style } = props;
-  let { match } = props;
-  
-  useEffect(() => {
-    let id = match.params.id;
-    props.getOrder(id);
-  }, [match.params.id]);
-
-  const onClickOrder = (id) => {
-    const orderRoute = "/myorders/" + match.params.orderId + "/orderDetails/" + id;
-    props.history.push(orderRoute);
-  };
-
-  return (
-    <ListItem button style={style} key={index}>
-      <OrderGrid onClick={onClickOrder}/>
-    </ListItem>
-  );
-}*/
-
 function OrderListView(props) {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [page, setPage] = React.useState(1);
 
-/*   const getOrderList = () =>{
-    props.dispatch(getOrderByGamerId());
-  }; */
   const {orderlist} = useSelector((state) => state.order);
   
   let { match } = props;
@@ -101,9 +68,6 @@ function OrderListView(props) {
     props.dispatch(getOrderByGamerId(gamerId));
   }, [user]);
 
-/*   useEffect(() =>{
-    console.log(order.orderlist);
-  },[order] ); */
   const onClickOrder = (orderId) => {
     const orderRoute = "/myOrders/gamerId/" + match.params.gamerId +"/details/" + orderId;
     props.history.push(orderRoute);

@@ -61,11 +61,9 @@ function MyPostsView(props) {
         match.params.userId
       );
       if (Object.keys(plusFields).length > 0) {
-        console.log("isCompanion");
         setIsCompanion(true);
         props.dispatch(getPostsByCompanion(match.params.userId));
       } else {
-        console.log("notCompanion");
         setIsCompanion(false);
       }
     })();

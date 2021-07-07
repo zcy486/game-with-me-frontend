@@ -129,7 +129,6 @@ export default class UserService {
         window.localStorage.removeItem("jwtToken");
     }
 
-
     static paymentURL() {
         return "http://localhost:4000/payment";
     }
@@ -155,4 +154,20 @@ export default class UserService {
         });
     }
 
+    static updateCompanionStatus(companionId, status) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${UserService.baseURL()}/status/${companionId}`,
+                {
+                    onlineStatus: status,
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

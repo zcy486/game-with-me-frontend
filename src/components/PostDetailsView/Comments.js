@@ -43,7 +43,6 @@ function Comments(props) {
 
   useEffect(() => {
     if (props.companionId) {
-      console.log(props.companionId);
       props.dispatch(getReviewWithLabels(props.companionId));
     }
   }, [props.companionId]);

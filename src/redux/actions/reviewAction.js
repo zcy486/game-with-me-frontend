@@ -105,7 +105,6 @@ export const getReviewByCompanionId = (userId) => {
 
 export const getReviewWithLabels = (companionId) => {
     function onSuccess(response) {
-        console.log(response)
         return { type: "GETREVIEWWITHLABELS_SUCCESS", response: response };
     }
     function onFailure(error) {

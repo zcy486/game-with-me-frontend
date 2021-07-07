@@ -8,6 +8,7 @@ import ChatList from "../../components/Chat/ChatList";
 import ChatHeader from "../../components/Chat/ChatHeader";
 import MessagePanel from "../../components/Chat/MessagePanel";
 import UserInput from "../../components/Chat/UserInput";
+import EmptyPage from "../../components/Chat/EmptyPage";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -247,7 +248,7 @@ function ChatView(props) {
           />
         </div>
       ) : (
-        <div />
+        <EmptyPage />
       )}
     </div>
   );

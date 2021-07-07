@@ -222,6 +222,12 @@ function ProfilePage(props) {
     props.onRecharge();
   };
 
+  const onWithdraw = () => {
+    props.onWithdraw();
+  };
+
+
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -347,6 +353,7 @@ function ProfilePage(props) {
           <h2 className={classes.headerInner}>My Wallet</h2>
           <Grid className={classes.balanceArea}>
             Balance: {props.user.balance}
+            <span>&nbsp;&nbsp;</span>
             <ECoin />
           </Grid>
           <Grid className={classes.buttons}>
@@ -354,6 +361,7 @@ function ProfilePage(props) {
               className={classes.secondButton}
               variant={"outlined"}
               size={"small"}
+              onClick={onWithdraw}
             >
               Withdraw
             </Button>

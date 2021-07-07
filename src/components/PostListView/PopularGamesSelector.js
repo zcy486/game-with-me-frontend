@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import {Avatar} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     height: 260,
     backgroundColor: theme.palette.background.paper,
     fontFamily: "Helvetica",
+  },
+  gamePic: {
+    width: theme.spacing(4.8),
+    height: theme.spacing(4.8),
   },
 }));
 
@@ -32,6 +38,9 @@ function PopularGamesSelector(props) {
             selected={props.selectedId === game._id}
             onClick={(event) => handleListItemClick(event, game._id)}
           >
+            <ListItemIcon>
+              <Avatar src={game.gamePic} className={classes.gamePic}/>
+            </ListItemIcon>
             <ListItemText primary={game.name} />
           </ListItem>
         ))}

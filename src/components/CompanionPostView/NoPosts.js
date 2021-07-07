@@ -15,12 +15,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NoPosts() {
+function NoPosts(props) {
   const classes = useStyles();
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant={"h6"}>This companion has currently no posts.</Typography>
+      {props.myself ? (
+        <Typography variant={"h6"}>
+          This companion has currently no posts.
+        </Typography>
+      ) : (
+        <Typography variant={"h6"}>You have currently no posts.</Typography>
+      )}
     </Paper>
   );
 }

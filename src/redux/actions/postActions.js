@@ -2,10 +2,11 @@ import PostService from "../../services/PostService";
 
 export function createPost(post, files) {
     function onSuccess() {
-        return { type: "CREATEPOST_SUCCESS" };
+        return { type: "CREATEPOST_SUCCESS"};
     }
     function onFailure(error) {
         console.log("create post failure", error);
+        return { type: "CREATEPOST_FAILURE", error: error};
     }
 
     return async (dispatch) => {
@@ -18,7 +19,7 @@ export function createPost(post, files) {
             await PostService.createPost(po);
             dispatch(onSuccess());
         } catch (e) {
-            onFailure(e);
+            dispatch(onFailure(e));
         }
     };
 }

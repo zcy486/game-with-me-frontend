@@ -22,6 +22,9 @@ export default function reviews(state = {}, action) {
            
         case "CREATEREVIEW_SUCCESS":
             return { ...state };
+
+        case "GETREVIEWWITHLABELS_SUCCESS":
+            return { response: action.response };
         default:
             return state;
     }

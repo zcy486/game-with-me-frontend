@@ -5,12 +5,8 @@ import PostDetails from "../../components/PostDetailsView/PostDetails";
 import ScrollContainer from "../../components/ScrollContainer";
 import Comments from "../../components/PostDetailsView/Comments";
 import backgroundPic from "../../images/bg_postlist.png";
-import MockAvatar from "../../images/avatar.svg";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import IconButton from "@material-ui/core/IconButton";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { getPost } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,15 +46,6 @@ function PostDetailsView(props) {
     const classes = useStyles();
 
     let { match } = props;
-
-  //TODO: replace mock screenshots
-  const screenshots = [
-    { original: MockAvatar, originalAlt: "1" },
-    { original: MockAvatar, originalAlt: "2" },
-    { original: MockAvatar, originalAlt: "3" },
-    { original: MockAvatar, originalAlt: "4" },
-    { original: MockAvatar, originalAlt: "5" },
-  ];
 
   const [canOrder, setCanOrder] = React.useState(false);
   const user = useSelector((state) => state.user.user);
@@ -135,8 +122,8 @@ function PostDetailsView(props) {
             ))}
           </GridList>
           <Comments
+              companionId={post && post.companionId}
             numComments={post && post.reviewNumber}
-            //TODO change mock data to reviews!
             labels={[
               { num: 10, name: "Carry in game" },
               { num: 5, name: "Humorous" },

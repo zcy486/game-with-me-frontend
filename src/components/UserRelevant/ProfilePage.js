@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
   Paper,
   Select,
@@ -21,6 +21,7 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ECoin from "../ECoin";
 import UserService from "../../services/UserService";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,6 +118,12 @@ const useStyles = makeStyles((theme) => ({
   },
   onlineStatus: {
     minWidth: 120,
+  },
+  circle: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 5,
   },
 }));
 
@@ -243,6 +250,21 @@ function ProfilePage(props) {
       await UserService.updateCompanionStatus(props.user._id, newStatus);
     }
   };
+
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      "&:focus": {
+        backgroundColor: theme.palette.primary.main,
+        "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
+
+  const online = { backgroundColor: "#56d243" };
+  const offline = { backgroundColor: "#bbbbbb" };
+  const busy = { backgroundColor: "#fc7303" };
 
   return (
     <div className={classes.root}>
@@ -408,9 +430,24 @@ function ProfilePage(props) {
                     labelId={"status-label"}
                     label={"OnlineStatus"}
                   >
-                    <MenuItem value={"Online"}>Online</MenuItem>
-                    <MenuItem value={"Offline"}>Offline</MenuItem>
-                    <MenuItem value={"Busy"}>Busy</MenuItem>
+                    <StyledMenuItem value={"Online"}>
+                      Online<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={online} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
+                    <StyledMenuItem value={"Offline"}>
+                      Offline<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={offline} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
+                    <StyledMenuItem value={"Busy"}>
+                      Busy<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={busy} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
                   </Select>
                 </FormControl>
               </div>

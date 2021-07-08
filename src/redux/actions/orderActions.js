@@ -51,7 +51,7 @@ export function createOrder(price, gamerId, postId, companionId, currentBalance)
 
             //TODO: change that to 15mins
             //if more than 30s order status still not changed, then delete the order, and clear the interval 
-            timeout = setTimeout(shouldDelete(interval, gamerId, currentBalance), 30000);
+            timeout = setTimeout(shouldDelete(interval), 30000);
 
             dispatch(onSuccess());
         } catch (e) {
@@ -71,7 +71,7 @@ export function updateOrderStatus(id, status) {
 
     return async (dispatch) => {
         try {
-            let order = await OrderService.updateStatus(id, status);
+            let order = await OrderService.updateStatus(id, status).order;
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);
@@ -138,7 +138,7 @@ export function deleteOrder(id) {
 };
 
 //helper function
-function shouldDelete(interval, gamerId, currentBalance) {
+function shouldDelete(interval) {
     return async () => {
         clearInterval(interval);
         interval = null;
@@ -152,7 +152,7 @@ function shouldDelete(interval, gamerId, currentBalance) {
                     await OrderService.deleteOrder(order._id);
 
                     //return the ecoin to gamer.
-                  //  await UserService.updateBalance(gamerId, currentBalance);
+                    //  await UserService.updateBalance(gamerId, currentBalance);
 
                     timeout = null;
 
@@ -178,13 +178,21 @@ function updatedOrder(companionId, timeout, currentBalance) {
                 localStorage.setItem("order", JSON.stringify(updatedOrder));
                 if (updatedOrder.orderStatus === "Confirmed") {
                     alert("Your order has been confirmed by the companion")
-                    //if confirmed, increase the order number of companion
+
+                     // if confirmed, record the payment into our database with type "Paid"
+                     await UserService.recordPayment(order.gamerId, "Paid", order.orderPrice, "self-account", order._id);
+
                     if (timeout) {
                         clearTimeout(timeout)
                         timeout = null;
                     }
                     localStorage.removeItem("order");
+
+                    
+                    //if confirmed, increase the order number of companion
                     await UserService.updateCompanionOrder(companionId);
+
+                
                 }
 
             } catch (e) {

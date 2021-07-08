@@ -85,7 +85,7 @@ export default function OrderGrid(props) {
                     <Grid className={classes.paperColumn}>
                         <Grid className={classes.dateInfo}>
 
-                            <Typography>{props.createdAt}</Typography>
+                            <Typography>{timestampFormatter(props.createdAt)}</Typography>
                         </Grid>
                        
                             <Grid item>
@@ -123,4 +123,12 @@ export default function OrderGrid(props) {
       </ButtonBase>
 
   );
+}
+
+function timestampFormatter(timestamp) {
+    let stringTime = timestamp.toString()
+    let date = stringTime.substring(0, 10);
+    let time = stringTime.substring(11,16);
+    let result = date + " " + time;
+    return result
 }

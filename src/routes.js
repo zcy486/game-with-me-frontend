@@ -4,14 +4,14 @@ import CompanionPostView from "./views/PostViews/CompanionPostView";
 import PostDetailsView from "./views/PostViews/PostDetailsView";
 import SignUpView from "./views/UserViews/SignUpView";
 import LoginView from "./views/UserViews/LoginView";
-import CreateOrderView from "./views/CreateOrderView";
+import CreateOrderView from "./views/OrderViews/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
 import CreateReviewView from "./views/CreateReviewView";
-import MyOrderDetailView from "./views/MyOrderDetailView";
-import OrderListView from "./views/OrderListView";
-import CompanionOrderView from "./views/CompanionOrderView";
+import MyOrderDetailView from "./views/OrderViews/MyOrderDetailView";
+import OrderListView from "./views/OrderViews/OrderListView";
+import CompanionOrderView from "./views/OrderViews/CompanionOrderView";
 import MyPostsView from "./views/PostViews/MyPostsView";
 
 const routes = [

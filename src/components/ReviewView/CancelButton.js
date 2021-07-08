@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { withRouter } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
 
 
 const styles = {

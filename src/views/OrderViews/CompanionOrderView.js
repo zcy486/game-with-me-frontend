@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: "repeat",
         justifyContent: "center",
         alignItems: "center",
+        backgroundSize: "cover",
 
     },
 

@@ -36,16 +36,16 @@ function CreateOrderView(props) {
 
     useEffect(() => {
         if (!user) {
-          props.history.push("/login");
+            props.history.push("/login");
         }
-      
-      }, [user, props.history]);
+
+    }, [user, props.history]);
 
 
     const onConfirm = (price, gamerId, postId, companionId) => {
         props.dispatch(createOrder(price, gamerId, postId, companionId, user.balance));
-        //TODO: change that to my order page!
-        props.history.push("/myOrders/gamerId/"+gamerId);
+
+        props.history.push("/myOrders/gamerId/" + gamerId);
     };
 
     const onRecharge = () => {
@@ -61,7 +61,7 @@ function CreateOrderView(props) {
         setOpen(false);
     };
 
-   
+
     const handleRecharge = (total, amount, account) => {
         props.dispatch(updateBalance(user._id, total, "Recharge", amount, account));
     };
@@ -77,18 +77,18 @@ function CreateOrderView(props) {
             <div className={classes.root}>
                 <div className={classes.pageArea}>
                     <h1>Order Details</h1>
-                    
+
                     {open ? (<RechargePage
                         open={open}
                         handleClose={handleClose}
                         currentBalance={user.balance}
                         user={user}
-                        handleRecharge= {handleRecharge}
+                        handleRecharge={handleRecharge}
                     ></RechargePage>) : null}
                     <OrderBox
                         post={post}
                         gameName={post && post.gameName}
-                        user= {user}
+                        user={user}
                         price={post && post.price}
                         onConfirm={onConfirm}
                         onCancel={onCancel}
@@ -97,13 +97,16 @@ function CreateOrderView(props) {
 
                     <h1>Information about Gaming Companion</h1>
                     <CompanionBox
+                        served={post && post.orderNumber}
+                        companionType={post && post.postType}
+                        ratings={post && post.ratings}
                         username={post && post.companionName}
                         age={post && post.companionAge}
                         introduction={post && post.introduction}
                         price={post && post.price}
                         server={post && post.servers}
                         platform={post && post.platforms}
-                        avatar ={post && post.avatarUrl}
+                        avatar={post && post.avatarUrl}
                     />
                 </div>
             </div>

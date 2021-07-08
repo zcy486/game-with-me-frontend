@@ -91,6 +91,9 @@ function CompanionOrderBox(props) {
         }
     }
 
+
+    const date = new Date(props.dateTime).toUTCString().split(" GMT")[0];
+    
     return (
  
             <Paper className={classes.paper}>
@@ -120,7 +123,7 @@ function CompanionOrderBox(props) {
                     <Grid className={classes.paperColumn}>
                         <Grid className={classes.dateInfo}>
 
-                            <Typography>{timestampFormatter(props.dateTime)}</Typography>
+                            <Typography>{date}</Typography>
                         </Grid>
                        
                             <Grid item>
@@ -133,14 +136,6 @@ function CompanionOrderBox(props) {
             </Paper>
    
     );
-}
-
-function timestampFormatter(timestamp) {
-    let stringTime = timestamp.toString()
-    let date = stringTime.substring(0, 10);
-    let time = stringTime.substring(11,16);
-    let result = date + " " + time;
-    return result
 }
 
 export default CompanionOrderBox;

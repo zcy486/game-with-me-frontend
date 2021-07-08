@@ -1,4 +1,5 @@
 import UserService from "../../services/UserService";
+import OrderService from "../../services/OrderService";
 
 export function login(username, password) {
     function onSuccess(user) {
@@ -19,8 +20,36 @@ export function login(username, password) {
 }
 
 export function logout() {
-    UserService.logout();
-    return { type: "LOGOUT" };
+   
+    function onSuccess() {
+        return { type: "LOGOUT"};
+    }
+
+    function onFailure(error) {
+        return { type: "LOGOUT_FAILURE", error: error };
+    }
+
+
+    return async (dispatch) => {
+       
+        try {
+            if (window.localStorage["order"]) {
+                let order = JSON.parse(window.localStorage['order']);
+                let updatedOrder = await OrderService.getOrder(order._id);
+                if (updatedOrder.orderStatus === "Created") {
+                    alert("Your order has been automatically cancelled because you logout.")
+                    await OrderService.deleteOrder(order._id);
+               //     await UserService.updateBalance(order.gamerId, order.currentBalance);
+                }
+                window.localStorage.removeItem("order");
+            }
+            dispatch(onSuccess());
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+        UserService.logout();
+       
+    };
 }
 
 export function loginReset() {
@@ -125,4 +154,5 @@ export function deleteImage(auser) {
     };
 
 }
+
 

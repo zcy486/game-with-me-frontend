@@ -14,6 +14,7 @@ import theme from "./theming/themes";
 import Fab from '@material-ui/core/Fab';
 import CancelIcon from '@material-ui/icons/Cancel';
 import OrderService from "../src/services/OrderService";
+import PageNotFound from '../src/components/PageNotFound';
 
 const useStyles = makeStyles(() => ({
     appRoot: {
@@ -63,6 +64,7 @@ function App() {
                             {routes.map((route, i) => (
                                 <Route key={i} {...route} />
                             ))}
+                            <Route component={PageNotFound} />
                         </Switch>
                         {hasOrder ?
                             <Fab variant="extended" className={classes.fab} color={"secondary"} onClick={cancel}>

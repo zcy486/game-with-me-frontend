@@ -63,12 +63,12 @@ function ChatList(props) {
                   user.connected ? (
                     <div className={classes.statusRow}>
                       <span className={classes.circle} style={online} />
-                      {" online"}
+                      {" in chat"}
                     </div>
                   ) : (
                     <div className={classes.statusRow}>
                       <span className={classes.circle} style={offline} />
-                      {" offline"}
+                      {" not in chat"}
                     </div>
                   )
                 }

@@ -40,7 +40,6 @@ export default class OrderService {
     }
 
     static getOrder(id) {
-        console.log(id);
         return new Promise(async (resolve, reject) => {
             HttpService.get(
                 `${OrderService.baseURL()}/${id}`,

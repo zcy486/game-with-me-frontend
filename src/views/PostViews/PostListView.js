@@ -109,6 +109,7 @@ function PostListView(props) {
   const packFilters = () => {
     return {
       gameId: match.params.gameId,
+      onlineStatus: status,
       language: language,
       postType: type,
       price: price,
@@ -186,7 +187,6 @@ function PostListView(props) {
               <Select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                disabled
               >
                 <MenuItem value="">
                   <em>None</em>

@@ -76,6 +76,20 @@ export default class reviewService {
             );
         });
     }
+
+    static getReviewWithLabels(companionId) {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                `${reviewService.baseURL()}/readWithLabels/${companionId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            )
+        })
+    }
     //userId is about companion
     static updateReview(reviewId, updateObj) {
         return new Promise((resolve, reject) => {

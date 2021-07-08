@@ -37,7 +37,6 @@ function App() {
 
     const waitedOrder = store.getState().order
 
-    console.log(waitedOrder.order);
 
     const cancel = async () => {
         try {
@@ -52,7 +51,7 @@ function App() {
 
 
     const hasOrder = (Object.keys(waitedOrder).length !== 0);
-    console.log(hasOrder)
+    //console.log(hasOrder)
     return (
         <div className={classes.appRoot}>
             <MuiThemeProvider theme={theme}>

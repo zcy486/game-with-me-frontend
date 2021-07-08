@@ -60,7 +60,6 @@ function UserMenu(props) {
 
   const onClickProfile = () => {
     props.onClose();
-    console.log(user);
     props.history.push("/profile");
   };
 

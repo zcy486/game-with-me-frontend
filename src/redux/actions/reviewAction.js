@@ -1,4 +1,5 @@
 import ReviewService from "../../services/ReviewService";
+import reviewService from "../../services/ReviewService";
 
 //get reviews by companion id
 export function getReviews() {
@@ -101,6 +102,23 @@ export const getReviewByCompanionId = (userId) => {
         }
     };
 };
+
+export const getReviewWithLabels = (companionId) => {
+    function onSuccess(response) {
+        return { type: "GETREVIEWWITHLABELS_SUCCESS", response: response };
+    }
+    function onFailure(error) {
+        console.log("get post failure", error);
+    }
+    return async (dispatch) => {
+        try {
+            let response = await reviewService.getReviewWithLabels(companionId);
+            dispatch(onSuccess(response));
+        } catch (e) {
+            onFailure(e);
+        }
+    }
+}
 
 
 export function deleteReview(id) {//by review id

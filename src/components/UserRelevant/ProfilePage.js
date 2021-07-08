@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
   Paper,
+  Select,
+  TextField,
+  InputLabel,
   Grid,
   Divider,
   ButtonBase,
   Button,
-  TextField,
-  Select,
   MenuItem,
   Typography,
   IconButton,
+  FormControl,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 
@@ -18,6 +20,8 @@ import MockAvatar from "../../images/avatar.svg";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ECoin from "../ECoin";
+import UserService from "../../services/UserService";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,21 +116,31 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginBottom: theme.spacing(2),
   },
+  onlineStatus: {
+    minWidth: 120,
+  },
+  circle: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 5,
+  },
 }));
 
 function ProfilePage(props) {
   const classes = useStyles();
 
+  const [editMode, setEditMode] = React.useState(false);
+
   const minAge = 0;
   const maxAge = 999;
   const [userAge, setUserAge] = React.useState("");
   const [userGender, setUserGender] = React.useState("");
-
-  const [editMode, setEditMode] = React.useState(false);
   const [uploadImg, setUploadImg] = React.useState(false);
   const [deleteImg, setDeleteImg] = React.useState(false);
   const [imgSrc, setImgSrc] = React.useState(MockAvatar);
   const [img, setImg] = React.useState("");
+  const [status, setStatus] = React.useState("");
 
   const extractUser = () => {
     if (!props.user) {
@@ -138,6 +152,9 @@ function ProfilePage(props) {
       setImgSrc(props.user.avatarUrl);
     } else {
       setImgSrc(MockAvatar);
+    }
+    if (props.companion) {
+      setStatus(props.companion.onlineStatus);
     }
   };
 
@@ -158,7 +175,7 @@ function ProfilePage(props) {
   // triggers when the new parameter is changed
   useEffect(() => {
     extractUser();
-  }, [props.user]);
+  }, [props.user, props.companion]);
 
   const onChangeUserAge = (event) => {
     const newAge = Math.round(
@@ -226,7 +243,28 @@ function ProfilePage(props) {
     props.onWithdraw();
   };
 
+  const onChangeStatus = async (event) => {
+    if (props.companion) {
+      const newStatus = event.target.value;
+      setStatus(newStatus);
+      await UserService.updateCompanionStatus(props.user._id, newStatus);
+    }
+  };
 
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      "&:focus": {
+        backgroundColor: theme.palette.primary.main,
+        "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+          color: theme.palette.common.white,
+        },
+      },
+    },
+  }))(MenuItem);
+
+  const online = { backgroundColor: "#56d243" };
+  const offline = { backgroundColor: "#bbbbbb" };
+  const busy = { backgroundColor: "#fc7303" };
 
   return (
     <div className={classes.root}>
@@ -379,6 +417,40 @@ function ProfilePage(props) {
           <h2 className={classes.headerInner}>Companion Profile</h2>
           {props.companion ? (
             <Grid>
+              <div className={classes.companionRow}>
+                <FormControl
+                  className={classes.onlineStatus}
+                  variant="outlined"
+                  color={"secondary"}
+                >
+                  <InputLabel id={"status-label"}>OnlineStatus</InputLabel>
+                  <Select
+                    value={status}
+                    onChange={onChangeStatus}
+                    labelId={"status-label"}
+                    label={"OnlineStatus"}
+                  >
+                    <StyledMenuItem value={"Online"}>
+                      Online<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={online} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
+                    <StyledMenuItem value={"Offline"}>
+                      Offline<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={offline} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
+                    <StyledMenuItem value={"Busy"}>
+                      Busy<span>&nbsp;&nbsp;</span>
+                      <ListItemIcon>
+                        <span className={classes.circle} style={busy} />
+                      </ListItemIcon>
+                    </StyledMenuItem>
+                  </Select>
+                </FormControl>
+              </div>
               <div className={classes.companionRow}>
                 <Typography>Served: {props.companion.orderNumber}</Typography>
               </div>

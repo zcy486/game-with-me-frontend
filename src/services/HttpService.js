@@ -91,10 +91,10 @@ export default class HttpService {
         var body = {};
         if (data instanceof FormData) {
             body = data;
-         
+
         } else {
             body = JSON.stringify(data);
-            header.append("Content-Type",'application/json');
+            header.append("Content-Type", 'application/json');
         }
         if (token) {
             header.append("Authorization", `JWT ${token}`);
@@ -151,6 +151,11 @@ export default class HttpService {
             if (resp.error) {
                 onError(resp.error);
             } else {
+                if (resp.hasOwnProperty("token")) {
+                    window.localStorage["jwtToken"] = resp.token;
+                    resp.user = this.extractUser(resp.token);
+                }
+
                 onSuccess(resp);
             }
         } catch (err) {

@@ -3,12 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
-import ScrollContainer from "../components/ScrollContainer";
-import backgroundPic from "../images/bg_postlist.png";
-import MockAvatar from "../images/avatar.svg";
-import CompanionOrderBox from "../components/CompanionOrderView/CompanionOrderBox";
-import { getCompanionOrders, updateCompanionOrders } from "../redux/actions";
-import noOrderImage from "../images/oops.png";
+import ScrollContainer from "../../components/ScrollContainer";
+import backgroundPic from "../../images/bg_postlist.png";
+import MockAvatar from "../../images/avatar.svg";
+import CompanionOrderBox from "../../components/CompanionOrderView/CompanionOrderBox";
+import { getCompanionOrders, updateCompanionOrders } from "../../redux/actions";
+import noOrderImage from "../../images/oops.png";
 
 const useStyles = makeStyles((theme) => ({
 

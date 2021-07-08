@@ -26,8 +26,9 @@ export function getOrders() {
     };
 }
 
-
-
+//helper var to clear timeout & interval
+var timeout;
+var interval;
 export function createOrder(price, gamerId, postId, companionId, currentBalance) {
     function onSuccess(order) {
         return { type: "CREATEORDER_SUCCESS", order: order };
@@ -44,12 +45,15 @@ export function createOrder(price, gamerId, postId, companionId, currentBalance)
             //Store the TO-BE-UPDATED order in the localStorage 
             localStorage.setItem("order", JSON.stringify(order));
 
-            //get the latest order fron backend every 5 seconds 
-            let interval = setInterval(updatedOrder(order._id),5000);
+            //get the latest order fron backend every 3 seconds 
 
-            //if more than 20s order status still not changed, then delete the order, and clear the interval 
-            setTimeout(shouldDelete(order._id, interval, gamerId, currentBalance), 20000);
-            dispatch(onSuccess(order));
+            interval = setInterval(updatedOrder(companionId, timeout, currentBalance), 3000);
+
+            //TODO: change that to 15mins
+            //if more than 30s order status still not changed, then delete the order, and clear the interval 
+            timeout = setTimeout(shouldDelete(interval, gamerId, currentBalance), 30000);
+
+            dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
         }
@@ -101,7 +105,7 @@ export const getOrderByGamerId = (gamerId) => {
     function onFailure(error) {
         console.log("GETORDERBYGAMERID_FAILURE", error);
     }
-    
+
     return async (dispatch, getState) => {
         try {
             let order = await OrderService.getOrderByGamerId(gamerId);
@@ -134,22 +138,24 @@ export function deleteOrder(id) {
 };
 
 //helper function
-function shouldDelete(id, interval, gamerId, currentBalance) {
+function shouldDelete(interval, gamerId, currentBalance) {
     return async () => {
+        clearInterval(interval);
+        interval = null;
         try {
             if (window.localStorage["order"]) {
-                clearInterval(interval);
-                let order = await OrderService.getOrder(id);
-                if (order.orderStatus === "Created") {
+
+                let order = JSON.parse(window.localStorage['order']);
+                let updatedOrder = await OrderService.getOrder(order._id);
+                if (updatedOrder.orderStatus === "Created") {
                     alert("Your order has been automatically cancelled because companion didn't confirmed.")
-                    await OrderService.deleteOrder(id);
+                    await OrderService.deleteOrder(order._id);
 
                     //return the ecoin to gamer.
-                    await UserService.updateBalance(gamerId, currentBalance);
+                  //  await UserService.updateBalance(gamerId, currentBalance);
 
-                }
-                if (order.orderStatus === "Confirmed") {
-                    alert("Your order has been confirmed by the companion")
+                    timeout = null;
+
                 }
                 //clear the storage anyway even if it's confirmed
                 localStorage.removeItem("order");
@@ -161,17 +167,32 @@ function shouldDelete(id, interval, gamerId, currentBalance) {
     }
 }
 
-function updatedOrder(id) {
+function updatedOrder(companionId, timeout, currentBalance) {
     return async () => {
-        try { 
-            if (window.localStorage["order"]) {
-            let order = await OrderService.getOrder(id);
-            localStorage.setItem("order", JSON.stringify(order));
+        if (window.localStorage["order"]) {
+
+            let order = JSON.parse(window.localStorage['order']);
+            try {
+                let updatedOrder = await OrderService.getOrder(order._id);
+                updatedOrder.currentBalance = currentBalance;
+                localStorage.setItem("order", JSON.stringify(updatedOrder));
+                if (updatedOrder.orderStatus === "Confirmed") {
+                    alert("Your order has been confirmed by the companion")
+                    //if confirmed, increase the order number of companion
+                    if (timeout) {
+                        clearTimeout(timeout)
+                        timeout = null;
+                    }
+                    localStorage.removeItem("order");
+                    await UserService.updateCompanionOrder(companionId);
+                }
+
+            } catch (e) {
+                console.log(e);
             }
 
-        } catch (e) {
-            console.log(e);
         }
+
     }
 }
 

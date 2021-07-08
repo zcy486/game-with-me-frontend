@@ -29,7 +29,7 @@ function MyOrderDetailView(props) {
   const {order} = useSelector((state) => state.order);
   useEffect(() => {
     props.dispatch(getOrder(match.params.orderId));
-  }, [order]);
+  }, [match.params]);
 
   const handleFinish = (status) => {
     console.log(match.params.orderId);

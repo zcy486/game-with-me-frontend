@@ -91,6 +91,9 @@ function CompanionOrderBox(props) {
         }
     }
 
+
+    const date = new Date(props.dateTime).toUTCString().split(" GMT")[0];
+    
     return (
  
             <Paper className={classes.paper}>
@@ -120,7 +123,7 @@ function CompanionOrderBox(props) {
                     <Grid className={classes.paperColumn}>
                         <Grid className={classes.dateInfo}>
 
-                            <Typography>{props.dateTime}</Typography>
+                            <Typography>{date}</Typography>
                         </Grid>
                        
                             <Grid item>

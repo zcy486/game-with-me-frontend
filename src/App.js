@@ -37,7 +37,6 @@ function App() {
 
     const waitedOrder = store.getState().order
 
-    //console.log(waitedOrder.order);
 
     const cancel = async () => {
         try {

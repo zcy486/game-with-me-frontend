@@ -45,7 +45,7 @@ function CreateOrderView(props) {
     const onConfirm = (price, gamerId, postId, companionId) => {
         props.dispatch(createOrder(price, gamerId, postId, companionId, user.balance));
         //TODO: change that to my order page!
-        props.history.push("/");
+        props.history.push("/myOrders/gamerId/"+gamerId);
     };
 
     const onRecharge = () => {

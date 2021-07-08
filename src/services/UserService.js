@@ -1,5 +1,4 @@
 import HttpService from "./HttpService";
-
 export default class UserService {
     static baseURL() {
         return "http://localhost:4000/user";
@@ -170,4 +169,36 @@ export default class UserService {
             );
         });
     }
+
+    static updateCompanionOrder(companionId) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${UserService.baseURL()}/updateorder/${companionId}`,
+               
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static getBalance(id) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${UserService.baseURL()}/getbalance/${id}`,
+               
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+
 }

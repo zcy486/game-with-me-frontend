@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import ECoin from "../ECoin";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
     justifyContent: "center",
     alignItems: "center",
-   
   },
   paperContent: {
-    display: "flex", },
+    display: "flex",
+  },
   image: {
     width: 128,
     height: 128,
@@ -28,25 +28,29 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
     padding: theme.spacing(1),
   },
+  img: {
+    width: theme.spacing(13),
+    height: theme.spacing(13),
+  },
   paperColumn: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     textAlign: "left",
-},
-placeHolder: {
+  },
+  placeHolder: {
     flexGrow: 1,
-},
-priceInfo: {
+  },
+  priceInfo: {
     display: "flex",
     alignItems: "center",
-},
-dateInfo: {
+  },
+  dateInfo: {
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
     color: "green",
-},
+  },
 }));
 
 export default function OrderGrid(props) {
@@ -54,45 +58,37 @@ export default function OrderGrid(props) {
   const onClick = (event) => {
     event.preventDefault();
     props.onClick(props.order._id);
-  }
+  };
   return (
-   
-      <ButtonBase 
-        onClick={onClick}
-      >
+    <ButtonBase onClick={onClick}>
       <Paper className={classes.paper}>
         <Grid container xs={500} spacing={2}>
-          
-            <Grid item className={classes.image} align ='center'>        
-                <img className={classes.img}  alt="avatar" src={props.avatarUrl} />         
-            </Grid>
-            <Grid className={classes.paperColumn}>
-                        <Typography>{props.companionName}</Typography>
-
-                        <Grid className={classes.priceInfo}>
-                            {props.gameName}
-                            <span>&nbsp;</span>
-
-                        </Grid>
-                        <Grid className={classes.priceInfo}>
-                            {props.orderPrice}
-                            <span>&nbsp;</span>
-                            <ECoin />
-                            <span>&nbsp;</span> 
-                        </Grid>
-                    </Grid>
-                    <Grid className={classes.placeHolder} />
-                    <Grid className={classes.paperColumn}>
-                        <Grid className={classes.dateInfo}>
-
-                            <Typography>{timestampFormatter(props.createdAt)}</Typography>
-                        </Grid>
-                       
-                            <Grid item>
-                           {props.orderStatus}
-                           </Grid>
+          <Grid item className={classes.image} align="center">
+            <img className={classes.img} alt="avatar" src={props.avatarUrl} />
           </Grid>
- {/*            <Grid item xs={12} sm container spacing={10} align = 'left'>
+          <Grid className={classes.paperColumn}>
+            <Typography>{props.companionName}</Typography>
+
+            <Grid className={classes.priceInfo}>
+              {props.gameName}
+              <span>&nbsp;</span>
+            </Grid>
+            <Grid className={classes.priceInfo}>
+              {props.orderPrice}
+              <span>&nbsp;</span>
+              <ECoin />
+              <span>&nbsp;</span>
+            </Grid>
+          </Grid>
+          <Grid className={classes.placeHolder} />
+          <Grid className={classes.paperColumn}>
+            <Grid className={classes.dateInfo}>
+              <Typography>{timestampFormatter(props.createdAt)}</Typography>
+            </Grid>
+
+            <Grid item>{props.orderStatus}</Grid>
+          </Grid>
+          {/*            <Grid item xs={12} sm container spacing={10} align = 'left'>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item >
                   <Typography  variant="subtitle1">
@@ -120,15 +116,14 @@ export default function OrderGrid(props) {
             </Grid> */}
         </Grid>
       </Paper>
-      </ButtonBase>
-
+    </ButtonBase>
   );
 }
 
 function timestampFormatter(timestamp) {
-    let stringTime = timestamp.toString()
-    let date = stringTime.substring(0, 10);
-    let time = stringTime.substring(11,16);
-    let result = date + " " + time;
-    return result
+  let stringTime = timestamp.toString();
+  let date = stringTime.substring(0, 10);
+  let time = stringTime.substring(11, 16);
+  let result = date + " " + time;
+  return result;
 }

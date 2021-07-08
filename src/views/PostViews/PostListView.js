@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {MenuItem, Select, InputLabel, FormControl, Avatar} from "@material-ui/core";
+import {MenuItem, Select, InputLabel, FormControl} from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";
@@ -78,7 +78,7 @@ function PostListView(props) {
   const posts = useSelector((state) => state.posts.response);
 
   //all you need with filters is here!
-  const allStatus = ["Online", "Offline", "Busy", "All-status"];
+  const allStatus = ["Online", "Offline", "Busy"];
   const allLanguages = [
     "Deutsch",
     "English",
@@ -167,6 +167,41 @@ function PostListView(props) {
     setPage(page);
   };
 
+  const onChangeStatus = (e) => {
+    setStatus(e.target.value);
+    setPage(1);
+  }
+
+  const onChangeLanguage = (e) => {
+    setLanguage(e.target.value);
+    setPage(1);
+  }
+
+  const onChangeType = (e) => {
+    setType(e.target.value);
+    setPage(1);
+  }
+
+  const onChangePrice = (e) => {
+    setPrice(e.target.value);
+    setPage(1);
+  }
+
+  const onChangeServer = (e) => {
+    setServer(e.target.value);
+    setPage(1);
+  }
+
+  const onChangePlatform = (e) => {
+    setPlatform(e.target.value);
+    setPage(1);
+  }
+
+  const onChangeSort = (e) => {
+    setSort(e.target.value);
+    setPage(1);
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.gameSelector}>
@@ -186,7 +221,7 @@ function PostListView(props) {
               <InputLabel>Status</InputLabel>
               <Select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={onChangeStatus}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -205,7 +240,7 @@ function PostListView(props) {
               <InputLabel>Language</InputLabel>
               <Select
                 value={language}
-                onChange={(e) => setLanguage(e.target.value)}
+                onChange={onChangeLanguage}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -222,7 +257,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Type</InputLabel>
-              <Select value={type} onChange={(e) => setType(e.target.value)}>
+              <Select value={type} onChange={onChangeType}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
@@ -238,7 +273,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Price</InputLabel>
-              <Select value={price} onChange={(e) => setPrice(e.target.value)}>
+              <Select value={price} onChange={onChangePrice}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
@@ -256,7 +291,7 @@ function PostListView(props) {
               <InputLabel>Server</InputLabel>
               <Select
                 value={server}
-                onChange={(e) => setServer(e.target.value)}
+                onChange={onChangeServer}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -276,7 +311,7 @@ function PostListView(props) {
               <InputLabel>Platform</InputLabel>
               <Select
                 value={platform}
-                onChange={(e) => setPlatform(e.target.value)}
+                onChange={onChangePlatform}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -296,7 +331,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Sort by</InputLabel>
-              <Select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <Select value={sort} onChange={onChangeSort}>
                 {sortBy.map((sortType, i) => {
                   return (
                     <MenuItem key={i} value={sortType}>
@@ -325,7 +360,7 @@ function PostListView(props) {
             })}
           {posts && posts.count !== 0 ? (
             <Pagination
-              count={Math.ceil(posts ? posts.count / 20 : 0)}
+              count={Math.ceil(posts ? posts.count / 10 : 0)}
               shape="rounded"
               color="secondary"
               onChange={onChangePage}

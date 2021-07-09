@@ -19,9 +19,13 @@ const useStyles = makeStyles(() => ({
     color: "ghostwhite",
     backgroundColor: "#9e8dec",
   },
+  listItemText: {
+    fontSize: 16,
+  },
   statusRow: {
     display: "flex",
     alignItems: "center",
+    fontSize: 14,
   },
   circle: {
     width: 12,
@@ -58,6 +62,8 @@ function ChatList(props) {
                 <Avatar src={MockAvatar} />
               </ListItemAvatar>
               <ListItemText
+                className={classes.listItemText}
+                disableTypography
                 primary={user.username}
                 secondary={
                   user.connected ? (

@@ -13,6 +13,7 @@ import MyOrderDetailView from "./views/OrderViews/MyOrderDetailView";
 import OrderListView from "./views/OrderViews/OrderListView";
 import CompanionOrderView from "./views/OrderViews/CompanionOrderView";
 import MyPostsView from "./views/PostViews/MyPostsView";
+import EditPostView from "./views/PostViews/EditPostsView";
 
 const routes = [
   {
@@ -56,6 +57,10 @@ const routes = [
     path: "/createpost",
     component: CreatePostView,
   },
+  {
+    path: "/editpost/:postId",
+    component: EditPostView,
+  },
 /*   { 
     path: "/orderDetails/review",
     component:CreateReviewView,
@@ -95,6 +100,7 @@ const routes = [
     component: CompanionOrderView,
     exact: true,
   },
+  //TODO
   {
     path: "/posts/:userId",
     component: MyPostsView,

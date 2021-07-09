@@ -8,33 +8,38 @@ import { getPostsByCompanion } from "../../redux/actions";
 import NoPosts from "../../components/CompanionPostView/NoPosts";
 import GameBox from "../../components/CompanionPostView/GameBox";
 import { Button } from "@material-ui/core";
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        backgroundImage: `url(${backgroundPic})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "repeat",
-      //backgroundSize: "cover",
-        //backgroundAttachment: "scroll",
-    },
-    pageArea: {
-        paddingTop: theme.spacing(12),
-        paddingLeft: theme.spacing(25),
-        paddingRight: theme.spacing(25),
-        paddingBottom: theme.spacing(10),
-    },
-    title: {
-        display: "flex",
-    },
-    button: {
-        maxHeight: "30px",
-        margin: "25px",
-    },
-    noPosts: {
-        marginBottom: "500px",
-    },
-    multiplePosts: {
-        marginBottom: "200px",
+  root: {
+    backgroundImage: `url(${backgroundPic})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "repeat",
+    //backgroundSize: "cover",
+    //backgroundAttachment: "scroll",
+  },
+  pageArea: {
+    paddingTop: theme.spacing(12),
+    paddingLeft: theme.spacing(25),
+    paddingRight: theme.spacing(25),
+    paddingBottom: theme.spacing(10),
+  },
+  title: {
+    display: "flex",
+  },
+  button: {
+    maxHeight: "30px",
+    margin: "25px",
+  },
+  noPosts: {
+    marginBottom: "500px",
+  },
+  multiplePosts: {
+    marginBottom: "200px",
+  },
+    fab: {
+      marginLeft: theme.spacing(5),
     }
 }));
 
@@ -53,6 +58,11 @@ function MyPostsView(props) {
 
   const clickCreate = () => {
     props.history.push("/createpost");
+  };
+
+  const onClickEdit = (post) => {
+      let route = "/editpost/" + post._id;
+      props.history.push(route);
   };
 
   useEffect(() => {
@@ -93,16 +103,20 @@ function MyPostsView(props) {
                 ) : (
                   ownedPosts.map((post, i) => {
                     return (
-                      <GameBox
-                        key={i}
-                        gameId={post.gameId}
-                        gameName={post.gameName}
-                        gamePic={post.gamePic}
-                        price={post.price}
-                        languages={post.language}
-                        postId={post._id}
-                        onClick={onClickPost}
-                      />
+                      <div key={i}>
+                        <GameBox
+                          gameId={post.gameId}
+                          gameName={post.gameName}
+                          gamePic={post.gamePic}
+                          price={post.price}
+                          languages={post.language}
+                          postId={post._id}
+                          onClick={onClickPost}
+                        />
+                          <Fab color="secondary" aria-label="edit" className={classes.fab} onClick={() => onClickEdit(post)}>
+                              <EditIcon />
+                          </Fab>
+                      </div>
                     );
                   })
                 )}

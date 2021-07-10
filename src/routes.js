@@ -100,9 +100,8 @@ const routes = [
     component: CompanionOrderView,
     exact: true,
   },
-  //TODO
   {
-    path: "/posts/:userId",
+    path: "/posts/:companionId",
     component: MyPostsView,
     exact: true,
   }

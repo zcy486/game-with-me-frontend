@@ -25,10 +25,6 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(30),
         paddingBottom: theme.spacing(10),
     },
-    alert: {
-        fontFamily: "Helvetica",
-        fontWeight: "bolder",
-    },
 }));
 
 function EditPostView(props) {
@@ -38,8 +34,7 @@ function EditPostView(props) {
 
     const onCancel = () => {
         if (user) {
-            let route = "/posts/" + user._id;
-            props.history.push(route);
+            props.history.push(`/posts/${user._id}`);
         }
     };
 

@@ -125,6 +125,7 @@ function EditPostPage(props) {
   const [availableTime, setAvailableTime] = React.useState([]);
   const [gameServers, setGameServers] = React.useState([]);
   const [gamePlatforms, setGamePlatforms] = React.useState([]);
+  //
 
   // for imgSrc
   const [screenshots, setScreenshots] = React.useState([]);
@@ -218,20 +219,25 @@ function EditPostPage(props) {
       (async () => {
         const post = await PostService.reloadOnEdit(match.params.postId);
         console.log("reloaded post: ", post);
-        if (post) {
-          // game
-          setGameName(post.gameId.name);
-          setAllServers(post.gameId.allServers);
-          setAllPlatforms(post.gameId.allPlatforms);
-          // post
-          setPostId(post._id);
-          setPrice(post.price);
-          setserviceType(post.postType);
-          setIntroduction(post.introduction);
-          setLanguage(post.language);
-          setAvailableTime(post.availableTime);
-          setGameServers(post.servers);
-          setGamePlatforms(post.platforms);
+        if (props.user._id === post.companionId) {
+          if (post) {
+            // game
+            setGameName(post.gameId.name);
+            setAllServers(post.gameId.allServers);
+            setAllPlatforms(post.gameId.allPlatforms);
+            // post
+            setPostId(post._id);
+            setPrice(post.price);
+            setserviceType(post.postType);
+            setIntroduction(post.introduction);
+            setLanguage(post.language);
+            setAvailableTime(post.availableTime);
+            setGameServers(post.servers);
+            setGamePlatforms(post.platforms);
+          }
+        } else {
+          // Handle attempt to edit other user's post
+          props.history.push(`/posts/${props.user._id}`);
         }
       })();
     }

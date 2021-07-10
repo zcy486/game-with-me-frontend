@@ -68,11 +68,11 @@ function MyPostsView(props) {
   useEffect(() => {
     (async () => {
       let plusFields = await UserService.getCompanionProfile(
-        match.params.userId
+        match.params.companionId
       );
       if (Object.keys(plusFields).length > 0) {
         setIsCompanion(true);
-        props.dispatch(getPostsByCompanion(match.params.userId));
+        props.dispatch(getPostsByCompanion(match.params.companionId));
       } else {
         setIsCompanion(false);
       }

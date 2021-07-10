@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         background: `url(${backgroundPic})`,
         backgroundSize: "cover",
         backgroundRepeat: "repeat",
+        height: "100%",
     },
     content: {
         width: 1500,

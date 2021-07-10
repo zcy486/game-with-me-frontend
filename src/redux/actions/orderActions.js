@@ -72,6 +72,7 @@ export function updateOrderStatus(id, status) {
     return async (dispatch) => {
         try {
             let order = await OrderService.updateStatus(id, status);
+            debugger;
             dispatch(onSuccess(order));
         } catch (e) {
             onFailure(e);

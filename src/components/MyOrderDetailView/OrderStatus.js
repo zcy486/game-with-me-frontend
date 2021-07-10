@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
+import { getOrder } from "../../redux/actions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ function getSteps() {
   }
 }*/
 
-function OrderStatus({confirmStatus, history, handleFinish}) {
+function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
   const classes = useStyles();
   const statusEnums = [
     "Created","Confirmed","CompletedByCompanion","CompletedByGamer"
@@ -98,6 +99,8 @@ function OrderStatus({confirmStatus, history, handleFinish}) {
                   
                 onClick={() =>{
                   handleFinish("CompletedByGamer")
+                  dispatch(getOrder(match.params.orderId));
+                  
                 }}
                 //className={classes.backButton}
               >

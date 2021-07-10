@@ -65,11 +65,12 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', 
       border: 0,
-      borderRadius: 20,
+      borderRadius: 5,
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       color: 'white',
       height: 40,
       padding: '0 30px',
+      marginLeft: "630px",
     },
 }));
 
@@ -276,8 +277,8 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
       </div>
 
 
-      <div>
-        <Button className={classes.submit} 
+      <div >
+        <Button  className={classes.submit}
         //disabled={
         // star === "" || label === ""         
         //}
@@ -294,7 +295,7 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
             handleClickOpen();
           }}>
           Submit
-        </Button>
+        </Button>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
         <CancelButton />
       </div>  
       

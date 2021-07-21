@@ -47,4 +47,18 @@ export default class GameService {
             );
         });
     }
+
+    static getMostPopularGame() {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                `${this.baseURL()}/mostPopular`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

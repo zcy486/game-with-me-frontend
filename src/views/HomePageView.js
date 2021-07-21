@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import ScrollContainer from "../components/ScrollContainer";
 import IntroBlock from "../components/HomePageView/IntroBlock";
 import ThreeSteps from "../components/HomePageView/ThreeSteps";
-import { getIdByName } from "../redux/actions";
 
 import backgroundPic from "../images/bg_homepage.png";
+import GameService from "../services/GameService";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -20,17 +20,15 @@ const useStyles = makeStyles(() => ({
 function HomePageView(props) {
   const classes = useStyles();
 
-  const firstGameId = useSelector((state) => state.games.gameId);
+  let firstGameId = useSelector((state) => state.games.gameId);
 
+  // Get the game with most posts
   useEffect(() => {
-    if (!firstGameId) {
-      loadFirstId();
-    }
+    (async () => {
+      let response = await GameService.getMostPopularGame();
+      firstGameId = response.gameId
+    })();
   }, [firstGameId]);
-
-  const loadFirstId = async () => {
-    props.dispatch(getIdByName("League of Legends"));
-  };
 
   const onClick = () => {
     if (firstGameId) {

@@ -83,8 +83,8 @@ function CreateReviewView(props) {
           <h2 className={classes.title}>Create Review For:</h2>
           
           {reviewlist && <ShortRecapBox
-              avatarUrl={reviewlist.avatar? reviewlist.avatar : MockAvatar}
-              companionName={reviewlist.name}
+              avatarUrl={reviewlist.avatarUrl? reviewlist.avatarUrl : MockAvatar}
+              companionName={reviewlist.username}
               ratings={reviewlist.ratings}
               /> }
           {/* <h3 className={classes.subTitle}>Give an Overall Rating</h3>

@@ -213,7 +213,6 @@ function PostListView(props) {
       </div>
       <ScrollContainer>
         <div className={classes.content}>
-          {currentGame && currentGame.numPosts}
           <h1 className={classes.gameTitle}>
             {currentGame && currentGame.name}
           </h1>

@@ -6,11 +6,9 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import ECoin from "../ECoin";
 
-import GameAvatar from "../../images/game_avatar.jpg";
-
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: 1000,
+    width: 900,
     fontFamily: "Helvetica",
     padding: theme.spacing(2),
     marginBottom: theme.spacing(1),

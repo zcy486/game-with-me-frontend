@@ -85,7 +85,7 @@ function CompanionInfo(props) {
               />
               <Typography>({props.reviewNumber})</Typography>
             </div>
-            <Typography>{props.ratings} / 5</Typography>
+            <Typography>{typeof (props.ratings) == "number" && (props.ratings).toFixed(1)} / 5.0</Typography>
           </Box>
           <Box
               className={classes.box}

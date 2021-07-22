@@ -61,6 +61,7 @@ function PostDetailsView(props) {
 
   const myPost = post && user && user._id === post.companionId;
 
+  // Disable ordering the user himself/herself
   useEffect(() => {
     if (user && post) {
       if (user._id !== post.companionId && !window.localStorage["order"]) {
@@ -90,26 +91,12 @@ function PostDetailsView(props) {
     }
   };
 
-  //TODO add Loading with post (useSelector) together
   return (
     <ScrollContainer>
       <div className={classes.root}>
         <div className={classes.pageArea}>
           <PostDetails
             post={post}
-            price={post && post.price}
-            gameName={post && post.gameName}
-            username={post && post.companionName}
-            age={post && post.companionAge}
-            introduction={post && post.introduction}
-            ratings={post && post.ratings}
-            served={post && post.orderNumber}
-            companionType={post && post.postType}
-            server={post && post.servers}
-            platform={post && post.platforms}
-            avatar={post && post.avatarUrl}
-            language={post && post.language}
-            availableTime={post && post.availableTime}
             clickOrder={clickOrder}
             canOrder={canOrder}
             user={user}

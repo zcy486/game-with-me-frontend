@@ -7,7 +7,7 @@ import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: 1000,
+    width: 900,
     fontFamily: "Helvetica",
     padding: theme.spacing(5),
     marginBottom: theme.spacing(7),

@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Helvetica",
         fontWeight: "bolder",
         color: "#8271DD",
-        marginBottom: "0",
+        marginBottom: theme.spacing(1),
     },
 
     noOrderImage: {

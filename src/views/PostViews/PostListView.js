@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {MenuItem, Select, InputLabel, FormControl} from "@material-ui/core";
+import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import { connect, useSelector } from "react-redux";
 import { getGames } from "../../redux/actions";
@@ -73,21 +73,33 @@ function PostListView(props) {
 
   const games = useSelector((state) => state.games.games);
 
-  const [currentGame, setCurrentGame] = React.useState(null);
-
   const posts = useSelector((state) => state.posts.response);
+
+  const [currentGame, setCurrentGame] = React.useState(null);
 
   //all you need with filters is here!
   const allStatus = ["Online", "Offline", "Busy"];
   const allLanguages = [
+    "Čeština",
+    "Dansk",
     "Deutsch",
     "English",
+    "Ελληνικά",
     "Español",
+    "Filipino",
     "Français",
     "한국어",
     "Italiano",
+    "Íslenska",
+    "Latviski",
+    "Magyar",
+    "Norsk",
     "日本語",
+    "Polski",
     "Português",
+    "Русский",
+    "Română",
+    "Suomi",
     "Svenska",
     "Türkçe",
     "Tiếng Việt",
@@ -170,37 +182,37 @@ function PostListView(props) {
   const onChangeStatus = (e) => {
     setStatus(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangeLanguage = (e) => {
     setLanguage(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangeType = (e) => {
     setType(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangePrice = (e) => {
     setPrice(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangeServer = (e) => {
     setServer(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangePlatform = (e) => {
     setPlatform(e.target.value);
     setPage(1);
-  }
+  };
 
   const onChangeSort = (e) => {
     setSort(e.target.value);
     setPage(1);
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -219,10 +231,7 @@ function PostListView(props) {
           <div className={classes.filtersRow}>
             <FormControl className={classes.formControl}>
               <InputLabel>Status</InputLabel>
-              <Select
-                value={status}
-                onChange={onChangeStatus}
-              >
+              <Select value={status} onChange={onChangeStatus}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
@@ -238,10 +247,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Language</InputLabel>
-              <Select
-                value={language}
-                onChange={onChangeLanguage}
-              >
+              <Select value={language} onChange={onChangeLanguage}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
@@ -289,10 +295,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Server</InputLabel>
-              <Select
-                value={server}
-                onChange={onChangeServer}
-              >
+              <Select value={server} onChange={onChangeServer}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
@@ -309,10 +312,7 @@ function PostListView(props) {
 
             <FormControl className={classes.formControl}>
               <InputLabel>Platform</InputLabel>
-              <Select
-                value={platform}
-                onChange={onChangePlatform}
-              >
+              <Select value={platform} onChange={onChangePlatform}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>

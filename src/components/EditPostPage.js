@@ -237,17 +237,6 @@ function EditPostPage(props) {
 
   const onSave = (event) => {
     event.preventDefault();
-    //TODO
-    /*
-        if (screenshots) {
-            console.log("screenshots!");
-            const formData = new FormData();
-            for (const file of screenshotFiles) {
-                formData.append("image", file);
-            }
-            props.onCreate(packPost(), formData);
-        }
-         */
     props.onSave(packPost());
   };
   return (

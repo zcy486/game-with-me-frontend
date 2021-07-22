@@ -106,6 +106,9 @@ export function updateBalance(id, balance, type, amount, account) {
 
     return async (dispatch) => {
         try {
+            if(type==="Withdraw"){
+                await UserService.withdraw(id, account, (amount*0.9));
+            }
             let resp = await UserService.updateBalance(id, balance);
             await UserService.recordPayment(id, type, amount, account, null);
             dispatch(onSuccess(resp.user));

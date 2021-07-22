@@ -49,9 +49,9 @@ export function createOrder(price, gamerId, postId, companionId, currentBalance)
 
             interval = setInterval(updatedOrder(companionId, timeout, currentBalance), 3000);
 
-            //TODO: change that to 15mins
+          
             //if more than 30s order status still not changed, then delete the order, and clear the interval 
-            timeout = setTimeout(shouldDelete(interval), 30000);
+            timeout = setTimeout(shouldDelete(interval), 900000);
 
             dispatch(onSuccess());
         } catch (e) {
@@ -152,7 +152,7 @@ function shouldDelete(interval) {
                     await OrderService.deleteOrder(order._id);
 
                     //return the ecoin to gamer.
-                    //  await UserService.updateBalance(gamerId, currentBalance);
+                    //accompished from backend
 
                     timeout = null;
 

@@ -23,7 +23,7 @@ import MockAvatar from "../images/avatar.svg";
 import ECoin from "../components/ECoin";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PropTypes from "prop-types";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,7 +125,7 @@ function CreatePostPage(props) {
 
   // for imgSrc
   const [screenshots, setScreenshots] = React.useState([]);
-  const [screenshotsp, setScreenshotsp] = React.useState([]);
+
   // for image files
   const [screenshotFiles, setScreenshotFiles] = React.useState([]);
 
@@ -606,7 +606,7 @@ function CreatePostPage(props) {
                           aria-label="upload picture"
                           component="span"
                         >
-                          <PhotoCameraIcon />
+                          <AddCircleIcon />
                         </IconButton>
                       </label>
                     </div>
@@ -615,7 +615,7 @@ function CreatePostPage(props) {
                   <Grid item container spacing={4} className={classes.box}>
                     <GridList className={classes.gridList}>
                       {screenshots.map((screenshot) => (
-                        <img className={classes.avatar} src={screenshot} />
+                        <img alt="screenshot" className={classes.avatar} src={screenshot} />
                       ))}
                     </GridList>
                   </Grid>

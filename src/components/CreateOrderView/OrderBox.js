@@ -44,8 +44,9 @@ function OrderBox(props) {
     const handleChange = (e) => {
 
         const valid = e.target.value.replace(/[e\+\-\.]/, '');
-
+        if(valid){
         setValue(valid);
+        }
     };
 
     const onConfirm = (event) => {

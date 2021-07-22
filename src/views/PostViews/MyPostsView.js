@@ -43,6 +43,8 @@ function MyPostsView(props) {
   let { match } = props;
   const [isCompanion, setIsCompanion] = React.useState(false);
 
+  const user = useSelector((state) => state.user.user)
+
   const postsByCompanion = useSelector((state) => state.posts.companion);
   const ownedPosts = postsByCompanion ? postsByCompanion.posts : [];
 
@@ -68,6 +70,19 @@ function MyPostsView(props) {
       }
     })();
   }, [match.params]);
+
+
+  useEffect(() => {
+    if (!user) {
+        props.history.push("/login");
+    }
+    if(match.params.userId != user._id) {
+        props.history.push("/notfound")
+    }
+
+}, [user, props.history]);
+
+
 
   return (
     <ScrollContainer>

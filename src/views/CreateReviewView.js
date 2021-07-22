@@ -1,15 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ShortRecapBox from "../components/ReviewView/ShortRecapBox";
-import StarForRating from "../components/ReviewView/StarForRating";
-import ControllStar from "../components/ReviewView/ControllStar";
-import Labels from "../components/ReviewView/Labels";
-import CheckboxLabels from "../components/ReviewView/CheckboxForLabel";
-import ReviewTextField from "../components/ReviewView/ReviewTextField";
 import Submitmsg from "../components/ReviewView/Submitmsg";
-import CancelButton from "../components/ReviewView/CancelButton";
 import backgroundPic from "../images/bg_postlist.png";
-import { ArrowRight } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import MockAvatar from "../images/avatar.svg";

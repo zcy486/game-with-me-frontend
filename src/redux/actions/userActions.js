@@ -38,8 +38,8 @@ export function logout() {
                 let updatedOrder = await OrderService.getOrder(order._id);
                 if (updatedOrder.orderStatus === "Created") {
                     alert("Your order has been automatically cancelled because you logout.")
+                    //delete user automatically transfer the money back to gamer account.
                     await OrderService.deleteOrder(order._id);
-               //     await UserService.updateBalance(order.gamerId, order.currentBalance);
                 }
                 window.localStorage.removeItem("order");
             }
@@ -107,7 +107,7 @@ export function updateBalance(id, balance, type, amount, account) {
     return async (dispatch) => {
         try {
             let resp = await UserService.updateBalance(id, balance);
-            await UserService.recordPayment(id, type, amount, account);
+            await UserService.recordPayment(id, type, amount, account, null);
             dispatch(onSuccess(resp.user));
         } catch (e) {
             dispatch(onFailure(e));

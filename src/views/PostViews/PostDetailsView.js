@@ -43,35 +43,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PostDetailsView(props) {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    let { match } = props;
+  let { match } = props;
 
   const [canOrder, setCanOrder] = React.useState(false);
   const user = useSelector((state) => state.user.user);
   const post = useSelector((state) => state.posts.post);
 
-    useEffect(() => {
-        props.dispatch(getPost(match.params.postId));
-    }, [match.params]);
+  useEffect(() => {
+    props.dispatch(getPost(match.params.postId));
+  }, [match.params]);
 
-    const clickOrder = () => {
-        props.history.push(window.location.pathname + "/order");
-    };
+  const clickOrder = () => {
+    props.history.push(window.location.pathname + "/order");
+  };
 
-    const myPost = (post && user && user._id === post.companionId)
+  const myPost = post && user && user._id === post.companionId;
 
-    useEffect(() => {
-            if (user && post) {
-                if (user._id !== post.companionId && !window.localStorage["order"]) {
-                    setCanOrder(true);
-                }
-            }
-    }, [user, post]);
+  useEffect(() => {
+    if (user && post) {
+      if (user._id !== post.companionId && !window.localStorage["order"]) {
+        setCanOrder(true);
+      }
+    }
+  }, [user, post]);
 
   const onClickChat = (event) => {
     event.preventDefault();
-    if(!user) {
+    if (!user) {
       props.history.push("/login");
     } else {
       const targetID = post && post.companionId;
@@ -96,6 +96,7 @@ function PostDetailsView(props) {
       <div className={classes.root}>
         <div className={classes.pageArea}>
           <PostDetails
+            post={post}
             price={post && post.price}
             gameName={post && post.gameName}
             username={post && post.companionName}
@@ -107,6 +108,7 @@ function PostDetailsView(props) {
             server={post && post.servers}
             platform={post && post.platforms}
             avatar={post && post.avatarUrl}
+            language={post && post.language}
             availableTime={post && post.availableTime}
             clickOrder={clickOrder}
             canOrder={canOrder}
@@ -115,14 +117,18 @@ function PostDetailsView(props) {
             clickChat={onClickChat}
           />
           <GridList className={classes.gridList} cols={2.5}>
-            {post && post.screenshots && !post.screenshots.isEmpty && Array.isArray(post.screenshots) && post.screenshots.map((screenshot) => (
-              <GridListTile key={screenshot}>
-                <img src={screenshot} alt={"screenshot"} />
-              </GridListTile>
-            ))}
+            {post &&
+              post.screenshots &&
+              !post.screenshots.isEmpty &&
+              Array.isArray(post.screenshots) &&
+              post.screenshots.map((screenshot) => (
+                <GridListTile key={screenshot}>
+                  <img src={screenshot} alt={"screenshot"} />
+                </GridListTile>
+              ))}
           </GridList>
           <Comments
-              companionId={post && post.companionId}
+            companionId={post && post.companionId}
             numComments={post && post.reviewNumber}
             labels={[
               { num: 10, name: "Carry in game" },

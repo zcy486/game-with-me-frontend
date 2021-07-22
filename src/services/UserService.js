@@ -132,7 +132,7 @@ export default class UserService {
         return "http://localhost:4000/payment";
     }
 
-    static recordPayment(id, type, amount, account) {
+    static recordPayment(id, type, amount, account, orderId) {
         return new Promise((resolve, reject) => {
             HttpService.post(
                 `${UserService.paymentURL()}/`,
@@ -141,6 +141,7 @@ export default class UserService {
                     type: type,
                     totalEcoin: amount,
                     account: account,
+                    order: orderId
 
                 },
                 function (data) {

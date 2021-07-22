@@ -83,5 +83,35 @@ export default class PostService {
         });
     }
 
+    static reloadOnEdit(postId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${PostService.baseURL()}/edit/${postId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        })
+    }
+
+
+    static updatePost(post) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${PostService.baseURL()}/${post._id}`,
+                post,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        })
+    }
+
 
 }

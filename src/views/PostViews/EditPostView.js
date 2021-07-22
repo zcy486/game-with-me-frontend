@@ -38,7 +38,7 @@ function EditPostView(props) {
         }
     };
 
-    const onCreate = (post) => {
+    const onSave = (post) => {
         (async () => {
             console.log("send post to backend: ", post);
             const updated = await PostService.updatePost(post);
@@ -56,7 +56,7 @@ function EditPostView(props) {
                     <EditPostPage
                         user={user}
                         onCancel={onCancel}
-                        onCreate={onCreate}
+                        onSave={onSave}
                     />
                 </div>
             </div>

@@ -63,10 +63,10 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: "Helvetica",
     },
     submit: {
-      background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', 
+      background: 'linear-gradient(45deg, #7908be 30%, #7908be 90%)', 
       border: 0,
       borderRadius: 5,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       color: 'white',
       height: 40,
       padding: '0 30px',
@@ -166,41 +166,10 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
     setOpen(false);
   };
 
-//extract on gamer or companion or reviewId???
-/*   const extractReview = () => {
-    if (!props.review) {
-      return;
-    }
 
-    setStar(props.review.star);
-    setLabel(props.review.label);
-    setText(props.review.reviewText);
-  }; */
-/* 
-  const packReview = () => {
-    let back = {
-      ...props.review,
-    };
-
-    back.star = star;
-    back.label = label;
-    back.text = text;
-    return back;
-  }; */
-
-  // triggers when the new parameter is changed
-/*   useEffect(() => {
-    extractReview();
-  }, [props.review]); */
-
-
-/*   const reviewSubmit = (event) => {
-    event.preventDefault();
-    props.onCreate(packReview());
-  }; */
-  const backToHomepage = () => {
+  const backToList = () => {
     //props.onClose();
-    history.push('/');
+    history.push("/myOrders/gamerId/"+ order.order.gamerId);
   };
 
 //1.rating star; 2.label; 3.review text
@@ -279,9 +248,6 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
 
       <div >
         <Button  className={classes.submit}
-        //disabled={
-        // star === "" || label === ""         
-        //}
           onClick={() => {
             if(_id === ""){
               debugger;
@@ -315,7 +281,7 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
           <Button onClick={
             () => {
               handleClose()
-              backToHomepage()
+              backToList()
             }} color="primary">
             ok
           </Button>

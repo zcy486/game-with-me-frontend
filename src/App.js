@@ -52,7 +52,6 @@ function App() {
 
 
     const hasOrder = (Object.keys(waitedOrder).length !== 0);
-
     return (
         <div className={classes.appRoot}>
             <MuiThemeProvider theme={theme}>

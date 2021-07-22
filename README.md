@@ -1,4 +1,4 @@
-# GameWithMe frontend application
+# Game-with-me-frontend application
 
 GameWithMe is a platform to help online gamers to enhance their gaming experience and get gaming companionship with quality gamer-for-hire services provided by gaming companions.
 

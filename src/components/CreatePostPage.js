@@ -158,7 +158,6 @@ function CreatePostPage(props) {
 
   const onChangeImgs = (event) => {
     const files = event.target.files;
-    console.log(files);
     const screenshot = [];
     if (!files) {
       return;

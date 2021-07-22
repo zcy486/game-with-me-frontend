@@ -125,13 +125,6 @@ function EditPostPage(props) {
   const [availableTime, setAvailableTime] = React.useState([]);
   const [gameServers, setGameServers] = React.useState([]);
   const [gamePlatforms, setGamePlatforms] = React.useState([]);
-  //
-
-  // for imgSrc
-  const [screenshots, setScreenshots] = React.useState([]);
-  const [screenshotsp, setScreenshotsp] = React.useState([]);
-  // for image files
-  const [screenshotFiles, setScreenshotFiles] = React.useState([]);
 
   const languages = [
     "Deutsch",
@@ -161,20 +154,6 @@ function EditPostPage(props) {
   const serviceTypes = ["Carry", "Chill", "All Types"];
 
   let { match } = props;
-
-  const onChangeImgs = (event) => {
-    const files = event.target.files;
-    console.log(files);
-    const screenshot = [];
-    if (!files) {
-      return;
-    }
-    for (const file of files) {
-      screenshot.push(URL.createObjectURL(file));
-    }
-    setScreenshotFiles(files);
-    setScreenshots(screenshot);
-  };
 
   function getStyles(gamename, gameName) {
     return {
@@ -256,8 +235,9 @@ function EditPostPage(props) {
     };
   };
 
-  const onCreate = (event) => {
+  const onSave = (event) => {
     event.preventDefault();
+    //TODO
     /*
         if (screenshots) {
             console.log("screenshots!");
@@ -268,7 +248,7 @@ function EditPostPage(props) {
             props.onCreate(packPost(), formData);
         }
          */
-    props.onCreate(packPost());
+    props.onSave(packPost());
   };
   return (
     <div className={classes.root}>
@@ -595,53 +575,6 @@ function EditPostPage(props) {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion defaultExpanded={true}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              id="panel-screenshots"
-            >
-              <Typography className={classes.heading}>Screenshots</Typography>
-              <Typography className={classes.secondaryHeading}>
-                You can upload some screenshots for your post.
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container spacing={4} className={classes.box}>
-                <Grid item xs container direction="column" spacing={3}>
-                  <Grid item container spacing={4} className={classes.box}>
-                    <div>
-                      <input
-                        accept="image/*"
-                        id="icon-button-file"
-                        type="file"
-                        onChange={onChangeImgs}
-                        multiple="multiple"
-                        style={{ display: "none" }}
-                      />
-                      <label htmlFor="icon-button-file">
-                        <IconButton
-                          color="secondary"
-                          aria-label="upload picture"
-                          component="span"
-                        >
-                          <PhotoCameraIcon />
-                        </IconButton>
-                      </label>
-                    </div>
-                  </Grid>
-
-                  <Grid item container spacing={4} className={classes.box}>
-                    <GridList className={classes.gridList}>
-                      {screenshots.map((screenshot) => (
-                        <img className={classes.avatar} src={screenshot} />
-                      ))}
-                    </GridList>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-
           <Grid className={classes.buttons}>
             <Button
               className={classes.secondButton}
@@ -655,7 +588,7 @@ function EditPostPage(props) {
                 availableTime.length === 0 ||
                 serviceType.length === 0
               }
-              onClick={onCreate}
+              onClick={onSave}
             >
               Save
             </Button>

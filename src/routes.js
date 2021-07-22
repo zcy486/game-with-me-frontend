@@ -13,7 +13,7 @@ import MyOrderDetailView from "./views/OrderViews/MyOrderDetailView";
 import OrderListView from "./views/OrderViews/OrderListView";
 import CompanionOrderView from "./views/OrderViews/CompanionOrderView";
 import MyPostsView from "./views/PostViews/MyPostsView";
-import EditPostView from "./views/PostViews/EditPostsView";
+import EditPostView from "./views/PostViews/EditPostView";
 
 const routes = [
   {

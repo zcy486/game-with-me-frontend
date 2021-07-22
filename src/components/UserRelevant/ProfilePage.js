@@ -462,7 +462,7 @@ function ProfilePage(props) {
                   precision={0.1}
                   readOnly
                 />
-                <Typography>{props.companion.ratings} / 5</Typography>
+                <Typography>{typeof (props.companion.ratings) === "number" && (props.companion.ratings).toFixed(1)} / 5.0</Typography>
               </div>
               <Grid className={classes.centerArea}>
                 <Button

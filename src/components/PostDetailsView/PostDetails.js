@@ -235,7 +235,7 @@ function PostDetails(props) {
                 readOnly
               />
               <span>&nbsp;</span>
-              <Typography>{props.post && props.post.ratings} / 5</Typography>
+              <Typography>{props.post && typeof (props.post.ratings) === "number" && (props.post.ratings).toFixed(1)} / 5.0</Typography>
             </div>
           </Box>
           <Box

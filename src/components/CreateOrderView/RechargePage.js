@@ -146,10 +146,11 @@ function RechargePage(props) {
 
 
     const handleInputChange = (e) => {
-
-        setInputValue(e.target.value);
-        setValue(e.target.value);
-
+        const valid = e.target.value.replace(/[e\+\-\.]/, '');
+        if(valid){
+        setInputValue(valid);
+        setValue(valid);
+        }
     };
 
     const handleChange = (e) => {
@@ -230,7 +231,7 @@ function RechargePage(props) {
             <DialogActions>
 
 
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose} variant={"outlined"}>Cancel</Button>
             </DialogActions>
         </Dialog>
 

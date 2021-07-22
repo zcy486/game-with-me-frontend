@@ -87,7 +87,7 @@ function MyPostsView(props) {
     if (!user) {
         props.history.push("/login");
     }
-    if(match.params.userId != user._id) {
+    if( user && match.params.companionId != user._id) {
         props.history.push("/notfound")
     }
 

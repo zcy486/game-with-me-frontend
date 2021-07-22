@@ -92,7 +92,8 @@ function CompanionOrderBox(props) {
     }
 
 
-    const date = new Date(props.dateTime).toUTCString().split(" GMT")[0];
+    const date = new Date(props.dateTime).toString().split(" GMT")[0];
+    console.log(date)
     
     return (
  

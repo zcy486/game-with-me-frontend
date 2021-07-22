@@ -83,7 +83,7 @@ export default function OrderGrid(props) {
           <Grid className={classes.placeHolder} />
           <Grid className={classes.paperColumn}>
             <Grid className={classes.dateInfo}>
-              <Typography>{timestampFormatter(props.createdAt)}</Typography>
+              <Typography>{new Date(props.createdAt).toString().split(" GMT")[0]}</Typography>
             </Grid>
 
             <Grid item>{props.orderStatus}</Grid>
@@ -118,12 +118,4 @@ export default function OrderGrid(props) {
       </Paper>
     </ButtonBase>
   );
-}
-
-function timestampFormatter(timestamp) {
-  let stringTime = timestamp.toString();
-  let date = stringTime.substring(0, 10);
-  let time = stringTime.substring(11, 16);
-  let result = date + " " + time;
-  return result;
 }

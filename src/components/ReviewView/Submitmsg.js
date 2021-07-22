@@ -295,7 +295,7 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
             handleClickOpen();
           }}>
           Submit
-        </Button>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+        </Button>&nbsp;&nbsp; &nbsp;&nbsp;
         <CancelButton />
       </div>  
       

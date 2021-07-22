@@ -87,19 +87,11 @@ function CreateReviewView(props) {
               companionName={reviewlist.username}
               ratings={reviewlist.ratings}
               /> }
-          {/* <h3 className={classes.subTitle}>Give an Overall Rating</h3>
-            <StarForRating/>
-          <h3 className={classes.subTitle}>Add Labels(Optional)</h3>
-            
-            <CheckboxLabels/>
-          <h3 className={classes.subTitle}>Write a review(Optional)</h3>
-            <ReviewTextField/> */}
          
           <div className={classes.buttomS}>
             
-          <Submitmsg order={order} review={review} handleUpdate={handleUpdate} handleSubmit={handleSubmit}/> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-{/*             <CancelButton/>
- */}           </div> 
+          <Submitmsg order={order} review={review} handleUpdate={handleUpdate} handleSubmit={handleSubmit}/>
+           </div> 
       
         </div>
 

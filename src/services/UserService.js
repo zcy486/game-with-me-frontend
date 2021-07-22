@@ -201,5 +201,24 @@ export default class UserService {
         });
     }
 
+    static withdraw(id, account, amount) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${UserService.baseURL()}/withdraw/${id}`,
+                {
+                    receiver: account,
+                    amount: amount,
+
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
 
 }

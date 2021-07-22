@@ -17,7 +17,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import MockAvatar from "../../images/avatar.svg";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from "@material-ui/icons/Delete";
 import ECoin from "../ECoin";
 import UserService from "../../services/UserService";
@@ -292,7 +292,7 @@ function ProfilePage(props) {
                         aria-label="upload picture"
                         component="span"
                       >
-                        <PhotoCameraIcon />
+                        <AddCircleIcon />
                       </IconButton>
                     </label>
                     <IconButton
@@ -397,7 +397,8 @@ function ProfilePage(props) {
           <Grid className={classes.buttons}>
             <Button
               className={classes.secondButton}
-              variant={"outlined"}
+              variant={"contained"}
+              color={"primary"}
               size={"small"}
               onClick={onWithdraw}
             >

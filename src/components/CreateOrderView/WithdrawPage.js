@@ -13,6 +13,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Typography, Box } from "@material-ui/core";
+import Ecoin from "../ECoin";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     Button: {
         marginLeft: theme.spacing(2),
     },
+    infoRow: {
+        display: "flex",
+    },
 }));
 
 
@@ -36,32 +41,28 @@ const useStyles = makeStyles((theme) => ({
 function WithdrawPage(props) {
     const classes = useStyles();
 
-    const onCancel = () => {
-        props.handleClose();
-    };
-
-    const onError = (err) => {
-        console.log(err)
-    }
-
     //user selected radio quantities
-    const [value, setValue] = useState(10);
+    const [value, setValue] = useState(1);
 
     //user inputed quantities
-    const [inputValue, setInputValue] = useState(100);
+    const [inputValue, setInputValue] = useState(props.currentBalance);
 
 
     const [account, setAccount] = useState(null)
 
-    const invalidValue = (value <= 0);
+    const [conOpen, setConOpen] = useState(false);
+
+    const invalidValue = (value <= 0 || value > props.currentBalance);
 
 
-    const invalidAccount = (account === null);
+    const [invalidAccount, setInvalidAcocunt] = useState(true);
 
     const handleInputChange = (e) => {
-
-        setInputValue(e.target.value);
-        setValue(e.target.value);
+        const valid = e.target.value.replace(/[e\+\-\.]/, '');
+        if (valid) {
+            setInputValue(valid);
+            setValue(valid);
+        }
 
     };
 
@@ -70,8 +71,14 @@ function WithdrawPage(props) {
 
     };
 
+
     const handleAccountChange = (e) => {
-        setAccount(e.target.value)
+        //regular expression for email validation
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(e.target.value)) {
+            setInvalidAcocunt(false);
+        }
+        setAccount(e.target.value);
     }
 
 
@@ -79,8 +86,15 @@ function WithdrawPage(props) {
         props.handleClose();
     };
 
+    const handleConClose = () => {
+        setConOpen(false);
+    }
     var outValue = Math.round((value * 0.9) * 100) / 100;
 
+
+    const handleConfirm = () => {
+        setConOpen(true);
+    }
 
     const handleWithdraw = () => {
         const newBalance = props.currentBalance - Number(value);
@@ -89,83 +103,161 @@ function WithdrawPage(props) {
     }
 
     return (
-        <Dialog
-            open={props.open}
-            onClose={handleClose}
-            aria-labelledby="dialog-title"
-            aria-describedby="dialog-description"
-            maxWidth={'lg'}
-        >
-            <DialogTitle id="dialog-title">
-                {"Withdraw Page"}
-            </DialogTitle>
-            <DialogContent dividers={true}>
+        props.currentBalance === 0 ?
+            <Dialog
+                open={props.open}
+                onClose={handleClose}
+                aria-labelledby="dialog-title"
+                aria-describedby="dialog-description"
+                maxWidth={'lg'}
+            >
+                <DialogTitle id="dialog-title">
+                    {"Withdraw Page"}
+                </DialogTitle>
+                <DialogContent dividers={true}>
 
-                <DialogContentText id="dialog-description">
-                    Please tell us your Paypal account:
-                </DialogContentText>
-
-
-                <TextField
-                    required
-                    id="standard-required"
-                    type="text"
-                    label="Paypal account"
-                    rows={1}
-                    error={account == null}
-                    variant="standard"
-                    onChange={handleAccountChange}
-                />
-
-                <DialogContentText id="dialog-description">
-                    Please choose the amount of E-coins you want to withdraw:
-                </DialogContentText>
-                <FormControl>
-                    <FormLabel> Amount</FormLabel>
-                    <RadioGroup aria-label="amount" name="amount" value={value.toString()} onChange={handleChange}>
-                        <FormControlLabel value="10" control={<Radio />} label="10" />
-                        <FormControlLabel value="20" control={<Radio />} label="20" />
-                        <FormControlLabel value="50" control={<Radio />} label="50" />
-                        <FormControlLabel value={inputValue.toString()} control={<Radio />} label={<TextField
-                            id="standard-number"
-                            type="number"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            error={inputValue < 0}
-                            variant="outlined"
-                            defaultValue={100}
-                            required={true}
-                            onChange={handleInputChange}
-                            InputProps={{ inputProps: { min: 1 } }}
-
-                        />} >
-
-                        </FormControlLabel>
-                    </RadioGroup>
-
-
-                </FormControl>
-
-                {invalidValue || invalidAccount ?
                     <DialogContentText id="dialog-description">
-                        Please enter a valid information.
-                    </DialogContentText> : <Grid>
+                        You don't have any ecoins to withdraw!
+                    </DialogContentText>
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} variant={"contained"} color="secondary">Confirm</Button>
+                </DialogActions>
+            </Dialog>
+
+            :
+            <div><Dialog
+                open={props.open}
+                onClose={handleClose}
+                aria-labelledby="dialog-title"
+                aria-describedby="dialog-description"
+                maxWidth={'lg'}
+            >
+                <DialogTitle id="dialog-title">
+                    {"Withdraw Page"}
+                </DialogTitle>
+                <DialogContent dividers={true}>
+
+                    <DialogContentText id="dialog-description">
+                        Please tell us your Paypal E-mail account:
+                    </DialogContentText>
+
+
+                    <TextField
+                        required
+                        id="standard-required"
+                        type="email"
+                        label="Paypal account"
+                        rows={1}
+                        variant="standard"
+                        value={account}
+                        error={invalidAccount}
+                        onChange={handleAccountChange}
+                    />
+
+                    <DialogContentText id="dialog-description">
+                        Please choose the amount of E-coins you want to withdraw:
+                    </DialogContentText>
+                    <FormControl>
+                        <FormLabel> Amount</FormLabel>
+                        <RadioGroup aria-label="amount" name="amount" value={value.toString()} onChange={handleChange}>
+                            <FormControlLabel value="1" control={<Radio />} label="1" />
+                            {props.currentBalance > 2 ? <FormControlLabel value={Math.round(props.currentBalance / 2).toString()} control={<Radio />} label={Math.round(props.currentBalance / 2).toString()} /> : null}
+                            <FormControlLabel value={inputValue.toString()} control={<Radio />} label={<TextField
+                                id="standard-number"
+                                type="number"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                
+                                variant="outlined"
+                                value={inputValue}
+                                error={invalidValue}
+                                required={true}
+                                onChange={handleInputChange}
+                                InputProps={{ inputProps: { min: 1 } }}
+
+                            />} >
+
+                            </FormControlLabel>
+                        </RadioGroup>
+
+
+                    </FormControl>
+
+                    {invalidValue || invalidAccount ?
                         <DialogContentText id="dialog-description">
-                            You will get {outValue} EURO to yout Paypal account: {account} for withdrawing {Number(value)} ecoins.
+                            Please enter a valid information.
+                        </DialogContentText> : <Grid>
+                            <DialogContentText id="dialog-description">
+                                You will get {outValue}€ to yout Paypal account: {account}
+                            </DialogContentText>
+                            <Grid>
+                            </Grid>
+                        </Grid>}
+                </DialogContent>
+                <DialogActions>
+
+                    <Button onClick={handleConfirm} variant={"contained"} color="secondary" disabled={invalidAccount || invalidValue} >Confirm</Button>
+
+                    <Button onClick={handleClose} variant={"outlined"}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
+                <Dialog
+                    open={conOpen}
+                    onClose={handleClose}
+                    aria-labelledby="dialog-title"
+                    aria-describedby="dialog-description"
+                    maxWidth={'lg'}
+                >
+                    <DialogTitle id="dialog-title">
+                        {"Confirmation Page"}
+                    </DialogTitle>
+                    <DialogContent dividers={true}>
+
+                        <DialogContentText id="dialog-description">
+
+                            <Typography  >
+                                You will get <span>&nbsp;</span>
+
+                                <Box fontWeight='fontWeightMedium' display="inline" color="black">
+                                    {outValue}€
+                                    <span>&nbsp;</span>
+
+                                </Box>
+
+                                in 1-3 days
+
+                                to your Paypal account:  <span>&nbsp;</span>
+                                <Box fontWeight='fontWeightMedium' color="black">
+                                    {account}
+                                    <span>&nbsp;</span>
+
+                                </Box>
+                            </Typography>
+                            <Typography className={classes.infoRow}>
+
+                                for withdrawing  <span>&nbsp;</span>
+                                <Box fontWeight='fontWeightMedium' display="inline" color="black">
+
+                                    {Number(value)}
+                                </Box>
+                                <Ecoin />
+                                <span>&nbsp;</span> on GameWithMe.
+                            </Typography >
+
+
                         </DialogContentText>
-                        <Grid>
-                        </Grid>
-                    </Grid>}
-            </DialogContent>
-            <DialogActions>
 
-                <Button onClick={handleWithdraw}>Confirm</Button>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleWithdraw} variant={"contained"} color="secondary">Confirm</Button>
+                        <Button onClick={handleConClose} variant={"outlined"} >Cancel</Button>
+                    </DialogActions>
+                </Dialog>
 
-                <Button onClick={handleClose}>Cancel</Button>
-            </DialogActions>
-        </Dialog>
-
+            </div>
     );
 }
 

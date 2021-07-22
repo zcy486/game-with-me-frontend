@@ -63,6 +63,9 @@ function OrderListView(props) {
     if(!user){
       props.history.push("/login");
     }
+    if(match.params.gamerId != user.user._id) {
+        props.history.push("/notfound")
+    }
     //getOrderList();
     const gamerId = user.user._id.toString();
     props.dispatch(getOrderByGamerId(gamerId));

@@ -76,7 +76,20 @@ function CompanionOrderView(props) {
 
     const orders = useSelector((state) => state.order.companionorders);
 
+    const user = useSelector((state) => state.user.user)
+
     const [page, setPage] = React.useState(1);
+
+    useEffect(() => {
+        if (!user) {
+            props.history.push("/login");
+        }
+        if(match.params.companionId != user._id) {
+            props.history.push("/notfound")
+        }
+
+    }, [user, props.history]);
+
 
     useEffect(() => {
         props.dispatch(getCompanionOrders(match.params.companionId));

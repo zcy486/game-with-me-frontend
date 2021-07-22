@@ -115,7 +115,7 @@ function LoginComponent(props) {
             Not Registered Yet?
           </Button>
           <div>
-            <Button className={classes.loginButton} onClick={props.onCancel}>
+            <Button className={classes.loginButton} onClick={props.onCancel} variant="outlined">
               Cancel
             </Button>
             <Button

@@ -71,8 +71,9 @@ function CreateOrderView(props) {
         props.history.push(window.location.pathname.replace("/order", ""));
     };
 
-    //TODO add Loading with user/order (useSelector) together
+    
     return (
+        user?
         <ScrollContainer>
             <div className={classes.root}>
                 <div className={classes.pageArea}>
@@ -111,6 +112,7 @@ function CreateOrderView(props) {
                 </div>
             </div>
         </ScrollContainer>
+        :  <ScrollContainer/>
     );
 }
 

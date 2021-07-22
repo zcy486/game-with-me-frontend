@@ -107,6 +107,9 @@ function ProfileView(props) {
 
 
     const handleWithdraw = (total, amount, account) => {
+
+        
+        //record payment and update balance
         props.dispatch(updateBalance(user.user._id, total, "Withdraw", amount, account));
         handleWithClose();
     };

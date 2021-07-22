@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
     fab: {
       marginLeft: theme.spacing(5),
+      marginTop: theme.spacing(5),
     }
 }));
 
@@ -118,7 +119,7 @@ function MyPostsView(props) {
                 ) : (
                   ownedPosts.map((post, i) => {
                     return (
-                      <div key={i}>
+                      <div key={i} style={{display: "flex"}}>
                         <GameBox
                           gameId={post.gameId}
                           gameName={post.gameName}

@@ -20,7 +20,7 @@ function NoPosts(props) {
 
   return (
     <Paper className={classes.paper}>
-      {props.myself ? (
+      {!props.myself ? (
         <Typography variant={"h6"}>
           This companion has currently no posts.
         </Typography>

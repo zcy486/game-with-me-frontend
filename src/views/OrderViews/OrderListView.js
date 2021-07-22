@@ -48,6 +48,13 @@ panination: {
   paddingTop: theme.spacing(12),
   paddingBottom: theme.spacing(10),
 },
+  noOrderTitle: {
+    fontSize: "xx-large",
+    fontFamily: "Helvetica",
+    fontWeight: "bolder",
+    color: "#8271DD",
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 function OrderListView(props) {

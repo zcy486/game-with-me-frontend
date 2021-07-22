@@ -90,7 +90,7 @@ function CompanionBox(props) {
                                     readOnly
                                 />
                                 <span>&nbsp;</span>
-                                <Typography>{props.ratings} / 5</Typography>
+                                <Typography>{typeof (props.ratings) === "number" && (props.ratings).toFixed(1)} / 5.0</Typography>
                             </div>
                         </Box>
 

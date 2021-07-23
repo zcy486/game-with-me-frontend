@@ -47,7 +47,7 @@ export function createOrder(price, gamerId, postId, companionId, currentBalance)
 
             //get the latest order fron backend every 3 seconds 
 
-            interval = setInterval(updatedOrder(companionId, timeout, currentBalance), 3000);
+            interval = setInterval(updatedOrder(gamerId, companionId, timeout, currentBalance), 3000);
 
           
             //if more than 30s order status still not changed, then delete the order, and clear the interval 
@@ -167,7 +167,7 @@ function shouldDelete(interval) {
     }
 }
 
-function updatedOrder(companionId, timeout, currentBalance) {
+function updatedOrder(gamerId, companionId, timeout, currentBalance) {
     return async () => {
         if (window.localStorage["order"]) {
 
@@ -177,22 +177,25 @@ function updatedOrder(companionId, timeout, currentBalance) {
                 updatedOrder.currentBalance = currentBalance;
                 localStorage.setItem("order", JSON.stringify(updatedOrder));
                 if (updatedOrder.orderStatus === "Confirmed") {
+                    if(interval){
+                        clearInterval(interval);
+                        interval = null;
+                    }
                     alert("Your order has been confirmed by the companion")
-
+                    
                      // if confirmed, record the payment into our database with type "Paid"
-                     await UserService.recordPayment(order.gamerId, "Paid", order.orderPrice, "self-account", order._id);
-
+                    await UserService.recordPayment(order.gamerId, "Paid", order.orderPrice, "self-account", order._id);
                     if (timeout) {
                         clearTimeout(timeout)
                         timeout = null;
                     }
+                    if(localStorage["order"]){
                     localStorage.removeItem("order");
-
-                    
+                    window.location.replace("/myOrders/gamerId/" + gamerId);
+                    }
                     //if confirmed, increase the order number of companion
                     await UserService.updateCompanionOrder(companionId);
-
-                
+                   
                 }
 
             } catch (e) {

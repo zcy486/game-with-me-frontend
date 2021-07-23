@@ -17,7 +17,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import MockAvatar from "../../images/avatar.svg";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ECoin from "../ECoin";
 import UserService from "../../services/UserService";
@@ -462,7 +462,11 @@ function ProfilePage(props) {
                   precision={0.1}
                   readOnly
                 />
-                <Typography>{typeof (props.companion.ratings) === "number" && (props.companion.ratings).toFixed(1)} / 5.0</Typography>
+                <Typography>
+                  {typeof props.companion.ratings === "number" &&
+                    props.companion.ratings.toFixed(1)}{" "}
+                  / 5.0
+                </Typography>
               </div>
               <Grid className={classes.centerArea}>
                 <Button

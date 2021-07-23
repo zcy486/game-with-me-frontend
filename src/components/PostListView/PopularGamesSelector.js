@@ -5,7 +5,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +39,7 @@ function PopularGamesSelector(props) {
             onClick={(event) => handleListItemClick(event, game._id)}
           >
             <ListItemIcon>
-              <Avatar src={game.gamePic} className={classes.gamePic}/>
+              <Avatar src={game.gamePic} className={classes.gamePic} />
             </ListItemIcon>
             <ListItemText primary={game.name} />
           </ListItem>

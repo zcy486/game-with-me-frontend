@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import CommentBox from "./CommentsBox";
 import MockAvatar from "../../images/avatar.svg";
-import { connect, useSelector } from "react-redux";
-import {
-  getReviewWithLabels,
-} from "../../redux/actions";
+import {connect, useSelector} from "react-redux";
+import {getReviewWithLabels} from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -94,9 +92,8 @@ function Comments(props) {
 }
 
 function timestampFormatter(timestamp) {
-  let stringTime = timestamp.toString()
-  let date = stringTime.substring(0, 10);
-  return date;
+  let stringTime = timestamp.toString();
+  return stringTime.substring(0, 10);
 }
 
 export default connect()(Comments);

@@ -23,7 +23,7 @@ import MockAvatar from "../images/avatar.svg";
 import ECoin from "../components/ECoin";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PropTypes from "prop-types";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
 
-    paper: {
-        width: "800px",
-        padding: theme.spacing(5),
-        marginBottom: theme.spacing(1.5),
-        fontSize: 16,
-        justifyContent: "center",
-        alignItems: "center",
-    },
+  paper: {
+    width: "800px",
+    padding: theme.spacing(5),
+    marginBottom: theme.spacing(1.5),
+    fontSize: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
   heading: {
     paddingLeft: theme.spacing(2),
@@ -238,51 +238,52 @@ function CreatePostPage(props) {
     };
   };
 
-    const onCreate = (event) => {
-        event.preventDefault();
-        
-        if (screenshots) {
-            const formData = new FormData();
-            for (const file of screenshotFiles) {
-                formData.append("image", file);
-            }
-            props.onCreate(packPost(), formData );
-        }
-        else props.onCreate(packPost(), null);
-    };
-    return (
-        <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <Grid container direction={"column"}>
-                    <Accordion defaultExpanded={true}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            id="panel-profile"
-                        >
-                            <Typography className={classes.heading}>Profile</Typography>
-                            <Typography className={classes.secondaryHeading}>
-                                Your profile will be shown to the gamers.
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Grid container spacing={4} className={classes.box}>
-                                <Grid item>
-                                    <ButtonBase className={classes.image}>
-                                        <img
-                                            className={classes.avatar}
-                                            alt="avatar"
-                                            src={props.user.avatarUrl ? props.user.avatarUrl : MockAvatar}
-                                        />
-                                    </ButtonBase>
-                                </Grid>
-                                <Grid item xs container direction="column" spacing={3}>
-                                    <Grid item>Username: {props.user.username}</Grid>
-                                    <Grid item>Age: {props.user.age}</Grid>
-                                    <Grid item>Gender: {props.user.gender}</Grid>
-                                </Grid>
-                            </Grid>
-                        </AccordionDetails>
-                    </Accordion>
+  const onCreate = (event) => {
+    event.preventDefault();
+
+    if (screenshots) {
+      const formData = new FormData();
+      for (const file of screenshotFiles) {
+        formData.append("image", file);
+      }
+      props.onCreate(packPost(), formData);
+    } else props.onCreate(packPost(), null);
+  };
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Grid container direction={"column"}>
+          <Accordion defaultExpanded={true}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              id="panel-profile"
+            >
+              <Typography className={classes.heading}>Profile</Typography>
+              <Typography className={classes.secondaryHeading}>
+                Your profile will be shown to the gamers.
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={4} className={classes.box}>
+                <Grid item>
+                  <ButtonBase className={classes.image}>
+                    <img
+                      className={classes.avatar}
+                      alt="avatar"
+                      src={
+                        props.user.avatarUrl ? props.user.avatarUrl : MockAvatar
+                      }
+                    />
+                  </ButtonBase>
+                </Grid>
+                <Grid item xs container direction="column" spacing={3}>
+                  <Grid item>Username: {props.user.username}</Grid>
+                  <Grid item>Age: {props.user.age}</Grid>
+                  <Grid item>Gender: {props.user.gender}</Grid>
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
 
           <Accordion defaultExpanded={true}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel-game">
@@ -626,7 +627,11 @@ function CreatePostPage(props) {
                   <Grid item container spacing={4} className={classes.box}>
                     <GridList className={classes.gridList}>
                       {screenshots.map((screenshot) => (
-                        <img alt="screenshot" className={classes.avatar} src={screenshot} />
+                        <img
+                          alt="screenshot"
+                          className={classes.avatar}
+                          src={screenshot}
+                        />
                       ))}
                     </GridList>
                   </Grid>

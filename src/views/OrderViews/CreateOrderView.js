@@ -11,109 +11,108 @@ import RechargePage from "../../components/CreateOrderView/RechargePage";
 import { updateBalance } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        backgroundImage: `url(${backgroundPic})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "repeat",
-    },
-    pageArea: {
-        paddingTop: theme.spacing(12),
-        paddingLeft: theme.spacing(30),
-        paddingRight: theme.spacing(30),
-        paddingBottom: theme.spacing(10),
-    },
+  root: {
+    backgroundImage: `url(${backgroundPic})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "repeat",
+  },
+  pageArea: {
+    paddingTop: theme.spacing(12),
+    paddingLeft: theme.spacing(30),
+    paddingRight: theme.spacing(30),
+    paddingBottom: theme.spacing(10),
+  },
 }));
 
 function CreateOrderView(props) {
-    const classes = useStyles();
-    const user = useSelector((state) => state.user.user);
-    const post = useSelector((state) => state.posts.post);
-    let { match } = props;
+  const classes = useStyles();
+  const user = useSelector((state) => state.user.user);
+  const post = useSelector((state) => state.posts.post);
+  let { match } = props;
 
-    useEffect(() => {
-        props.dispatch(getPost(match.params.postId));
-    }, [match.params]);
+  useEffect(() => {
+    props.dispatch(getPost(match.params.postId));
+  }, [match.params]);
 
-    useEffect(() => {
-        if (!user) {
-            props.history.push("/login");
-        }
-
-    }, [user, props.history]);
-
-
-    const onConfirm = (price, gamerId, postId, companionId) => {
-        props.dispatch(createOrder(price, gamerId, postId, companionId, user.balance));
-
-        props.history.push("/myOrders/gamerId/" + gamerId);
-    };
-
-    const onRecharge = () => {
-        handleClickOpen();
+  useEffect(() => {
+    if (!user) {
+      props.history.push("/login");
     }
-    const [open, setOpen] = React.useState(false);
+  }, [user, props.history]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
-    const handleRecharge = (total, amount, account) => {
-        props.dispatch(updateBalance(user._id, total, "Recharge", amount, account));
-    };
-
-
-    const onCancel = () => {
-        props.history.push(window.location.pathname.replace("/order", ""));
-    };
-
-    
-    return (
-        user?
-        <ScrollContainer>
-            <div className={classes.root}>
-                <div className={classes.pageArea}>
-                    <h1>Order Details</h1>
-
-                    {open ? (<RechargePage
-                        open={open}
-                        handleClose={handleClose}
-                        currentBalance={user.balance}
-                        user={user}
-                        handleRecharge={handleRecharge}
-                    ></RechargePage>) : null}
-                    <OrderBox
-                        post={post}
-                        gameName={post && post.gameName}
-                        user={user}
-                        price={post && post.price}
-                        onConfirm={onConfirm}
-                        onCancel={onCancel}
-                        onRecharge={onRecharge}
-                    />
-
-                    <h1>Information about Gaming Companion</h1>
-                    <CompanionBox
-                        served={post && post.orderNumber}
-                        companionType={post && post.postType}
-                        ratings={post && post.ratings}
-                        username={post && post.companionName}
-                        age={post && post.companionAge}
-                        introduction={post && post.introduction}
-                        price={post && post.price}
-                        server={post && post.servers}
-                        platform={post && post.platforms}
-                        avatar={post && post.avatarUrl}
-                    />
-                </div>
-            </div>
-        </ScrollContainer>
-        :  <ScrollContainer/>
+  const onConfirm = (price, gamerId, postId, companionId) => {
+    props.dispatch(
+      createOrder(price, gamerId, postId, companionId, user.balance)
     );
+
+    props.history.push("/myOrders/gamerId/" + gamerId);
+  };
+
+  const onRecharge = () => {
+    handleClickOpen();
+  };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleRecharge = (total, amount, account) => {
+    props.dispatch(updateBalance(user._id, total, "Recharge", amount, account));
+  };
+
+  const onCancel = () => {
+    props.history.push(window.location.pathname.replace("/order", ""));
+  };
+
+  return user ? (
+    <ScrollContainer>
+      <div className={classes.root}>
+        <div className={classes.pageArea}>
+          <h1>Order Details</h1>
+
+          {open ? (
+            <RechargePage
+              open={open}
+              handleClose={handleClose}
+              currentBalance={user.balance}
+              user={user}
+              handleRecharge={handleRecharge}
+            />
+          ) : null}
+          <OrderBox
+            post={post}
+            gameName={post && post.gameName}
+            user={user}
+            price={post && post.price}
+            onConfirm={onConfirm}
+            onCancel={onCancel}
+            onRecharge={onRecharge}
+          />
+
+          <h1>Information about Gaming Companion</h1>
+          <CompanionBox
+            served={post && post.orderNumber}
+            companionType={post && post.postType}
+            ratings={post && post.ratings}
+            username={post && post.companionName}
+            age={post && post.companionAge}
+            introduction={post && post.introduction}
+            price={post && post.price}
+            server={post && post.servers}
+            platform={post && post.platforms}
+            avatar={post && post.avatarUrl}
+          />
+        </div>
+      </div>
+    </ScrollContainer>
+  ) : (
+    <ScrollContainer />
+  );
 }
 
 export default connect()(CreateOrderView);

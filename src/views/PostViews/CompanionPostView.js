@@ -44,20 +44,18 @@ function CompanionPostView(props) {
 
   const onClickChat = (event) => {
     event.preventDefault();
-    if(!me) {
+    if (!me) {
       props.history.push("/login");
-    }
-    else {
+    } else {
       const targetID = match.params.companionId;
       const targetName = postsByCompanion && postsByCompanion.username;
       if (me._id === targetID) {
         window.alert("You cannot chat to yourself!");
-      }
-      else {
-        props.history.push("/chat/"+targetID+"/"+targetName);
+      } else {
+        props.history.push("/chat/" + targetID + "/" + targetName);
       }
     }
-  }
+  };
 
   return (
     <ScrollContainer>
@@ -76,7 +74,7 @@ function CompanionPostView(props) {
           />
           <h1>Published Games</h1>
           {ownedPosts.length === 0 ? (
-            <NoPosts myself={false}/>
+            <NoPosts myself={false} />
           ) : (
             ownedPosts.map((post, i) => {
               return (

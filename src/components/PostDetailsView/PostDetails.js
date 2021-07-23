@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
   Box,
@@ -110,33 +110,40 @@ function PostDetails(props) {
     props.clickOrder();
   };
 
-  const [rows,setRows] = React.useState([]);
+  const [rows, setRows] = React.useState([]);
 
   useEffect(() => {
     if (props.post) {
       const timeslots = props.post.availableTime;
       const _rows = [
         {
-          time: "Monday", available: timeslots.includes("Monday"),
+          time: "Monday",
+          available: timeslots.includes("Monday"),
         },
         {
-          time: "Tuesday", available: timeslots.includes("Tuesday"),
+          time: "Tuesday",
+          available: timeslots.includes("Tuesday"),
         },
         {
-          time: "Wednesday", available: timeslots.includes("Wednesday"),
+          time: "Wednesday",
+          available: timeslots.includes("Wednesday"),
         },
         {
-          time: "Thursday", available: timeslots.includes("Thursday"),
+          time: "Thursday",
+          available: timeslots.includes("Thursday"),
         },
         {
-          time: "Friday", available: timeslots.includes("Friday"),
+          time: "Friday",
+          available: timeslots.includes("Friday"),
         },
         {
-          time: "Saturday", available: timeslots.includes("Saturday"),
+          time: "Saturday",
+          available: timeslots.includes("Saturday"),
         },
         {
-          time: "Sunday", available: timeslots.includes("Sunday"),
-        }
+          time: "Sunday",
+          available: timeslots.includes("Sunday"),
+        },
       ];
       setRows(_rows);
     }
@@ -166,7 +173,11 @@ function PostDetails(props) {
                 <img
                   className={classes.img}
                   alt="avatar"
-                  src={props.post && props.post.avatarUrl ? props.post.avatarUrl : mockAvatar}
+                  src={
+                    props.post && props.post.avatarUrl
+                      ? props.post.avatarUrl
+                      : mockAvatar
+                  }
                 />
               </ButtonBase>
             </Grid>
@@ -193,19 +204,17 @@ function PostDetails(props) {
             >
               Chat
             </Button>
-            <Tooltip title={
-                            props.user
-                                ?
-                                hasOrder ?
-                                    "You have a not-yet-confirmed order now, please wait for response."
-                                    :
-                                    props.myPost ?
-                                        "You can not place order for yourself."
-                                        : ""
-                                :
-                                "Please sign in / register to make order."
-
-                        }>
+            <Tooltip
+              title={
+                props.user
+                  ? hasOrder
+                    ? "You have a not-yet-confirmed order now, please wait for response."
+                    : props.myPost
+                    ? "You can not place order for yourself."
+                    : ""
+                  : "Please sign in / register to make order."
+              }
+            >
               <span>
                 <Button
                   variant={"contained"}
@@ -230,12 +239,19 @@ function PostDetails(props) {
             <Typography variant={"h6"}>Rating score:</Typography>
             <div className={classes.rating}>
               <Rating
-                value={props.post && props.post.ratings ? props.post.ratings : 0}
+                value={
+                  props.post && props.post.ratings ? props.post.ratings : 0
+                }
                 precision={0.1}
                 readOnly
               />
               <span>&nbsp;</span>
-              <Typography>{props.post && typeof (props.post.ratings) === "number" && (props.post.ratings).toFixed(1)} / 5.0</Typography>
+              <Typography>
+                {props.post &&
+                  typeof props.post.ratings === "number" &&
+                  props.post.ratings.toFixed(1)}{" "}
+                / 5.0
+              </Typography>
             </div>
           </Box>
           <Box
@@ -265,15 +281,21 @@ function PostDetails(props) {
             </Grid>
             <Grid item>
               Server: <span>&nbsp;&nbsp;</span>
-              {props.post && Array.isArray(props.post.servers) && props.post.servers.join(", ")}
+              {props.post &&
+                Array.isArray(props.post.servers) &&
+                props.post.servers.join(", ")}
             </Grid>
             <Grid item>
               Platform: <span>&nbsp;&nbsp;</span>
-              {props.post && Array.isArray(props.post.platforms) && props.post.platforms.join(", ")}
+              {props.post &&
+                Array.isArray(props.post.platforms) &&
+                props.post.platforms.join(", ")}
             </Grid>
             <Grid item>
               Language: <span>&nbsp;&nbsp;</span>
-              {props.post && Array.isArray(props.post.language) && props.post.language.join(", ")}
+              {props.post &&
+                Array.isArray(props.post.language) &&
+                props.post.language.join(", ")}
             </Grid>
           </Grid>
           <TableContainer component={Paper}>
@@ -285,8 +307,8 @@ function PostDetails(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <StyledTableRow key={row.name}>
+                {rows.map((row, i) => (
+                  <StyledTableRow key={i}>
                     <StyledTableCell component="th" scope="row">
                       {row.time}
                     </StyledTableCell>

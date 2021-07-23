@@ -1,6 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Button, Grid, Paper, Divider, Typography, Box} from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Paper,
+  Divider,
+  Typography,
+  Box,
+} from "@material-ui/core";
 
 import MockAvatar from "../../images/avatar.svg";
 import Rating from "@material-ui/lab/Rating";
@@ -45,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   rating: {
     display: "flex",
     alignItems: "center",
-  }
+  },
 }));
 
 function CompanionInfo(props) {
@@ -56,7 +63,11 @@ function CompanionInfo(props) {
       <Grid container direction={"column"}>
         <Grid className={classes.avatarAndInfo}>
           <Grid item>
-            <img className={classes.img} alt="avatar" src={props.avatarUrl ? props.avatarUrl : MockAvatar} />
+            <img
+              className={classes.img}
+              alt="avatar"
+              src={props.avatarUrl ? props.avatarUrl : MockAvatar}
+            />
           </Grid>
           <Grid className={classes.info}>
             <Grid item>{props.username}</Grid>
@@ -65,32 +76,39 @@ function CompanionInfo(props) {
           </Grid>
         </Grid>
         <Grid className={classes.buttonRow}>
-          <Button variant={"contained"} color={"primary"} onClick={props.clickChat}>
+          <Button
+            variant={"contained"}
+            color={"primary"}
+            onClick={props.clickChat}
+          >
             Chat
           </Button>
         </Grid>
         <Divider />
         <Grid className={classes.ratingRow}>
           <Box
-              className={classes.box}
-              component="fieldset"
-              borderColor="transparent"
+            className={classes.box}
+            component="fieldset"
+            borderColor="transparent"
           >
             <Typography variant={"h6"}>Rating score:</Typography>
             <div className={classes.rating}>
               <Rating
-                  value={props.ratings? props.ratings : 0}
-                  precision={0.1}
-                  readOnly
+                value={props.ratings ? props.ratings : 0}
+                precision={0.1}
+                readOnly
               />
               <Typography>({props.reviewNumber})</Typography>
             </div>
-            <Typography>{typeof (props.ratings) === "number" && (props.ratings).toFixed(1)} / 5.0</Typography>
+            <Typography>
+              {typeof props.ratings === "number" && props.ratings.toFixed(1)} /
+              5.0
+            </Typography>
           </Box>
           <Box
-              className={classes.box}
-              component="fieldset"
-              borderColor="transparent"
+            className={classes.box}
+            component="fieldset"
+            borderColor="transparent"
           >
             <Typography variant={"h6"}>Served:</Typography>
             <Typography>{props.orderNumber}</Typography>

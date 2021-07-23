@@ -8,8 +8,8 @@ import { getPostsByCompanion } from "../../redux/actions";
 import NoPosts from "../../components/CompanionPostView/NoPosts";
 import GameBox from "../../components/CompanionPostView/GameBox";
 import { Button } from "@material-ui/core";
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
   multiplePosts: {
     marginBottom: "200px",
   },
-    fab: {
-      marginLeft: theme.spacing(5),
-      marginTop: theme.spacing(5),
-    }
+  fab: {
+    marginLeft: theme.spacing(5),
+    marginTop: theme.spacing(5),
+  },
 }));
 
 function MyPostsView(props) {
@@ -49,7 +49,7 @@ function MyPostsView(props) {
 
   const [isCompanion, setIsCompanion] = React.useState(false);
 
-  const user = useSelector((state) => state.user.user)
+  const user = useSelector((state) => state.user.user);
 
   const postsByCompanion = useSelector((state) => state.posts.companion);
 
@@ -65,8 +65,8 @@ function MyPostsView(props) {
   };
 
   const onClickEdit = (post) => {
-      let route = "/editpost/" + post._id;
-      props.history.push(route);
+    let route = "/editpost/" + post._id;
+    props.history.push(route);
   };
 
   // Check whether user is already a companion
@@ -84,18 +84,16 @@ function MyPostsView(props) {
     })();
   }, [match.params]);
 
-// Authentication check
+  // Authentication check
   useEffect(() => {
     if (!user) {
-        props.history.push("/login");
+      props.history.push("/login");
     }
 
-    if(match.params.companionId !== user._id) {
-        props.history.push("/notfound")
+    if (match.params.companionId !== user._id) {
+      props.history.push("/notfound");
     }
-}, [user, props.history]);
-
-
+  }, [user, props.history]);
 
   return (
     <ScrollContainer>
@@ -121,7 +119,7 @@ function MyPostsView(props) {
                 ) : (
                   ownedPosts.map((post, i) => {
                     return (
-                      <div key={i} style={{display: "flex"}}>
+                      <div key={i} style={{ display: "flex" }}>
                         <GameBox
                           gameId={post.gameId}
                           gameName={post.game[0].name}
@@ -131,9 +129,14 @@ function MyPostsView(props) {
                           postId={post._id}
                           onClick={onClickPost}
                         />
-                          <Fab color="secondary" aria-label="edit" className={classes.fab} onClick={() => onClickEdit(post)}>
-                              <EditIcon />
-                          </Fab>
+                        <Fab
+                          color="secondary"
+                          aria-label="edit"
+                          className={classes.fab}
+                          onClick={() => onClickEdit(post)}
+                        >
+                          <EditIcon />
+                        </Fab>
                       </div>
                     );
                   })

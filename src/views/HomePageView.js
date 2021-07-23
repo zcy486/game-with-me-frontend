@@ -26,7 +26,7 @@ function HomePageView(props) {
   useEffect(() => {
     (async () => {
       let response = await GameService.getMostPopularGame();
-      firstGameId = response.gameId
+      firstGameId = response.gameId;
     })();
   }, [firstGameId]);
 

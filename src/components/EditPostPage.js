@@ -16,14 +16,11 @@ import {
   Select,
   TextField,
   Typography,
-  GridList,
-  IconButton,
 } from "@material-ui/core";
 
 import MockAvatar from "../images/avatar.svg";
 import ECoin from "../components/ECoin";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import PostService from "../services/PostService";
 
 const useStyles = makeStyles((theme) => ({

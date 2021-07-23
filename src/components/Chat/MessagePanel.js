@@ -43,9 +43,7 @@ function MessagePanel(props) {
       <div className={classes.messagePanel}>
         {props.selectedUser && !props.loaded ? (
           <div className={classes.loadButton}>
-            <Button onClick={props.onLoad}>
-              Load History Messages
-            </Button>
+            <Button onClick={props.onLoad}>Load History Messages</Button>
           </div>
         ) : (
           <div />

@@ -26,7 +26,7 @@ export function getReviews() {
 }
 
 
-//
+
 export function createReview(star, label, reviewText, companionId, gamerId, orderId)
     {
     function onSuccess() {

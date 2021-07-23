@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function ShortRecapBox(props) {
   const classes = useStyles();
   return (
- //   <div className={classes.root}>
+
       <Paper className={classes.paper}>
         <Grid container spacing={10}>
           <Grid item>
@@ -47,16 +47,9 @@ function ShortRecapBox(props) {
                 <Typography variant="h5">
                   {props.companionName}
                 </Typography>           
-              </Grid>
-           {/*    <Grid item xs>
-                <Typography >
-                  ID:123
-                </Typography>            
-              </Grid>  */}            
+              </Grid>        
             </Grid>
             <Grid item >
-              {/* <StarShowRating
-               ratings={review && review.ratings}/> */}
                <Box component="fieldset" mb={3} borderColor="transparent">   
                 <Rating name="disabled" value={props.ratings} disabled /> 
           
@@ -65,7 +58,7 @@ function ShortRecapBox(props) {
           </Grid>
         </Grid>
       </Paper>
-//    </div>
+
   );
 }
 export default connect()(ShortRecapBox);

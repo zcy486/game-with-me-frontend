@@ -138,4 +138,4 @@ const onClickRefresh = () =>{
   );
 }
 
-export default connect(/* null, {getOrderByGamerId} */)(OrderListView);
+export default connect()(OrderListView);

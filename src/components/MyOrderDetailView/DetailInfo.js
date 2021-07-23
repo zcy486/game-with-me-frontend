@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import { logout } from "../../redux/actions";
 import OrderStatus from "../../components/MyOrderDetailView/OrderStatus";
 
 const useStyles = makeStyles({
@@ -33,7 +32,6 @@ function DetailInfo(props) {
   const bull = <span className={classes.bullet}>•</span>;
   
   const createView = () => {
-    //props.onClose();
     props.history.push("/orderDetails/review/"+ props.orderId + "/"+ props.companionId);
   };
 
@@ -70,17 +68,6 @@ function DetailInfo(props) {
             confirmStatus = {props.status}
           />
         </Typography>
-   {/*      <Typography className={classes.pos} color="textSecondary">
-          The order will be confirmed by your companion in 15 minutes, otherwise
-          the order would be canceled and the e-coins would be transferred back.
-          <br />
-          You can also cancel the order at yourside whenever during the 15mins.
-        </Typography>
-        <Typography variant="body2" component="p">
-            You can also find your order information from your user profile. 
-          <br />
-          Hope you have a good time in your games!!!
-        </Typography> */}
       </CardContent>
       <CardActions>
         <Button

@@ -49,7 +49,6 @@ function CreateReviewView(props) {
   let { match } = props;
   //deconstruct from redux state.review
   const review = useSelector((state) => state.review);
-  // console.log(match.params.orderId);
   const reviewlist = useSelector((state) => state.review.reviewlist);
 
   const handleSubmit = (star, label, reviewText, companionId, gamerId, orderId) => {
@@ -68,7 +67,6 @@ function CreateReviewView(props) {
 
   //fetch Order info for orderId/gamerId/companionId
   const order = useSelector((state) => state.order);
-  console.log(review)
   useEffect(() => {
       props.dispatch(getOrder(match.params.orderId));
     }, []); 

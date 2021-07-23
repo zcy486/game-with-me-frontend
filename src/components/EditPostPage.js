@@ -209,7 +209,6 @@ function EditPostPage(props) {
     if (match.params.postId) {
       (async () => {
         const post = await PostService.reloadOnEdit(match.params.postId);
-        console.log("reloaded post: ", post);
         if (props.user._id === post.companionId) {
           if (post) {
             // game

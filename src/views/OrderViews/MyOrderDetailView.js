@@ -32,7 +32,6 @@ function MyOrderDetailView(props) {
   }, [match.params]);
 
   const handleFinish = (status) => {
-    console.log(match.params.orderId);
     props.dispatch(updateOrderStatus(match.params.orderId, status));
   }
 

@@ -126,6 +126,7 @@ function CompanionOrderView(props) {
                         orders.orders.slice((page - 1) * 3, page * 3).map((order, i) => {
                             return (
                                 <CompanionOrderBox
+                                    key={i}
                                     order={order}
                                     gamerName={order.gamerName}
                                     gameName={order.gameName}

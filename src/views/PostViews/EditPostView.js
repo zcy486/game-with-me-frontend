@@ -40,7 +40,6 @@ function EditPostView(props) {
 
     const onSave = (post) => {
         (async () => {
-            console.log("send post to backend: ", post);
             const updated = await PostService.updatePost(post);
             if (user && updated) {
                 props.history.push(`/posts/${user._id}`);

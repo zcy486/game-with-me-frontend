@@ -63,7 +63,15 @@ function CommentBox(props) {
           </p>
         </Grid>
         <Grid className={classes.paperColumn}>
-          <p style={{marginLeft: theme.spacing(1), marginBottom: theme.spacing(0.5), marginTop: theme.spacing(0.5)}}>{props.date}</p>
+          <p
+            style={{
+              marginLeft: theme.spacing(1),
+              marginBottom: theme.spacing(0.5),
+              marginTop: theme.spacing(0.5),
+            }}
+          >
+            {props.date}
+          </p>
           <Rating defaultValue={props.rating} precision={0.5} readOnly />
         </Grid>
       </Grid>

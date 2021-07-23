@@ -12,27 +12,29 @@ import OrderStatus from "../../components/MyOrderDetailView/OrderStatus";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 275,
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 });
 
 function DetailInfo(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-  
+
   const createView = () => {
-    props.history.push("/orderDetails/review/"+ props.orderId + "/"+ props.companionId);
+    props.history.push(
+      "/orderDetails/review/" + props.orderId + "/" + props.companionId
+    );
   };
 
   return (
@@ -65,21 +67,21 @@ function DetailInfo(props) {
           {bull}Order Status:&nbsp;{props.status}
           <OrderStatus
             handleFinish={props.handleFinish}
-            confirmStatus = {props.status}
+            confirmStatus={props.status}
           />
         </Typography>
       </CardContent>
       <CardActions>
         <Button
-              variant={"contained"}
-              color={"secondary"}
-              size={"large"}
-              
-              disabled={
-                  //status is finish
-                  props.status !== "CompletedByGamer"
-              }
-              onClick={createView} size="big" color ="secondary">
+          variant={"contained"}
+          color={"secondary"}
+          size={"large"}
+          disabled={
+            //status is finish
+            props.status !== "CompletedByGamer"
+          }
+          onClick={createView}
+        >
           Create review
         </Button>
       </CardActions>

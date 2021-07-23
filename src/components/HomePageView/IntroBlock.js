@@ -72,7 +72,7 @@ function IntroBlock(props) {
   const onClick = (e) => {
     e.preventDefault();
     props.onClick();
-  }
+  };
 
   return (
     <div className={classes.root}>

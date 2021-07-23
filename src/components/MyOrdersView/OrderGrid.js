@@ -83,7 +83,9 @@ export default function OrderGrid(props) {
           <Grid className={classes.placeHolder} />
           <Grid className={classes.paperColumn}>
             <Grid className={classes.dateInfo}>
-              <Typography>{new Date(props.createdAt).toString().split(" GMT")[0]}</Typography>
+              <Typography>
+                {new Date(props.createdAt).toString().split(" GMT")[0]}
+              </Typography>
             </Grid>
 
             <Grid item>{props.orderStatus}</Grid>

@@ -61,14 +61,6 @@ const routes = [
     path: "/editpost/:postId",
     component: EditPostView,
   },
-/*   { 
-    path: "/orderDetails/review",
-    component:CreateReviewView,
-  },
-  {
-    path: "/orderDetails/:orderId",
-    component:MyOrderDetailView,
-  }, */
   {
     path: "/chat",
     component: ChatView,
@@ -86,17 +78,18 @@ const routes = [
   },
   {
     path: "/orderDetails/review/:orderId/:companionId",
-    component:CreateReviewView,
-},
-{
+    component: CreateReviewView,
+  },
+  {
     path: "/myOrders/gamerId/:gamerId/details/:orderId",
-    component:MyOrderDetailView,
-},
-{
+    component: MyOrderDetailView,
+  },
+  {
     path: "/myOrders/gamerId/:gamerId",
-    component:OrderListView,
-},
- {   path: "/companionorder/:companionId",
+    component: OrderListView,
+  },
+  {
+    path: "/companionorder/:companionId",
     component: CompanionOrderView,
     exact: true,
   },
@@ -104,7 +97,7 @@ const routes = [
     path: "/posts/:companionId",
     component: MyPostsView,
     exact: true,
-  }
+  },
 ];
 
 export default routes;

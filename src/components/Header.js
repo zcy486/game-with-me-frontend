@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import {
   AppBar,
@@ -18,7 +18,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import UserMenu from "./UserRelevant/UserMenu";
 import SearchService from "../services/SearchService";
-import UserService from "../services/UserService";
 //import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
@@ -112,7 +111,7 @@ function Header(props) {
   useEffect(() => {
     let active = true;
 
-    if(!loading) {
+    if (!loading) {
       return undefined;
     }
 
@@ -120,9 +119,9 @@ function Header(props) {
       const response = await SearchService.search(inputValue);
       await sleep(200);
 
-      if(active) {
-        setOptions(response)
-        if(response.length === 0) {
+      if (active) {
+        setOptions(response);
+        if (response.length === 0) {
           setLoadingText("No matches");
         }
       }
@@ -139,7 +138,6 @@ function Header(props) {
     }
   }, [open]);
 
-
   const onInputChange = (event, value) => {
     setOptions([]);
     setInputValue(value);
@@ -151,12 +149,11 @@ function Header(props) {
 
   const onChange = (event, value, reason) => {
     setValue(value);
-    if(reason === "select-option") {
-      if(value.group === "Games") {
+    if (reason === "select-option") {
+      if (value.group === "Games") {
         const gameId = value.id;
         props.history.push("/games/" + gameId);
-      }
-      else if(value.group === "Companions") {
+      } else if (value.group === "Companions") {
         const companionId = value.id;
         props.history.push("/companion/" + companionId);
       }
@@ -171,8 +168,7 @@ function Header(props) {
   const onClickChat = () => {
     if (!user.user) {
       props.history.push("/login");
-    }
-    else {
+    } else {
       props.history.push("/chat");
     }
   };
@@ -208,12 +204,12 @@ function Header(props) {
           options={options}
           groupBy={(option) => option.group}
           filterOptions={(x) => x}
-          getOptionLabel={(option) => option.name? option.name : option}
+          getOptionLabel={(option) => (option.name ? option.name : option)}
           //render-input-relevant
           renderInput={(params) => (
             <div className={classes.search} ref={params.InputProps.ref}>
               <div className={classes.searchIcon}>
-                <SearchIcon className={classes.iconButton}/>
+                <SearchIcon className={classes.iconButton} />
               </div>
               <InputBase
                 classes={{ root: classes.inputRoot, input: classes.inputInput }}

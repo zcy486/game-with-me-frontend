@@ -30,8 +30,8 @@ function GamesSelector(props) {
   const classes = useStyles();
 
   const onSelectGame = (gameId) => {
-    props.onSelectGame(gameId)
-  }
+    props.onSelectGame(gameId);
+  };
 
   return (
     <List
@@ -50,7 +50,7 @@ function GamesSelector(props) {
         <PopularGamesSelector
           games={props.games ? props.games.popular : []}
           onSelectGame={onSelectGame}
-          selectedId = {props.selectedId}
+          selectedId={props.selectedId}
         />
       </Collapse>
 
@@ -63,9 +63,9 @@ function GamesSelector(props) {
 
       <Collapse in={true} timeout="auto" unmountOnExit>
         <AllGamesSelector
-            games={props.games ? props.games.all : []}
-            onSelectGame={onSelectGame}
-            selectedId = {props.selectedId}
+          games={props.games ? props.games.all : []}
+          onSelectGame={onSelectGame}
+          selectedId={props.selectedId}
         />
       </Collapse>
     </List>

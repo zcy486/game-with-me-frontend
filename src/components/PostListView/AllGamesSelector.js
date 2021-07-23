@@ -4,8 +4,8 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import {Avatar} from "@material-ui/core";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bolder",
     backgroundColor: "#e0f3ff",
     opacity: "0.9",
-  }
+  },
 }));
 
 function AllGamesSelector(props) {
@@ -67,7 +67,9 @@ function AllGamesSelector(props) {
         <ul className={classes.ul}>
           {result.map((section, i) => (
             <div key={i}>
-              <ListSubheader className={classes.listSubHeader}>{section.group}</ListSubheader>
+              <ListSubheader className={classes.listSubHeader}>
+                {section.group}
+              </ListSubheader>
               {Array.isArray(section.children) &&
                 section.children.map((game, j) => (
                   <ListItem
@@ -77,7 +79,7 @@ function AllGamesSelector(props) {
                     onClick={(event) => handleListItemClick(event, game._id)}
                   >
                     <ListItemIcon>
-                      <Avatar src={game.gamePic} className={classes.gamePic}/>
+                      <Avatar src={game.gamePic} className={classes.gamePic} />
                     </ListItemIcon>
                     <ListItemText primary={game.name} />
                   </ListItem>

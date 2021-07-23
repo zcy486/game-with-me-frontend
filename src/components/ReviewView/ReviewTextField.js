@@ -1,19 +1,19 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
+    "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: '120ch',
+      width: "120ch",
     },
   },
 }));
 
 export default function MultilineTextFields() {
   const classes = useStyles();
-  const [value, setValue] = React.useState('Controlled');
+  const [value, setValue] = React.useState("Controlled");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -22,9 +22,8 @@ export default function MultilineTextFields() {
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <div>
-        
         <TextField
-          id="filled-multiline-static"          
+          id="filled-multiline-static"
           multiline
           rows={10}
           placeholder="Max. 500 words."
@@ -32,7 +31,6 @@ export default function MultilineTextFields() {
           variant="filled"
         />
       </div>
-     
     </form>
   );
 }

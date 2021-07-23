@@ -91,10 +91,7 @@ function CreatePostView(props) {
             games={games.all}
           />
           <Collapse in={openAlert}>
-            <Alert
-              className={classes.alert}
-              severity="error"
-            >
+            <Alert className={classes.alert} severity="error">
               You already have a post of this game!
             </Alert>
           </Collapse>

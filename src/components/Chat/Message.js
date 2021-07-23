@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     padding: 0,
     minWidth: 150,
-    margin:theme.spacing(1),
+    margin: theme.spacing(1),
   },
   title: {
     fontSize: 14,
@@ -23,7 +23,7 @@ const Message = (props) => {
 
   return (
     <Card className={classes.card}>
-      <CardContent >
+      <CardContent>
         <Typography
           className={classes.title}
           color="textSecondary"

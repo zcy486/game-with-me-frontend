@@ -130,14 +130,26 @@ function CreatePostPage(props) {
   const [screenshotFiles, setScreenshotFiles] = React.useState([]);
 
   const languages = [
+    "Čeština",
+    "Dansk",
     "Deutsch",
     "English",
+    "Ελληνικά",
     "Español",
+    "Filipino",
     "Français",
     "한국어",
     "Italiano",
+    "Íslenska",
+    "Latviski",
+    "Magyar",
+    "Norsk",
     "日本語",
+    "Polski",
     "Português",
+    "Русский",
+    "Română",
+    "Suomi",
     "Svenska",
     "Türkçe",
     "Tiếng Việt",
@@ -158,7 +170,6 @@ function CreatePostPage(props) {
 
   const onChangeImgs = (event) => {
     const files = event.target.files;
-    console.log(files);
     const screenshot = [];
     if (!files) {
       return;

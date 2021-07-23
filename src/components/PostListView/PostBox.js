@@ -57,7 +57,7 @@ function PostBox(props) {
 
   const onClick = (event) => {
     event.preventDefault();
-    props.onClick(props.post._id);
+    props.onClick(props.postId);
   };
 
   return (

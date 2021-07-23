@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -38,7 +38,7 @@ function EditPostView(props) {
         }
     };
 
-    const onCreate = (post) => {
+    const onSave = (post) => {
         (async () => {
             console.log("send post to backend: ", post);
             const updated = await PostService.updatePost(post);
@@ -56,7 +56,7 @@ function EditPostView(props) {
                     <EditPostPage
                         user={user}
                         onCancel={onCancel}
-                        onCreate={onCreate}
+                        onSave={onSave}
                     />
                 </div>
             </div>

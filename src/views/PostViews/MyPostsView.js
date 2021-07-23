@@ -16,8 +16,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${backgroundPic})`,
     backgroundPosition: "center",
     backgroundRepeat: "repeat",
-    //backgroundSize: "cover",
-    //backgroundAttachment: "scroll",
   },
   pageArea: {
     paddingTop: theme.spacing(12),
@@ -46,12 +44,15 @@ const useStyles = makeStyles((theme) => ({
 
 function MyPostsView(props) {
   const classes = useStyles();
+
   let { match } = props;
+
   const [isCompanion, setIsCompanion] = React.useState(false);
 
   const user = useSelector((state) => state.user.user)
 
   const postsByCompanion = useSelector((state) => state.posts.companion);
+
   const ownedPosts = postsByCompanion ? postsByCompanion.posts : [];
 
   const onClickPost = (gameId, postId) => {
@@ -68,6 +69,7 @@ function MyPostsView(props) {
       props.history.push(route);
   };
 
+  // Check whether user is already a companion
   useEffect(() => {
     (async () => {
       let plusFields = await UserService.getCompanionProfile(
@@ -82,15 +84,15 @@ function MyPostsView(props) {
     })();
   }, [match.params]);
 
-
+// Authentication check
   useEffect(() => {
     if (!user) {
         props.history.push("/login");
     }
-    if( user && match.params.companionId != user._id) {
+
+    if(match.params.companionId !== user._id) {
         props.history.push("/notfound")
     }
-
 }, [user, props.history]);
 
 
@@ -122,8 +124,8 @@ function MyPostsView(props) {
                       <div key={i} style={{display: "flex"}}>
                         <GameBox
                           gameId={post.gameId}
-                          gameName={post.gameName}
-                          gamePic={post.gamePic}
+                          gameName={post.game[0].name}
+                          gamePic={post.game[0].gamePic}
                           price={post.price}
                           languages={post.language}
                           postId={post._id}

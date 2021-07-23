@@ -32,7 +32,6 @@ export default class OrderService {
             HttpService.get(this.baseURL(),
                 function (data) {
                     resolve(data);
-                    console.log(data);
                 }, function (textStatus) {
                     reject(textStatus);
                 });

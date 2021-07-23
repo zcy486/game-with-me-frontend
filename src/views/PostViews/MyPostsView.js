@@ -90,7 +90,7 @@ function MyPostsView(props) {
         props.history.push("/login");
     }
 
-    if(match.params.companionId != user._id) {
+    if(match.params.companionId !== user._id) {
         props.history.push("/notfound")
     }
 }, [user, props.history]);
@@ -124,8 +124,8 @@ function MyPostsView(props) {
                       <div key={i} style={{display: "flex"}}>
                         <GameBox
                           gameId={post.gameId}
-                          gameName={post.gameName}
-                          gamePic={post.gamePic}
+                          gameName={post.game[0].name}
+                          gamePic={post.game[0].gamePic}
                           price={post.price}
                           languages={post.language}
                           postId={post._id}

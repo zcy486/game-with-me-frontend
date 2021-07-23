@@ -178,30 +178,7 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
               label={labelText}
             />
           })}
-          {/* <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedA} onChange={handleLabling} name="checkedA" />}
-            label="Humorous"
-          />
-          <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedB} onChange={handleLabling} name="checkedB" />}
-            label="Carry in game"
-          />
-          <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedC} onChange={handleLabling} name="checkedC" />}
-            label="Interactive"
-          />
-          <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedD} onChange={handleLabling} name="checkedD" />}
-            label="Friendly"
-          />
-          <FormControlLabel
-            control={<BlueCheckbox icon={<SentimentSatisfiedAltIcon />} checked={label.checkedE} onChange={handleLabling} name="checkedE" />}
-            label="Patient"
-          />
-          <FormControlLabel
-            control={<PurpleCheckbox icon={<SentimentDissatisfiedIcon />} checked={label.checkedF} onChange={handleLabling} name="checkedF" />}
-            label="Rude"
-          /> */}
+
         </FormGroup>
 
       </div>
@@ -266,5 +243,5 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
       </div>
   );
 }
-//TODO: uncomment if withStyles is needed
+
 export default connect()(withRouter(SubmitReview));

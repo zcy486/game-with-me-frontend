@@ -41,7 +41,14 @@ function App() {
 
     const cancel = async () => {
         try {
-            await OrderService.deleteOrder(waitedOrder.order._id);
+            //test order again
+            let order = JSON.parse(window.localStorage['order']);
+            let newestOrder = await OrderService.getOrder(order._id);
+            if (newestOrder.orderStatus === "Confirmed") {
+                alert("Your order has been confirmed by the companion and can't be deleted!");
+            } else {
+                await OrderService.deleteOrder(waitedOrder.order._id);
+            }
             window.localStorage.removeItem("order");
             window.location.reload();
 
@@ -67,7 +74,7 @@ function App() {
                         </Switch>
                         {hasOrder ?
                             <Fab variant="extended" className={classes.fab} color={"secondary"} onClick={cancel}>
-                                <CancelIcon/>
+                                <CancelIcon />
                                 Cancel current order
                             </Fab> : null}
                     </React.Fragment>

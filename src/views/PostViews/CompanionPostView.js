@@ -83,8 +83,8 @@ function CompanionPostView(props) {
                 <GameBox
                   key={i}
                   gameId={post.gameId}
-                  gameName={post.gameName}
-                  gamePic={post.gamePic}
+                  gameName={post.game[0].name}
+                  gamePic={post.game[0].gamePic}
                   price={post.price}
                   languages={post.language}
                   postId={post._id}

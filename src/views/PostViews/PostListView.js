@@ -347,14 +347,14 @@ function PostListView(props) {
               return (
                 <PostBox
                   key={i}
+                  postId={post._id}
                   username={post.companionName}
+                  avatar={post.avatarUrl ? post.avatarUrl : MockAvatar}
                   price={post.price}
                   ratings={post.ratings}
                   reviewNumber={post.reviewNumber}
                   languages={post.language}
-                  avatar={post.avatarUrl ? post.avatarUrl : MockAvatar}
                   onClick={onClickPost}
-                  post={post}
                 />
               );
             })}

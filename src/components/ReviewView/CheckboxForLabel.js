@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 import { purple } from '@material-ui/core/colors';
@@ -66,3 +66,4 @@ export default function CheckboxLabels() {
     </FormGroup>
   );
 }
+ */

@@ -21,27 +21,17 @@ import CancelButton from "../../components/ReviewView/CancelButton";
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-/* const styles = {
-    submit0: {
-      background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', 
-      border: 0,
-      borderRadius: 20,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
-      height: 40,
-      padding: '0 30px',
-    },
-};*/
+
 const stars = {
-    //0.5: 'Useless',
+    
     1: 'Terrible',
-    //1.5: 'Poor',
+    
     2: 'Not bad',
-    //2.5: 'Ok',
+    
     3: 'Satisfied',
-    //3.5: 'Good',
+    
     4: 'Good',
-    //4.5: 'Excellent',
+    
     5: 'Perfect',
 };
 
@@ -65,8 +55,7 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       background: 'linear-gradient(45deg, #7908be 30%, #7908be 90%)', 
       border: 0,
-      borderRadius: 5,
-      //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      borderRadius: 5,   
       color: 'white',
       height: 40,
       padding: '0 30px',
@@ -105,14 +94,9 @@ const Textfield = makeStyles((theme) => ({
 }));
 
 function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
-  //debugger;
   //deconstruct review based on Review Model
   const classes = useStyles();
-  //construct basic review data based on Review Model
-/*   const [_id, setId] = useState(review._id || ""); //review _id
-  const [star, setStar] = useState(review.star || 0); //review star
-  const [label, setLabel] = useState(review.label || []); //review label
-  const [reviewText, setReviewText] = useState(review.reviewText || ""); //review reviewText */
+
 
   const [_id, setId] = useState(""); //review _id
   const [star, setStar] = useState(0); //review star
@@ -126,12 +110,7 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
       setReviewText(review.review.reviewText)
     }
   },[review]);
-  
-  //TODO: uncomment if needed
-  // const [orderId, setOrderId] = useState(orderId); //
-  // const [companionId, setCompanionId] = useState(companionId); //
-  // const [gamerId, setGamerId] = useState(gamerId); //
-  //construct frontend logic controller states
+
   const [open, setOpen] = React.useState(false); //for dialog
   const [hover, setHover] = React.useState(-1); //star
 
@@ -168,7 +147,6 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
 
 
   const backToList = () => {
-    //props.onClose();
     history.push("/myOrders/gamerId/"+ order.order.gamerId);
   };
 
@@ -180,7 +158,6 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
         <Rating
           name="simple-controlled"
           value={star}
-          //precision={1}
           onChange={(event, newStar) => {
             setStar(newStar);
           }}
@@ -250,9 +227,6 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
         <Button  className={classes.submit}
           onClick={() => {
             if(_id === ""){
-              debugger;
-              //create new Review, o
-              //const {orderId, companionId, gamerId} = order;
               handleSubmit(star, label, reviewText,  order.order.companionId, order.order.gamerId, order.order._id);
             }else{
               //update Review
@@ -293,4 +267,4 @@ function SubmitReview({review, handleSubmit,handleUpdate, history , order}) {
   );
 }
 //TODO: uncomment if withStyles is needed
-export default connect()(withRouter(/* withStyles(styles)( */SubmitReview));
+export default connect()(withRouter(SubmitReview));

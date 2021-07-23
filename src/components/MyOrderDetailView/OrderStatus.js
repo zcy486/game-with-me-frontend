@@ -29,20 +29,6 @@ function getSteps() {
    'Order is completed by your companion','Complete by your order and give a review'];
 }
 
-/*function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return 'Order has been placed';
-    case 1:
-      return 'Waiting for your companion\'s confirmation';
-    case 2:
-      return 'Order is completed by your companion';
-    case 3:
-      return 'Complete by your order and give a review';
-    default:
-      return 'Unknown stepIndex';
-  }
-}*/
 
 function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
   const classes = useStyles();
@@ -56,7 +42,7 @@ function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
     setActiveStep(statusEnums.findIndex(elem => elem === confirmStatus))
   }, [confirmStatus])
 
-  const handleNext = () => {
+/*   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -65,9 +51,8 @@ function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
   };
 
   const  finishOrder= () => {
-    //props.onClose();
     history.push("/orderDetails/review");
-  };
+  }; */
 
   return (
     <div className={classes.root}>
@@ -82,12 +67,6 @@ function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>All steps completed</Typography>
-            {/* <Button variant={"contained"}
-              color={"secondary"}
-              size={"large"}
-              disabled={activeStep === 0 || activeStep === 1 || activeStep === 2}>
-              Create reviewss
-            </Button> */}
           </div>
         ) : (
           <div>
@@ -102,13 +81,11 @@ function OrderStatus({confirmStatus, history, handleFinish, match, dispatch}) {
                   dispatch(getOrder(match.params.orderId));
                   
                 }}
-                //className={classes.backButton}
+                
               >
                    Finish   
               </Button>
-           {/*    <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button> */}
+
             
           </div>
         )}

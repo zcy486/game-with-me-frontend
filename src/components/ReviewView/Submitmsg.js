@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 30px",
     marginLeft: "630px",
   },
+  label: {
+    borderRadius: "25px",
+    border: "2px solid #7908be",
+    paddingRight: theme.spacing(0.4),
+    background: "#ffffff"
+  },
 }));
 
 const BlueCheckbox = withStyles({
@@ -178,17 +184,16 @@ function SubmitReview({ review, handleSubmit, handleUpdate, history, order }) {
             const ifChecked = label.includes(labelText);
             return (
               <FormControlLabel
+                  className={classes.label}
                 control={
                   labelText === "Rude" ? (
                     <PurpleCheckbox
-                      icon={<SentimentDissatisfiedIcon />}
                       checked={ifChecked}
                       onChange={handleLabling}
                       name={labelText}
                     />
                   ) : (
                     <BlueCheckbox
-                      icon={<SentimentSatisfiedAltIcon />}
                       checked={ifChecked}
                       onChange={handleLabling}
                       name={labelText}

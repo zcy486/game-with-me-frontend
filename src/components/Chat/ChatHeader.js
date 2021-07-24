@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -12,6 +12,7 @@ import {
 
 import MockAvatar from "../../images/avatar.svg";
 import ECoin from "../ECoin";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles((theme) => ({
   chatHeader: {
@@ -47,6 +48,21 @@ const useStyles = makeStyles((theme) => ({
 function ChatHeader(props) {
   const classes = useStyles();
 
+  const [avatarUrl, setAvatarUrl] = React.useState(MockAvatar);
+
+  useEffect(() => {
+    if (props.selectedUser) {
+      (async () => {
+        let resp = await UserService.getAvatar(props.selectedUser.userID);
+        if (resp.avatarUrl) {
+          setAvatarUrl(resp.avatarUrl);
+        } else {
+          setAvatarUrl(MockAvatar);
+        }
+      })();
+    }
+  }, [props.selectedUser]);
+
   const onClickOrder = (event) => {
     event.preventDefault();
     props.history.push(
@@ -58,7 +74,7 @@ function ChatHeader(props) {
     <div className={classes.chatHeader}>
       {props.selectedUser ? (
         <div className={classes.target}>
-          <Avatar className={classes.avatar} src={MockAvatar} />
+          <Avatar className={classes.avatar} src={avatarUrl} />
           <Typography>{props.selectedUser.username}</Typography>
         </div>
       ) : (

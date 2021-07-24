@@ -18,10 +18,10 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import MockAvatar from "../images/avatar.svg";
-import ECoin from "../components/ECoin";
+import MockAvatar from "../../images/avatar.svg";
+import ECoin from "../ECoin";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import PostService from "../services/PostService";
+import PostService from "../../services/PostService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -424,7 +424,7 @@ function EditPostPage(props) {
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        error={price < 1}
+                        error={price < 1 || price % 1 !== 0}
                         variant="outlined"
                         value={price}
                         onChange={handlePriceChange}

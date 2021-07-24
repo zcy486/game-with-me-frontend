@@ -19,8 +19,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-import MockAvatar from "../images/avatar.svg";
-import ECoin from "../components/ECoin";
+import MockAvatar from "../../images/avatar.svg";
+import ECoin from "../ECoin";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PropTypes from "prop-types";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -441,7 +441,7 @@ function CreatePostPage(props) {
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        error={price < 1}
+                        error={price < 1 || price % 1 !== 0}
                         variant="outlined"
                         defaultValue={1}
                         onChange={handlePriceChange}

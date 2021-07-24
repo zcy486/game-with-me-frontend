@@ -1,15 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  List,
-  ListItem,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-} from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 import AnnouncementIcon from "@material-ui/icons/Announcement";
-
-import MockAvatar from "../../images/avatar.svg";
 
 const useStyles = makeStyles(() => ({
   chatList: {
@@ -58,9 +50,6 @@ function ChatList(props) {
                 props.selectedUser && props.selectedUser.userID === user.userID
               }
             >
-              <ListItemAvatar>
-                <Avatar src={MockAvatar} />
-              </ListItemAvatar>
               <ListItemText
                 className={classes.listItemText}
                 disableTypography

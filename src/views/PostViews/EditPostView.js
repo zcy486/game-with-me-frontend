@@ -6,7 +6,7 @@ import ScrollContainer from "../../components/ScrollContainer";
 import backgroundPic from "../../images/bg_postlist.png";
 import Loading from "../../components/Loading";
 
-import EditPostPage from "../../components/EditPostPage";
+import EditPostPage from "../../components/PostOperations/EditPostPage";
 import PostService from "../../services/PostService";
 
 const useStyles = makeStyles((theme) => ({

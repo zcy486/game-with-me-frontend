@@ -13,6 +13,7 @@ import EmptyPage from "../../components/Chat/EmptyPage";
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
+    height: "100%",
   },
   rightPanel: {
     width: "100%",

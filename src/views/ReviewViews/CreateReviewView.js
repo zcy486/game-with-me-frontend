@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ShortRecapBox from "../components/ReviewView/ShortRecapBox";
-import Submitmsg from "../components/ReviewView/Submitmsg";
-import backgroundPic from "../images/bg_postlist.png";
+import ShortRecapBox from "../../components/ReviewView/ShortRecapBox";
+import Submitmsg from "../../components/ReviewView/Submitmsg";
+import backgroundPic from "../../images/bg_postlist.png";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import MockAvatar from "../images/avatar.svg";
+import MockAvatar from "../../images/avatar.svg";
 import {
   createReview,
   getReviewByOrderId,
   updateReview,
   getReviewByCompanionId,
-} from "../redux/actions/reviewAction";
-import { getOrder } from "../redux/actions/orderActions";
+} from "../../redux/actions/reviewAction";
+import { getOrder } from "../../redux/actions/orderActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

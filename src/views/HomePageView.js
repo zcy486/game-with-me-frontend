@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    height: "100%",
   },
 }));
 

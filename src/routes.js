@@ -8,7 +8,7 @@ import CreateOrderView from "./views/OrderViews/CreateOrderView";
 import ProfileView from "./views/UserViews/ProfileView";
 import CreatePostView from "./views/PostViews/CreatePostView";
 import ChatView from "./views/ChatViews/ChatView";
-import CreateReviewView from "./views/CreateReviewView";
+import CreateReviewView from "./views/ReviewViews/CreateReviewView";
 import MyOrderDetailView from "./views/OrderViews/MyOrderDetailView";
 import OrderListView from "./views/OrderViews/OrderListView";
 import CompanionOrderView from "./views/OrderViews/CompanionOrderView";

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     background: `url(${backgroundPic})`,
     backgroundRepeat: "repeat",
+    height: "100%",
   },
   gameSelector: {
     paddingRight: theme.spacing(4),

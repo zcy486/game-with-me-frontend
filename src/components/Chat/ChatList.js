@@ -6,7 +6,7 @@ import AnnouncementIcon from "@material-ui/icons/Announcement";
 const useStyles = makeStyles(() => ({
   chatList: {
     width: 350,
-    height: 689,
+    height: "100%",
     overflowY: "auto",
     color: "ghostwhite",
     backgroundColor: "#9e8dec",

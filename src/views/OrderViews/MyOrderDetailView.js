@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     background: `url(${backgroundPic})`,
     backgroundRepeat: "repeat",
+    height: "100%",
   },
   content: {
     textAlign: "left",
@@ -30,6 +31,14 @@ function MyOrderDetailView(props) {
   useEffect(() => {
     props.dispatch(getOrder(match.params.orderId));
   }, [match.params]);
+
+  //update status every 3s
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      props.dispatch(getOrder(match.params.orderId));
+    },3000)
+    return () => clearInterval(intervalId);
+  }, [])
 
   const handleFinish = (status) => {
     props.dispatch(updateOrderStatus(match.params.orderId, status));

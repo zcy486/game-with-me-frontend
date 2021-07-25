@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     background: `url(${backgroundPic})`,
     backgroundSize: "cover",
     backgroundRepeat: "repeat",
+    height: "100%",
   },
   content: {
     width: 1500,
@@ -94,8 +95,9 @@ function OrderListView(props) {
       <div className={classes.content}>
         <div className={classes.yourOrders}>My Orders</div>
         {orderlist &&
-        orderlist.sort((a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        orderlist.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         )
           ? orderlist.slice((page - 1) * 3, page * 3).map((order, k) => {
               return (
@@ -123,7 +125,11 @@ function OrderListView(props) {
           />
         ) : (
           <div className={classes.noOrder}>
-            <img src={noOrderImage} className={classes.noOrderImage} alt={"noOrderImage"}/>
+            <img
+              src={noOrderImage}
+              className={classes.noOrderImage}
+              alt={"noOrderImage"}
+            />
             <div className={classes.noOrderTitle}>No orders here yet</div>
             <Button
               variant={"contained"}

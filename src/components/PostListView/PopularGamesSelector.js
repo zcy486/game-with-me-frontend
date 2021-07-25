@@ -9,11 +9,11 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
     maxWidth: 360,
-    height: 260,
+    height: "100%",
     backgroundColor: theme.palette.background.paper,
     fontFamily: "Helvetica",
+    paddingBottom: theme.spacing(6),
   },
   gamePic: {
     width: theme.spacing(4.8),

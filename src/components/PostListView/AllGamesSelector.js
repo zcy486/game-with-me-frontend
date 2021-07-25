@@ -10,11 +10,11 @@ import { Avatar } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
-    maxWidth: 360,
+    maxWidth: theme.spacing(40),
     backgroundColor: theme.palette.background.paper,
     position: "relative",
     overflow: "auto",
-    maxHeight: 430,
+    maxHeight: theme.spacing(50),
     fontFamily: "Helvetica",
   },
   listSection: {

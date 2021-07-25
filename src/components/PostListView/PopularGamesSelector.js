@@ -9,7 +9,7 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 360,
+    maxWidth: theme.spacing(40),
     height: "100%",
     backgroundColor: theme.palette.background.paper,
     fontFamily: "Helvetica",
